@@ -1,7 +1,9 @@
 #include <stdio.h>
 
 //Importações dos arquivos
-#include "servicos.c"
+//#include "servicos.c"
+#include "colaboradores.c"
+#include "sobre.c"
 
 int main() {
 
@@ -27,16 +29,16 @@ int main() {
     // Chamando a função da opção desejada
     switch (opcao) {
         case 1:
-            cliente();
+            //cliente();
             break;
         case 2:
-            servico();
+            //servico();
             break;
         case 3:
-            agendamento();
+            //agendamento();
             break;
         case 4:
-            relatorio();
+            //relatorio();
             break;
         case 5:
             colaboradores();
@@ -45,7 +47,7 @@ int main() {
             sobre();
             break;
         case 0:
-            sair();
+            //sair();
             break;
     }
 
