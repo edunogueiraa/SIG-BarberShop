@@ -1,5 +1,8 @@
-void sobre(void) {
+#include <stdio.h>
+#include <stdlib.h>
 
+void sobre(void) {
+    system("clear||cls");
     printf("_______________________________________________________________________________\n");
     printf("|                                                                             |\n");
     printf("|                               Informações                                   |\n");
@@ -15,5 +18,8 @@ void sobre(void) {
     printf("|  Projeto desenvolvido como requisito para a disciplina DCT1106 -            |\n");
     printf("|  Programação, aplicando os conceitos aprendidos em sala de aula.            |\n");
     printf("|_____________________________________________________________________________|\n\n");
+
+    printf("\n>>> Tecle <ENTER> para continuar...\n");
+    getchar();
 
 } 
