@@ -5,16 +5,28 @@
 int relatorio() {
     system("clear||cls");
     int opcaoCliente;
-    printf("____________________________________________\n");
-    printf("|                                          |\n");
-    printf("|                Relatórios                |\n");
-    printf("|__________________________________________|\n");
-    printf("|                                          |\n");
-    printf("|           1 Consultar por Data           |\n");
-    printf("|           2 Consultar por Serviço        |\n");
-    printf("|           3 Consultar por Cliente        |\n");
-    printf("|           0 Sair                         |\n");
-    printf("|__________________________________________|\n\n");
+
+    printf("_________________________________________________________________________________________________\n");
+    printf("|                                                                                                 |\n");
+    printf("|      _____ _____ _____       ______            _               _____ _                          |\n");
+    printf("|     /  ___|_   _|  __ \\      | ___ \\          | |             /  ___| |                         |\n");
+    printf("|     \\ `--.  | | | |  \\/______| |_/ / __ _ _ __| |__   ___ _ __\\ `--.| |__   ___  _ __           |\n");
+    printf("|      `--. \\ | | | | __|______| ___ \\/ _` | '__| '_ \\ / _ \\ '__|`--. \\ '_ \\ / _ \\| '_ \\          |\n");
+    printf("|     /\\__/ /_| |_| |_\\ \\      | |_/ / (_| | |  | |_) |  __/ |  /\\__/ / | | | (_) | |_) |         |\n");
+    printf("|     \\____/ \\___/ \\____/      \\____/ \\__,_|_|  |_.__/ \\___|_|  \\____/|_| |_|\\___/| .__/          |\n");
+    printf("|                                                                                 | |             |\n");
+    printf("|                                                                                 |_|             |\n");
+    printf("|_________________________________________________________________________________________________|\n");
+    printf("|                                                                                                 |\n");
+    printf("|                                         MENU RELATÓRIO                                          |\n");
+    printf("|_________________________________________________________________________________________________|\n");
+    printf("|                                                                                                 |\n");
+    printf("|                                    1 Consultar por Data                                         |\n");
+    printf("|                                    2 Consultar por Serviço                                      |\n");
+    printf("|                                    3 Consultar por Cliente                                      |\n");
+    printf("|                                    0 Sair                                                       |\n");
+    printf("|_________________________________________________________________________________________________|\n\n");
+
 
     printf("Digite a opção desejada: ");
     scanf("%d", &opcaoCliente);
@@ -27,10 +39,12 @@ int relatorio() {
 void relatorioData(void) {
     system("clear||cls");
     printf("\n");
-    printf("____________________________________________\n");
-    printf("|                                          |\n");
-    printf("|           Relatório por Data             |\n");
-    printf("|__________________________________________|\n");
+    printf("___________________________________________________________________________________________________\n");
+    printf("|                                                                                                 |\n");
+    printf("|                                         RELATÓRIO POR DATA                                      |\n");
+    printf("|_________________________________________________________________________________________________|\n");
+
+    printf("\nListagem de agendamentos por data: \n");
 
     printf("\n>>> Tecle <ENTER> para continuar...\n");
     getchar();
@@ -39,10 +53,12 @@ void relatorioData(void) {
 void relatorioServico(void) {
     system("clear||cls");
     printf("\n");
-    printf("____________________________________________\n");
-    printf("|                                          |\n");
-    printf("|           Relatório por Servico          |\n");
-    printf("|__________________________________________|\n");
+    printf("___________________________________________________________________________________________________\n");
+    printf("|                                                                                                 |\n");
+    printf("|                                         RELATÓRIO POR SERVIÇO                                   |\n");
+    printf("|_________________________________________________________________________________________________|\n");
+
+    printf("\nListagem de agendamentos por serviços: \n");
 
     printf("\n>>> Tecle <ENTER> para continuar...\n");
     getchar();
@@ -51,10 +67,12 @@ void relatorioServico(void) {
 void relatorioCliente(void) {
     system("clear||cls");
     printf("\n");
-    printf("____________________________________________\n");
-    printf("|                                          |\n");
-    printf("|           Relatório por Cliente          |\n");
-    printf("|__________________________________________|\n");
+    printf("___________________________________________________________________________________________________\n");
+    printf("|                                                                                                 |\n");
+    printf("|                                         RELATÓRIO POR CLIENTE                                   |\n");
+    printf("|_________________________________________________________________________________________________|\n");
+
+    printf("\nListagem de agendamentos por clientes: \n");
 
     printf("\n>>> Tecle <ENTER> para continuar...\n");
     getchar();
