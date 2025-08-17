@@ -139,11 +139,16 @@ int main() {
                 break;
 
             case 0:
-                //int opcaoSair;
-                //opcaoSair = sair();
-                //if (opcaoSair == 1) {
-                //    opcaoPrincipal = 0;
-                //}
+                int opcaoSair;
+                opcaoSair = sair();
+                if (opcaoSair == 1) {
+                    opcaoPrincipal = 0;
+
+                    printf("\nAté logo!\n\n");
+                } else {
+                    
+                    opcaoPrincipal = 1;
+                }
 
                 break;
         }
