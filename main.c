@@ -14,6 +14,11 @@
 int main() {
 
     int opcaoPrincipal = -1;
+    int opcaoCliente = -1;
+    int opcaoServico = -1;
+    int opcaoAgendamento = -1;
+    int opcaoRelatorio = -1;
+    int opcaoSair;
 
     while (opcaoPrincipal != 0) {
         opcaoPrincipal = menuPrincipal();
@@ -22,7 +27,7 @@ int main() {
         switch (opcaoPrincipal) {
 
             case 1:
-                int opcaoCliente = -1;
+                opcaoCliente = -1;
                 while (opcaoCliente != 0){
                     opcaoCliente = cliente();
 
@@ -56,7 +61,7 @@ int main() {
                 break;
 
             case 2:
-                int opcaoServico = -1;
+                opcaoServico = -1;
                 while (opcaoServico != 0){
                     opcaoServico = servico();
 
@@ -82,7 +87,7 @@ int main() {
                 break;
 
             case 3:
-                int opcaoAgendamento = -1;
+                opcaoAgendamento = -1;
                 while (opcaoAgendamento != 0){
                     opcaoAgendamento = agendamento();
 
@@ -108,7 +113,7 @@ int main() {
                 break;
 
             case 4:
-                int opcaoRelatorio = -1;
+                opcaoRelatorio = -1;
                 while (opcaoRelatorio != 0){
                     opcaoRelatorio = relatorio();
 
@@ -139,7 +144,7 @@ int main() {
                 break;
 
             case 0:
-                int opcaoSair;
+                opcaoSair;
                 opcaoSair = sair();
                 if (opcaoSair == 1) {
                     opcaoPrincipal = 0;
