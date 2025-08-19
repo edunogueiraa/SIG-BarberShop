@@ -11,6 +11,37 @@
 #include "sobre.c"
 #include "sair.c"
 
+//Assinaturas de funções
+int menuPrincipal();
+
+int cliente();
+void cadastroCliente();
+void listarCliente();
+void atualizarCliente();
+void deletarCliente();
+
+int servico();
+void cadastroServico();
+void listarServico();
+void atualizarServico();
+void deletarServico();
+
+int agendamento();
+void cadastroAgendamento();
+void listarAgendamento();
+void atualizarAgendamento();
+void deletarAgendamento();
+
+int relatorio();
+void relatorioData();
+void relatorioServico();
+void relatorioCliente();
+
+int sair();
+void colaboradores();
+void sobre();
+
+// Programa principal
 int main() {
 
     int opcaoPrincipal = -1;
@@ -18,7 +49,7 @@ int main() {
     int opcaoServico = -1;
     int opcaoAgendamento = -1;
     int opcaoRelatorio = -1;
-    int opcaoSair;
+    int opcaoSair = -1;
 
     while (opcaoPrincipal != 0) {
         opcaoPrincipal = menuPrincipal();
@@ -144,7 +175,6 @@ int main() {
                 break;
 
             case 0:
-                opcaoSair;
                 opcaoSair = sair();
                 if (opcaoSair == 1) {
                     opcaoPrincipal = 0;
