@@ -2,14 +2,14 @@
 #include <stdlib.h>
 
 //Importando arquivos
-#include "menuPrincipal.c"
-#include "cliente.c"
-#include "servicos.c"
-#include "agendamento.c"
-#include "relatorio.c"
-#include "colaboradores.c"
-#include "sobre.c"
-#include "sair.c"
+#include "Modulos/menuPrincipal.c"
+#include "Modulos/cliente.c"
+#include "Modulos/servicos.c"
+#include "Modulos/agendamento.c"
+#include "Modulos/relatorio.c"
+#include "Modulos/colaboradores.c"
+#include "Modulos/sobre.c"
+#include "Modulos/sair.c"
 
 //Assinaturas de funções
 int menuPrincipal();
