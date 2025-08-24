@@ -22,6 +22,8 @@ int menuPrincipal() {
     printf("|                                   4 Módulo Relatório                                            |\n");
     printf("|                                   5 Módulo Colaboradores                                        |\n");
     printf("|                                   6 Módulo Sobre                                                |\n");
+    printf("|                                   7 Módulo Estoque                                              |\n");
+    printf("|                                                                                                 |\n");
     printf("|                                   0 Sair                                                        |\n");
     printf("|_________________________________________________________________________________________________|\n\n");
 
