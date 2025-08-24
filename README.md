@@ -1,1 +1,1 @@
-# Projeto SIG-Barbearia
+# Projeto SIG-Barbearia 💈

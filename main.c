@@ -10,6 +10,8 @@
 #include "Modulos/colaboradores.c"
 #include "Modulos/sobre.c"
 #include "Modulos/sair.c"
+#include "Modulos/estoque.c"
+
 
 //Assinaturas de funções
 int menuPrincipal();
@@ -41,6 +43,13 @@ int sair();
 void colaboradores();
 void sobre();
 
+int estoque();
+void cadastroEstoque();
+void listarEstoque();
+void atualizarEstoque();
+void deletarEstoque();
+
+
 // Programa principal
 int main() {
 
@@ -50,6 +59,7 @@ int main() {
     int opcaoAgendamento = -1;
     int opcaoRelatorio = -1;
     int opcaoSair = -1;
+    int opcaoEstoque = -1; 
 
     while (opcaoPrincipal != 0) {
         opcaoPrincipal = menuPrincipal();
@@ -172,6 +182,36 @@ int main() {
 
             case 6:
                 sobre();
+                break;
+
+            case 7:
+                opcaoEstoque = -1;
+                while (opcaoEstoque != 0){
+                    opcaoEstoque = estoque();
+
+                    switch (opcaoEstoque) {
+
+                        case 1:
+                            cadastroEstoque();
+                            break;
+
+                        case 2:
+                            listarEstoque();
+                            break;
+
+                        case 3:
+                            atualizarEstoque();
+                            break;
+
+                        case 4:
+                            deletarEstoque();
+                            break;
+
+                        case 0:
+                            break;
+
+                    }
+                }
                 break;
 
             case 0:
