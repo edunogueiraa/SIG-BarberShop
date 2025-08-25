@@ -60,16 +60,19 @@ int main() {
     int opcaoRelatorio = -1;
     int opcaoSair = -1;
     int opcaoEstoque = -1; 
+    
+    // A estrutura do-While garante que o codigo seja exibido pelo menos uma vez
+    do {
 
-    while (opcaoPrincipal != 0) {
         opcaoPrincipal = menuPrincipal();
         
         // Chamando a função da opção desejada
         switch (opcaoPrincipal) {
 
             case 1:
-                opcaoCliente = -1;
-                while (opcaoCliente != 0){
+
+                do {
+
                     opcaoCliente = cliente();
 
                     switch (opcaoCliente) {
@@ -90,20 +93,16 @@ int main() {
                             deletarCliente();
                             break;
 
-                        case 0:
-                            break;
-
-                        default:
-                            printf("Opção inválida!\n");
-                            break;
-
                     }
-                }
+
+                } while (opcaoCliente != 0);
+
                 break;
 
             case 2:
-                opcaoServico = -1;
-                while (opcaoServico != 0){
+
+                do {
+
                     opcaoServico = servico();
 
                     switch (opcaoServico) {
@@ -124,12 +123,15 @@ int main() {
                             deletarServico();
                             break;
                     }
-                }
+                
+                } while (opcaoServico != 0);
+
                 break;
 
             case 3:
-                opcaoAgendamento = -1;
-                while (opcaoAgendamento != 0){
+
+                do{
+                    
                     opcaoAgendamento = agendamento();
 
                     switch (opcaoAgendamento) {
@@ -150,12 +152,14 @@ int main() {
                             deletarAgendamento();
                             break;
                     }
-                }
+                
+                } while (opcaoAgendamento != 0);
+
                 break;
 
             case 4:
-                opcaoRelatorio = -1;
-                while (opcaoRelatorio != 0){
+
+                do{
                     opcaoRelatorio = relatorio();
 
                     switch (opcaoRelatorio) {
@@ -173,7 +177,8 @@ int main() {
                             break;
 
                     }
-                }            
+                
+                } while (opcaoRelatorio != 0);            
                 break;
 
             case 5:
@@ -185,8 +190,9 @@ int main() {
                 break;
 
             case 7:
-                opcaoEstoque = -1;
-                while (opcaoEstoque != 0){
+
+                do{
+
                     opcaoEstoque = estoque();
 
                     switch (opcaoEstoque) {
@@ -207,11 +213,8 @@ int main() {
                             deletarEstoque();
                             break;
 
-                        case 0:
-                            break;
-
                     }
-                }
+                } while (opcaoEstoque != 0);
                 break;
 
             case 0:
@@ -227,7 +230,7 @@ int main() {
 
                 break;
         }
-    }
+    } while (opcaoPrincipal != 0);
 
     return 0;
 }
