@@ -15,51 +15,20 @@
 
 //Assinaturas de funções
 int menuPrincipal();
-
-int cliente();
-void cadastroCliente();
-void listarCliente();
-void atualizarCliente();
-void deletarCliente();
-
-int servico();
-void cadastroServico();
-void listarServico();
-void atualizarServico();
-void deletarServico();
-
-int agendamento();
-void cadastroAgendamento();
-void listarAgendamento();
-void atualizarAgendamento();
-void deletarAgendamento();
-
-int relatorio();
-void relatorioData();
-void relatorioServico();
-void relatorioCliente();
-
-int sair();
+void opcaoCliente();
+void opcaoServico();
+void opcaoAgendamento();
+void opcaoRelatorio();
+void opcaoEstoque();
 void colaboradores();
 void sobre();
-
-int estoque();
-void cadastroEstoque();
-void listarEstoque();
-void atualizarEstoque();
-void deletarEstoque();
-
+int sair();
 
 // Programa principal
 int main() {
 
     int opcaoPrincipal = -1;
-    int opcaoCliente = -1;
-    int opcaoServico = -1;
-    int opcaoAgendamento = -1;
-    int opcaoRelatorio = -1;
-    int opcaoSair = -1;
-    int opcaoEstoque = -1; 
+    int opcaoSair = -1; 
     
     // A estrutura do-While garante que o codigo seja exibido pelo menos uma vez
     do {
@@ -70,115 +39,19 @@ int main() {
         switch (opcaoPrincipal) {
 
             case 1:
-
-                do {
-
-                    opcaoCliente = cliente();
-
-                    switch (opcaoCliente) {
-
-                        case 1:
-                            cadastroCliente();
-                            break;
-
-                        case 2:
-                            listarCliente();
-                            break;
-
-                        case 3:
-                            atualizarCliente();
-                            break;
-
-                        case 4:
-                            deletarCliente();
-                            break;
-
-                    }
-
-                } while (opcaoCliente != 0);
-
+                opcaoCliente();
                 break;
 
             case 2:
-
-                do {
-
-                    opcaoServico = servico();
-
-                    switch (opcaoServico) {
-
-                        case 1:
-                            cadastroServico();
-                            break;
-
-                        case 2:
-                            listarServico();
-                            break;
-
-                        case 3:
-                            atualizarServico();
-                            break;
-
-                        case 4:
-                            deletarServico();
-                            break;
-                    }
-                
-                } while (opcaoServico != 0);
-
+                opcaoServico();
                 break;
 
             case 3:
-
-                do{
-                    
-                    opcaoAgendamento = agendamento();
-
-                    switch (opcaoAgendamento) {
-
-                        case 1:
-                            cadastroAgendamento();
-                            break;
-
-                        case 2:
-                            listarAgendamento();
-                            break;
-
-                        case 3:
-                            atualizarAgendamento();
-                            break;
-
-                        case 4:
-                            deletarAgendamento();
-                            break;
-                    }
-                
-                } while (opcaoAgendamento != 0);
-
+                opcaoAgendamento();
                 break;
 
             case 4:
-
-                do{
-                    opcaoRelatorio = relatorio();
-
-                    switch (opcaoRelatorio) {
-
-                        case 1:
-                            relatorioData();
-                            break;
-
-                        case 2:
-                            relatorioServico();
-                            break;
-
-                        case 3:
-                            relatorioCliente();
-                            break;
-
-                    }
-                
-                } while (opcaoRelatorio != 0);            
+                opcaoRelatorio();
                 break;
 
             case 5:
@@ -190,31 +63,7 @@ int main() {
                 break;
 
             case 7:
-
-                do{
-
-                    opcaoEstoque = estoque();
-
-                    switch (opcaoEstoque) {
-
-                        case 1:
-                            cadastroEstoque();
-                            break;
-
-                        case 2:
-                            listarEstoque();
-                            break;
-
-                        case 3:
-                            atualizarEstoque();
-                            break;
-
-                        case 4:
-                            deletarEstoque();
-                            break;
-
-                    }
-                } while (opcaoEstoque != 0);
+                opcaoEstoque();
                 break;
 
             case 0:
@@ -227,7 +76,6 @@ int main() {
                     
                     opcaoPrincipal = 1;
                 }
-
                 break;
         }
     } while (opcaoPrincipal != 0);

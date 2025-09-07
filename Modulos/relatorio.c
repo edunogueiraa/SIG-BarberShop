@@ -4,8 +4,6 @@
 
 int relatorio() {
     system("clear||cls");
-    int opcaoCliente;
-
     printf("_________________________________________________________________________________________________\n");
     printf("|                                                                                                 |\n");
     printf("|      _____ _____ _____       ______            _               _____ _                          |\n");
@@ -26,13 +24,6 @@ int relatorio() {
     printf("|                                    3 Consultar por Cliente                                      |\n");
     printf("|                                    0 Sair                                                       |\n");
     printf("|_________________________________________________________________________________________________|\n\n");
-
-
-    printf("Digite a opção desejada: ");
-    scanf("%d", &opcaoCliente);
-    getchar();
-
-    return opcaoCliente;
     
 }
 
@@ -76,4 +67,33 @@ void relatorioCliente(void) {
 
     printf("\n>>> Tecle <ENTER> para continuar...\n");
     getchar();
+}
+
+void opcaoRelatorio(void) {
+
+    int opcaoRelatorio = -1;
+
+    do {
+        relatorio();
+        printf("Digite a opção desejada: ");
+        scanf("%d", &opcaoRelatorio);
+        getchar();
+
+        switch (opcaoRelatorio) {
+
+            case 1:
+                relatorioData();
+                break;
+
+            case 2:
+                relatorioServico();
+                break;
+
+            case 3:
+                relatorioCliente();
+                break;
+        }
+
+    } while (opcaoRelatorio != 0);
+
 }

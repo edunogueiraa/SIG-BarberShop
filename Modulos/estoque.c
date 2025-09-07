@@ -1,9 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int estoque() {
+void estoque(void) {
     system("clear||cls");
-    int opcaoEstoque;
     printf("_________________________________________________________________________________________________\n");
     printf("|                                                                                                 |\n");
     printf("|      _____ _____ _____       ______            _               _____ _                          |\n");
@@ -25,12 +24,6 @@ int estoque() {
     printf("|                                   4 Deletar                                                     |\n");
     printf("|                                   0 Sair                                                        |\n");
     printf("|_________________________________________________________________________________________________|\n\n");
-
-    printf("Digite a opção desejada: ");
-    scanf("%d", &opcaoEstoque);
-    getchar();
-
-    return opcaoEstoque;
     
 }
 
@@ -88,4 +81,35 @@ void deletarEstoque(void) {
     printf("\nInforme O ID: \n");
     printf("\n>>> Tecle <ENTER> para continuar...\n");
     getchar();
+}
+
+void opcaoEstoque(void) {
+    int opcaoEstoque = -1;
+
+    do {
+        estoque();
+        printf("Digite a opção desejada: ");
+        scanf("%d", &opcaoEstoque);
+        getchar();
+
+        switch (opcaoEstoque) {
+
+            case 1:
+                cadastroEstoque();
+                break;
+
+            case 2:
+                listarEstoque();
+                break;
+
+            case 3:
+                atualizarEstoque();
+                break;
+
+            case 4:
+                deletarEstoque();
+                break;
+
+        }
+    } while (opcaoEstoque != 0);
 }
