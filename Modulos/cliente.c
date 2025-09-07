@@ -1,10 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
 int cliente() {
     system("clear||cls");
-    int opcaoCliente;
     printf("_________________________________________________________________________________________________\n");
     printf("|                                                                                                 |\n");
     printf("|      _____ _____ _____       ______            _               _____ _                          |\n");
@@ -27,11 +25,6 @@ int cliente() {
     printf("|                                   0 Sair                                                        |\n");
     printf("|_________________________________________________________________________________________________|\n\n");
 
-    printf("Digite a opção desejada: ");
-    scanf("%d", &opcaoCliente);
-    getchar();
-
-    return opcaoCliente;
     
 }
 
@@ -90,4 +83,39 @@ void deletarCliente(void) {
     printf("\nInforme o CPF (apenas numeros): \n");
     printf("\n>>> Tecle <ENTER> para continuar...\n");
     getchar();
+}
+
+int opcaoCliente() {
+
+    int opcaoCliente;
+
+    do {
+
+        cliente();
+        printf("Digite a opção desejada: ");
+        scanf("%d", &opcaoCliente);
+        getchar();
+
+        switch (opcaoCliente) {
+
+            case 1:
+                cadastroCliente();
+                break;
+
+            case 2:
+                listarCliente();
+                break;
+
+            case 3:
+                atualizarCliente();
+                break;
+
+            case 4:
+                deletarCliente();
+                break;
+
+        }
+
+    } while (opcaoCliente != 0);
+    
 }

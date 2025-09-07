@@ -16,11 +16,7 @@
 //Assinaturas de funções
 int menuPrincipal();
 
-int cliente();
-void cadastroCliente();
-void listarCliente();
-void atualizarCliente();
-void deletarCliente();
+int opcaoCliente();
 
 int servico();
 void cadastroServico();
@@ -54,7 +50,6 @@ void deletarEstoque();
 int main() {
 
     int opcaoPrincipal = -1;
-    int opcaoCliente = -1;
     int opcaoServico = -1;
     int opcaoAgendamento = -1;
     int opcaoRelatorio = -1;
@@ -71,31 +66,7 @@ int main() {
 
             case 1:
 
-                do {
-
-                    opcaoCliente = cliente();
-
-                    switch (opcaoCliente) {
-
-                        case 1:
-                            cadastroCliente();
-                            break;
-
-                        case 2:
-                            listarCliente();
-                            break;
-
-                        case 3:
-                            atualizarCliente();
-                            break;
-
-                        case 4:
-                            deletarCliente();
-                            break;
-
-                    }
-
-                } while (opcaoCliente != 0);
+                opcaoCliente();
 
                 break;
 
