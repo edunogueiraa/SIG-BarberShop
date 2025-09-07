@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int cliente() {
+void cliente(void) {
     system("clear||cls");
     printf("_________________________________________________________________________________________________\n");
     printf("|                                                                                                 |\n");
@@ -25,7 +25,6 @@ int cliente() {
     printf("|                                   0 Sair                                                        |\n");
     printf("|_________________________________________________________________________________________________|\n\n");
 
-    
 }
 
 void cadastroCliente(void) {
@@ -85,9 +84,9 @@ void deletarCliente(void) {
     getchar();
 }
 
-int opcaoCliente() {
+void opcaoCliente(void) {
 
-    int opcaoCliente;
+    int opcaoCliente = -1;
 
     do {
 

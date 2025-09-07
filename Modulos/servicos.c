@@ -2,9 +2,8 @@
 #include <stdlib.h>
 
 
-int servico() {
+void servico(void) {
     system("clear||cls");
-    int opcaoServico;
     printf("_________________________________________________________________________________________________\n");
     printf("|                                                                                                 |\n");
     printf("|      _____ _____ _____       ______            _               _____ _                          |\n");
@@ -26,13 +25,6 @@ int servico() {
     printf("|                                   4 Deletar                                                     |\n");
     printf("|                                   0 Sair                                                        |\n");
     printf("|_________________________________________________________________________________________________|\n\n");
-
-    printf("Digite a opção desejada: ");
-    scanf("%d", &opcaoServico);
-    getchar();
-
-    return opcaoServico;
-    
 }
 
 void cadastroServico(void) {
@@ -91,3 +83,38 @@ void deletarServico(void) {
     printf("\n>>> Tecle <ENTER> para continuar...\n");
     getchar();
 }
+
+void opcaoServico(void) {
+
+    int opcaoServico = -1;
+
+    do {
+
+        servico();
+        printf("Digite a opção desejada: ");
+        scanf("%d", &opcaoServico);
+        getchar();
+
+        switch (opcaoServico) {
+
+            case 1:
+                cadastroServico();
+                break;
+
+            case 2:
+                listarServico();
+                break;
+
+            case 3:
+                atualizarServico();
+                break;
+
+            case 4:
+                deletarServico();
+                break;
+        }
+
+    } while (opcaoServico != 0);
+
+}
+

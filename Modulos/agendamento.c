@@ -2,9 +2,8 @@
 #include <stdlib.h>
 
 
-int agendamento() {
+void agendamento(void) {
     system("clear||cls");
-    int opcaoAgendamento;
     printf("_________________________________________________________________________________________________\n");
     printf("|                                                                                                 |\n");
     printf("|      _____ _____ _____       ______            _               _____ _                          |\n");
@@ -26,13 +25,6 @@ int agendamento() {
     printf("|                                   4 Deletar                                                     |\n");
     printf("|                                   0 Sair                                                        |\n");
     printf("|_________________________________________________________________________________________________|\n\n");
-
-    printf("Digite a opção desejada: ");
-    scanf("%d", &opcaoAgendamento);
-    getchar();
-
-    return opcaoAgendamento;
-    
 }
 
 void cadastroAgendamento(void) {
@@ -90,4 +82,38 @@ void deletarAgendamento(void) {
 
     printf("\n>>> Tecle <ENTER> para continuar...\n");
     getchar();
+}
+
+void opcaoAgendamento(void) {
+
+    int opcaoAgendamento = -1;
+
+    do{
+
+        agendamento();
+        printf("Digite a opção desejada: ");
+        scanf("%d", &opcaoAgendamento);
+        getchar();
+
+        switch (opcaoAgendamento) {
+
+            case 1:
+                cadastroAgendamento();
+                break;
+
+            case 2:
+                listarAgendamento();
+                break;
+
+            case 3:
+                atualizarAgendamento();
+                break;
+
+            case 4:
+                deletarAgendamento();
+                break;
+        }
+
+    } while (opcaoAgendamento != 0);
+
 }
