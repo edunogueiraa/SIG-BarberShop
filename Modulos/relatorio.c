@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 
-int relatorio() {
+void relatorio(void) {
     system("clear||cls");
     printf("_________________________________________________________________________________________________\n");
     printf("|                                                                                                 |\n");

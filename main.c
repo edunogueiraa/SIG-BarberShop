@@ -1,23 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-//Importando arquivos
-#include "Modulos/menuPrincipal.c"
-#include "Modulos/cliente.c"
-#include "Modulos/servicos.c"
-#include "Modulos/agendamento.c"
-#include "Modulos/relatorio.c"
-#include "Modulos/colaboradores.c"
-#include "Modulos/sobre.c"
-#include "Modulos/sair.c"
-#include "Modulos/estoque.c"
+#include "Modulos/include/agendamento.h"  
 
 
 //Assinaturas de funções
 int menuPrincipal();
 void opcaoCliente();
 void opcaoServico();
-void opcaoAgendamento();
 void opcaoRelatorio();
 void opcaoEstoque();
 void colaboradores();

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "include/agendamento.h"  
 
 
 void agendamento(void) {
