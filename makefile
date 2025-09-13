@@ -2,7 +2,7 @@ CC = gcc
 CFLAGS = -Iinclude -Wall -c
 
 # Arquivos do projeto
-SRC = main.c $(wildcard Modulos/*.c)
+SRC = main.c $(wildcard modulos/*.c)
 OBJ = $(SRC:.c=.o)
 OUT = programa.exe
 

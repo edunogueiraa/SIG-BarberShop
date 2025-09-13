@@ -1,17 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "Modulos/include/agendamento.h"  
-
-
-//Assinaturas de funções
-int menuPrincipal();
-void opcaoCliente();
-void opcaoServico();
-void opcaoRelatorio();
-void opcaoEstoque();
-void colaboradores();
-void sobre();
-int sair();
+#include "modulos/include/agendamento.h"  
 
 // Programa principal
 int main() {
