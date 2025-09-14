@@ -1,6 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "modulos/include/agendamento.h"  
+#include "modulos/include/agendamento.h"
+#include "modulos/include/cliente.h"
+#include "modulos/include/colaboradores.h"
+#include "modulos/include/estoque.h"
+#include "modulos/include/menuPrincipal.h"
+#include "modulos/include/relatorio.h"
+#include "modulos/include/sair.h"
+#include "modulos/include/servicos.h"
+#include "modulos/include/sobre.h"
 
 // Programa principal
 int main() {
@@ -21,7 +29,7 @@ int main() {
                 break;
 
             case 2:
-                opcaoServico();
+                opcaoServicos();
                 break;
 
             case 3:

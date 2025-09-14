@@ -84,7 +84,7 @@ void deletarServico(void) {
     getchar();
 }
 
-void opcaoServico(void) {
+void opcaoServicos(void) {
 
     int opcaoServico = -1;
 
