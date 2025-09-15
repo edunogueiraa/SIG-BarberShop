@@ -1,5 +1,5 @@
-#ifndef ESTOQUE_H
-#define ESTOQUE_H
+#ifndef ESTOQUEPRODUTOS_H
+#define ESTOQUEPRODUTOS_H
 
 void estoque(void);
 void cadastroEstoque(void);
