@@ -24,50 +24,29 @@ O **SIG-BarberShop** é um sistema de gestão desenvolvido em **C** para auxilia
 ### Pré-requisitos
 
 - Compilador C (ex.: `gcc`)
-- Sistema operacional Windows, Linux ou compatível
+- Sistema operacional: Linux
 
-### Compilação
+### Comandos para execução do projeto
 
 No terminal, dentro da pasta do projeto, execute:
 
 ```bash
-gcc *.c -o SIG-BarberShop
+make
+
+make run 
+
+make clean
 ```
-
-### Execução
-
-Após a compilação:
-
-```bash
-./SIG-BarberShop   # Linux ou MacOS
-SIG-BarberShop.exe # Windows
-```
-
 ---
 
 ## 📂 Estrutura do Projeto
 
 ```
-├── agendamento.c       # Módulo de agendamento
-├── cliente.c           # Módulo de clientes
-├── colaboradores.c     # Módulo de colaboradores
-├── estoque.c           # Módulo de estoque
-├── main.c              # Arquivo principal do sistema
-├── menuPrincipal.c     # Controle do menu principal
-├── relatorio.c         # Geração de relatórios
-├── servicos.c          # Módulo de serviços
-├── sobre.c             # Informações sobre o sistema
-├── sair.c              # Encerramento do sistema
+├── modulos             # Funções do programa
+├──── include           # Armazenamento .h
 ├── .gitignore          # Arquivos ignorados pelo Git
+├── main.c              # Arquivo principal do sistema
+├── makefile            # Configurações de execução
 └── README.md           # Documentação do projeto
 ```
-
----
-
-## 🛠️ Tecnologias Utilizadas
-
-- Linguagem **C**
-- Compilador **GCC** (ou compatível)
-- Estrutura modular (separação em múltiplos arquivos `.c`)
-
 ---
