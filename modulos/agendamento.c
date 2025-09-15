@@ -1,7 +1,5 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include "include/agendamento.h"  
-
+#include <stdlib.h> 
 
 void agendamento(void) {
     system("clear||cls");
