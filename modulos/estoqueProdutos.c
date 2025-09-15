@@ -15,13 +15,13 @@ void estoque(void) {
     printf("|                                                                                 |_|             |\n");
     printf("|_________________________________________________________________________________________________|\n");
     printf("|                                                                                                 |\n");
-    printf("|                                         MENU ESTOQUE                                            |\n");
+    printf("|                                  MENU ESTOQUE DE PRODUTOS                                       |\n");
     printf("|_________________________________________________________________________________________________|\n");
     printf("|                                                                                                 |\n");
-    printf("|                                   1 Cadastrar                                                   |\n");
-    printf("|                                   2 Listar                                                      |\n");
-    printf("|                                   3 Atualizar                                                   |\n");
-    printf("|                                   4 Deletar                                                     |\n");
+    printf("|                                   1 Cadastrar Produto                                           |\n");
+    printf("|                                   2 Listar Produtos                                             |\n");
+    printf("|                                   3 Atualizar Produto                                           |\n");
+    printf("|                                   4 Deletar Produto                                             |\n");
     printf("|                                   0 Sair                                                        |\n");
     printf("|_________________________________________________________________________________________________|\n\n");
     
@@ -32,7 +32,7 @@ void cadastroEstoque(void) {
     printf("\n");
     printf("___________________________________________________________________________________________________\n");
     printf("|                                                                                                 |\n");
-    printf("|                                         CADASTRO ESTOQUE                                        |\n");
+    printf("|                                         CADASTRO PRODUTO                                        |\n");
     printf("|_________________________________________________________________________________________________|\n");
         
     printf("\nNome: \n");
@@ -49,7 +49,7 @@ void listarEstoque(void) {
     printf("\n");
     printf("___________________________________________________________________________________________________\n");
     printf("|                                                                                                 |\n");
-    printf("|                                         LISTAR ESTOQUE                                          |\n");
+    printf("|                                         LISTAR PRODUTO                                         |\n");
     printf("|_________________________________________________________________________________________________|\n");
 
     printf("\nInforme o ID: \n");
@@ -62,10 +62,14 @@ void atualizarEstoque(void) {
     printf("\n");
     printf("___________________________________________________________________________________________________\n");
     printf("|                                                                                                 |\n");
-    printf("|                                         ATUALIZAR ESTOQUE                                       |\n");
+    printf("|                                         ATUALIZAR PRODUTO                                       |\n");
     printf("|_________________________________________________________________________________________________|\n");
 
     printf("\nInforme o ID: \n");
+    printf("\nNome: \n");
+    printf("ID: \n");
+    printf("Tipo: \n");
+    printf("Valor (R$): \n");
     printf("\n>>> Tecle <ENTER> para continuar...\n");
     getchar();
 }
@@ -75,7 +79,7 @@ void deletarEstoque(void) {
     printf("\n");
     printf("___________________________________________________________________________________________________\n");
     printf("|                                                                                                 |\n");
-    printf("|                                         DELETAR ESTOQUE                                         |\n");
+    printf("|                                         DELETAR PRODUTO                                         |\n");
     printf("|_________________________________________________________________________________________________|\n");
 
     printf("\nInforme O ID: \n");
