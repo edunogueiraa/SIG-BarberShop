@@ -3,7 +3,7 @@
 #include "modulos/include/agendamento.h"
 #include "modulos/include/cliente.h"
 #include "modulos/include/colaboradores.h"
-#include "modulos/include/estoque.h"
+#include "modulos/include/estoqueProdutos.h"
 #include "modulos/include/menuPrincipal.h"
 #include "modulos/include/relatorio.h"
 #include "modulos/include/sair.h"
