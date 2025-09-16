@@ -11,18 +11,15 @@
 #include "modulos/include/servicos.h"
 #include "modulos/include/sobre.h"
 
-// Programa principal
 int main() {
 
     char opcaoPrincipal = '9';
     char opcaoSair = '9'; 
     
-    // A estrutura do-While garante que o codigo seja exibido pelo menos uma vez
     do {
 
         opcaoPrincipal = menuPrincipal();
         
-        // Chamando a função da opção desejada
         switch (opcaoPrincipal) {
 
             case '1':
@@ -46,7 +43,7 @@ int main() {
                 break;
 
             case '6':
-                sobre();
+                telaSobre();
                 break;
 
             case '7':
@@ -56,7 +53,7 @@ int main() {
             case '0':
 
                 do{
-                    opcaoSair = sair();
+                    opcaoSair = telaSair();
                     if (opcaoSair == '1') {
                         opcaoPrincipal = '0';
                         printf("\nEncerrando sistema!\n\n");

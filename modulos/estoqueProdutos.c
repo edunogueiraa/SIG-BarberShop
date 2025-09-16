@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void estoque(void) {
+void telaEstoque(void) {
     system("clear||cls");
     printf("_________________________________________________________________________________________________\n");
     printf("|                                                                                                 |\n");
@@ -91,7 +91,7 @@ void opcaoEstoque(void) {
     char opcaoEstoque = '9';
 
     do {
-        estoque();
+        telaEstoque();
         printf("Digite a opção desejada: ");
         scanf("%c", &opcaoEstoque);
         getchar();

@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void sobre(void) {
+void telaSobre(void) {
     system("clear||cls");
     printf("_________________________________________________________________________________________________\n");
     printf("|                                                                                                 |\n");
