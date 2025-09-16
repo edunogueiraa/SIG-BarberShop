@@ -2,20 +2,17 @@
 
 ## 📌 Descrição
 
-O **SIG-BarberShop** é um sistema de gestão desenvolvido em **C** para auxiliar na organização e administração de uma barbearia. O sistema permite o cadastro e gerenciamento de clientes, serviços, colaboradores, agendamentos e estoque, além da emissão de relatórios, oferecendo uma solução prática para controle interno.
+O **SIG-BarberShop** é um sistema de gestão desenvolvido em **C** para auxiliar na organização e administração de uma barbearia. O sistema permite o cadastro e gerenciamento de clientes, serviços, colaboradores, agendamentos e estoque de produtos, além da emissão de relatórios, oferecendo uma solução prática para controle interno.
 
 ---
 
 ## ⚙️ Funcionalidades
 
-- Cadastro de clientes
+- Gerenciamento de clientes
+- Gerenciamento de agendamento
 - Gerenciamento de serviços oferecidos
-- 
-- Agendamento de horários
-- Controle de estoque
+- Controle de produtos no estoque
 - Geração de relatórios
-- Menu principal intuitivo
-- Opção de encerrar e acessar informações do sistema
 
 ---
 

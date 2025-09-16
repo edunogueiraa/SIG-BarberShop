@@ -1,1 +1,1 @@
-char menuPrincipal();
+char menuPrincipal(void);
