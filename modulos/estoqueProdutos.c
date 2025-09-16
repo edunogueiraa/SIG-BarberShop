@@ -88,32 +88,32 @@ void deletarEstoque(void) {
 }
 
 void opcaoEstoque(void) {
-    int opcaoEstoque = -1;
+    char opcaoEstoque = '9';
 
     do {
         estoque();
         printf("Digite a opção desejada: ");
-        scanf("%d", &opcaoEstoque);
+        scanf("%c", &opcaoEstoque);
         getchar();
 
         switch (opcaoEstoque) {
 
-            case 1:
+            case '1':
                 cadastroEstoque();
                 break;
 
-            case 2:
+            case '2':
                 listarEstoque();
                 break;
 
-            case 3:
+            case '3':
                 atualizarEstoque();
                 break;
 
-            case 4:
+            case '4':
                 deletarEstoque();
                 break;
 
         }
-    } while (opcaoEstoque != 0);
+    } while (opcaoEstoque != '0');
 }

@@ -71,29 +71,29 @@ void relatorioCliente(void) {
 
 void opcaoRelatorio(void) {
 
-    int opcaoRelatorio = -1;
+    char opcaoRelatorio = '9';
 
     do {
         relatorio();
         printf("Digite a opção desejada: ");
-        scanf("%d", &opcaoRelatorio);
+        scanf("%c", &opcaoRelatorio);
         getchar();
 
         switch (opcaoRelatorio) {
 
-            case 1:
+            case '1':
                 relatorioData();
                 break;
 
-            case 2:
+            case '2':
                 relatorioServico();
                 break;
 
-            case 3:
+            case '3':
                 relatorioCliente();
                 break;
         }
 
-    } while (opcaoRelatorio != 0);
+    } while (opcaoRelatorio != '0');
 
 }

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h> 
 #include "modulos/include/agendamento.h"
 #include "modulos/include/cliente.h"
 #include "modulos/include/colaboradores.h"
@@ -13,8 +14,8 @@
 // Programa principal
 int main() {
 
-    int opcaoPrincipal = -1;
-    int opcaoSair = -1; 
+    char opcaoPrincipal = '9';
+    char opcaoSair = '9'; 
     
     // A estrutura do-While garante que o codigo seja exibido pelo menos uma vez
     do {
@@ -24,47 +25,52 @@ int main() {
         // Chamando a função da opção desejada
         switch (opcaoPrincipal) {
 
-            case 1:
+            case '1':
                 opcaoCliente();
                 break;
 
-            case 2:
+            case '2':
                 opcaoServicos();
                 break;
 
-            case 3:
+            case '3':
                 opcaoAgendamento();
                 break;
 
-            case 4:
+            case '4':
                 opcaoRelatorio();
                 break;
 
-            case 5:
+            case '5':
                 colaboradores();
                 break;
 
-            case 6:
+            case '6':
                 sobre();
                 break;
 
-            case 7:
+            case '7':
                 opcaoEstoque();
                 break;
 
-            case 0:
-                opcaoSair = sair();
-                if (opcaoSair == 1) {
-                    opcaoPrincipal = 0;
+            case '0':
 
-                    printf("\nAté logo!\n\n");
-                } else {
-                    
-                    opcaoPrincipal = 1;
-                }
+                do{
+                    opcaoSair = sair();
+                    if (opcaoSair == '1') {
+                        opcaoPrincipal = '0';
+                        printf("\nEncerrando sistema!\n\n");
+                        sleep(1);
+                        printf("\nAté logo!\n\n");
+                    } else if (opcaoSair == '2') {
+                        opcaoPrincipal = '1';
+                    } else {
+                        printf("\nOpção inválida!");
+                    }
+                } while (opcaoSair != '1' && opcaoSair != '2');
                 break;
         }
-    } while (opcaoPrincipal != 0);
+    } while (opcaoPrincipal != '0');
 
     return 0;
 }
