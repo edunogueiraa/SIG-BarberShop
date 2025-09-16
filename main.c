@@ -11,18 +11,15 @@
 #include "modulos/include/servicos.h"
 #include "modulos/include/sobre.h"
 
-// Programa principal
 int main() {
 
     char opcaoPrincipal = '9';
     char opcaoSair = '9'; 
     
-    // A estrutura do-While garante que o codigo seja exibido pelo menos uma vez
     do {
 
         opcaoPrincipal = menuPrincipal();
         
-        // Chamando a função da opção desejada
         switch (opcaoPrincipal) {
 
             case '1':
