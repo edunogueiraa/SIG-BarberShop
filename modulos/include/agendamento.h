@@ -1,4 +1,4 @@
-void agendamento(void);
+void telaAgendamento(void);
 void cadastroAgendamento(void);
 void listarAgendamento(void);
 void atualizarAgendamento(void);

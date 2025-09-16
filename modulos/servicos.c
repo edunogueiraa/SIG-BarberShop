@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 
-void servico(void) {
+void telaServico(void) {
     system("clear||cls");
     printf("_________________________________________________________________________________________________\n");
     printf("|                                                                                                 |\n");
@@ -90,7 +90,7 @@ void opcaoServicos(void) {
 
     do {
 
-        servico();
+        telaServico();
         printf("Digite a opção desejada: ");
         scanf("%c", &opcaoServico);
         getchar();

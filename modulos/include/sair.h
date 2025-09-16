@@ -1,1 +1,1 @@
-char sair(void);
+char telaSair(void);

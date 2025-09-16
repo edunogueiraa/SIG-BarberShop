@@ -1,4 +1,4 @@
-void cliente(void);
+void telaCliente(void);
 void cadastroCliente(void);
 void listarCliente(void);
 void atualizarCliente(void);

@@ -1,4 +1,4 @@
-void estoque(void);
+void telaEstoque(void);
 void cadastroEstoque(void);
 void listarEstoque(void);
 void atualizarEstoque(void);

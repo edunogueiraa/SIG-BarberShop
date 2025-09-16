@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 
-void relatorio(void) {
+void telaRelatorio(void) {
     system("clear||cls");
     printf("_________________________________________________________________________________________________\n");
     printf("|                                                                                                 |\n");
@@ -74,7 +74,7 @@ void opcaoRelatorio(void) {
     char opcaoRelatorio = '9';
 
     do {
-        relatorio();
+        telaRelatorio();
         printf("Digite a opção desejada: ");
         scanf("%c", &opcaoRelatorio);
         getchar();

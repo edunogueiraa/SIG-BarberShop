@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h> 
 
-void agendamento(void) {
+void telaAgendamento(void) {
     system("clear||cls");
     printf("_________________________________________________________________________________________________\n");
     printf("|                                                                                                 |\n");
@@ -89,7 +89,7 @@ void opcaoAgendamento(void) {
 
     do{
 
-        agendamento();
+        telaAgendamento();
         printf("Digite a opção desejada: ");
         scanf("%c", &opcaoAgendamento);
         getchar();

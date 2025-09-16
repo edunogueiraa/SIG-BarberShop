@@ -43,7 +43,7 @@ int main() {
                 break;
 
             case '6':
-                sobre();
+                telaSobre();
                 break;
 
             case '7':
@@ -53,7 +53,7 @@ int main() {
             case '0':
 
                 do{
-                    opcaoSair = sair();
+                    opcaoSair = telaSair();
                     if (opcaoSair == '1') {
                         opcaoPrincipal = '0';
                         printf("\nEncerrando sistema!\n\n");

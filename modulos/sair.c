@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-char sair(void) {
+char telaSair(void) {
     system("clear||cls");
     char opcaoSair;
     printf("\n");
