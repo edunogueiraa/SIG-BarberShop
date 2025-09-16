@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int sair(void) {
+char sair(void) {
     system("clear||cls");
-    int opcaoSair;
+    char opcaoSair;
     printf("\n");
     printf("_________________________________________________________________________________________________\n");
     printf("|                                                                                                 |\n");
@@ -26,7 +26,7 @@ int sair(void) {
 
 
     printf("Digite a opção desejada: ");
-    scanf("%d", &opcaoSair);
+    scanf("%c", &opcaoSair);
     getchar();
 
     return opcaoSair;

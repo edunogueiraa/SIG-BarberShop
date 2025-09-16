@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int menuPrincipal() {
+char menuPrincipal() {
 
     system("clear||cls");
     printf("_________________________________________________________________________________________________\n");
@@ -28,8 +28,9 @@ int menuPrincipal() {
 
 
     printf("Digite a opção desejada: ");
-    int opcaoPrincipal;
-    scanf("%d", &opcaoPrincipal);
+    char opcaoPrincipal;
+    scanf("%c", &opcaoPrincipal);
+    getchar();
 
     return opcaoPrincipal;
 }

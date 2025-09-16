@@ -86,35 +86,35 @@ void deletarServico(void) {
 
 void opcaoServicos(void) {
 
-    int opcaoServico = -1;
+    char opcaoServico = '9';
 
     do {
 
         servico();
         printf("Digite a opção desejada: ");
-        scanf("%d", &opcaoServico);
+        scanf("%c", &opcaoServico);
         getchar();
 
         switch (opcaoServico) {
 
-            case 1:
+            case '1':
                 cadastroServico();
                 break;
 
-            case 2:
+            case '2':
                 listarServico();
                 break;
 
-            case 3:
+            case '3':
                 atualizarServico();
                 break;
 
-            case 4:
+            case '4':
                 deletarServico();
                 break;
         }
 
-    } while (opcaoServico != 0);
+    } while (opcaoServico != '0');
 
 }
 

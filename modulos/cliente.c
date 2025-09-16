@@ -86,35 +86,35 @@ void deletarCliente(void) {
 
 void opcaoCliente(void) {
 
-    int opcaoCliente = -1;
+    char opcaoCliente = '9';
 
     do {
 
         cliente();
         printf("Digite a opção desejada: ");
-        scanf("%d", &opcaoCliente);
+        scanf("%c", &opcaoCliente);
         getchar();
 
         switch (opcaoCliente) {
 
-            case 1:
+            case '1':
                 cadastroCliente();
                 break;
 
-            case 2:
+            case '2':
                 listarCliente();
                 break;
 
-            case 3:
+            case '3':
                 atualizarCliente();
                 break;
 
-            case 4:
+            case '4':
                 deletarCliente();
                 break;
 
         }
 
-    } while (opcaoCliente != 0);
+    } while (opcaoCliente != '0');
     
 }

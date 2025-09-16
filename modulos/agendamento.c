@@ -85,34 +85,34 @@ void deletarAgendamento(void) {
 
 void opcaoAgendamento(void) {
 
-    int opcaoAgendamento = -1;
+    char opcaoAgendamento = '9';
 
     do{
 
         agendamento();
         printf("Digite a opção desejada: ");
-        scanf("%d", &opcaoAgendamento);
+        scanf("%c", &opcaoAgendamento);
         getchar();
 
         switch (opcaoAgendamento) {
 
-            case 1:
+            case '1':
                 cadastroAgendamento();
                 break;
 
-            case 2:
+            case '2':
                 listarAgendamento();
                 break;
 
-            case 3:
+            case '3':
                 atualizarAgendamento();
                 break;
 
-            case 4:
+            case '4':
                 deletarAgendamento();
                 break;
         }
 
-    } while (opcaoAgendamento != 0);
+    } while (opcaoAgendamento != '0');
 
 }
