@@ -1,6 +1,6 @@
 #ifndef SAIR_H
 #define SAIR_H
 
-int sair(void);
+char sair(void);
 
 #endif
