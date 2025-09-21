@@ -1,12 +1,12 @@
-# Projeto SIG-Barbearia 💈
+# 💈 Projeto SIG-Barbearia 
 
-## 📌 Descrição
+## Descrição
 
 O **SIG-BarberShop** é um sistema de gestão desenvolvido em **C** para auxiliar na organização e administração de uma barbearia. O sistema permite o cadastro e gerenciamento de clientes, serviços, colaboradores, agendamentos e estoque de produtos, além da emissão de relatórios, oferecendo uma solução prática para controle interno.
 
 ---
 
-## ⚙️ Funcionalidades
+## Funcionalidades
 
 - Gerenciamento de clientes
 - Gerenciamento de agendamento
@@ -16,7 +16,7 @@ O **SIG-BarberShop** é um sistema de gestão desenvolvido em **C** para auxilia
 
 ---
 
-## 🚀 Como Compilar e Executar
+## Como Compilar e Executar
 
 ### Pré-requisitos
 
@@ -36,7 +36,7 @@ make clean
 ```
 ---
 
-## 📂 Estrutura do Projeto
+## Estrutura do Projeto
 
 ```
 ├── modulos             # Funções do programa
@@ -46,4 +46,11 @@ make clean
 ├── makefile            # Configurações de execução
 └── README.md           # Documentação do projeto
 ```
+---
+
+## Colaboradores
+
+- [ Eduardo Nogueira ]  
+- [ Helena Dantas ]   
+
 ---
