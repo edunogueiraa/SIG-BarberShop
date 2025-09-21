@@ -37,6 +37,7 @@ void cadastroServico(void) {
 
     printf("\nNome do serviço: \n");
     printf("Valor: \n");
+    printf("Duração: \n");
 
     printf("\n>>> Tecle <ENTER> para continuar...\n");
     getchar();
