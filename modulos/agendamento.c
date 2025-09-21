@@ -36,6 +36,8 @@ void cadastroAgendamento(void) {
 
     printf("\nDigite o CPF do cliente (apenas numeros): \n");
     printf("Digite o ID do serviço:  \n");
+    printf("Data: \n");
+    printf("Horário: \n");
 
     printf("\n>>> Tecle <ENTER> para continuar...\n");
     getchar();
