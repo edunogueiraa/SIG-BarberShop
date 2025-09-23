@@ -64,7 +64,7 @@ void cadastroCliente(void) {
 
 
     //Criando o arquivo
-    arquivo = fopen("clientes.txt", "at");
+    arquivo = fopen("./dados/clientes.txt", "at");
 
     if (arquivo == NULL) {
         printf("Erro na criação de arquivo");
