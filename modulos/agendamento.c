@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h> 
 
+
 void telaAgendamento(void) {
     system("clear||cls");
     printf("_________________________________________________________________________________________________\n");
@@ -34,13 +35,40 @@ void cadastroAgendamento(void) {
     printf("|                                         CADASTRO AGENDAMENTO                                    |\n");
     printf("|_________________________________________________________________________________________________|\n");
 
-    printf("\nDigite o CPF do cliente (apenas numeros): \n");
-    printf("Digite o ID do serviço:  \n");
-    printf("Data: \n");
-    printf("Horário: \n");
+    FILE * arquivo;
+    char cpfCliente[50];
+    char nomeCliente[50];
+    int idServico;
+    char data[50];
+    char hora[50];
 
-    printf("\n>>> Tecle <ENTER> para continuar...\n");
-    getchar();
+    printf("\nDigite o CPF do cliente (apenas numeros): \n");
+    scanf("%s", cpfCliente);
+
+    printf("Digite o ID do serviço:  \n");
+    scanf("%d", &idServico);
+
+    printf("Data: \n");
+    scanf("%s", data);
+
+    printf("Horário: \n");
+    scanf("%s", hora);
+
+    arquivo = fopen("agendamentos.txt", "at");
+
+    if (arquivo == NULL) {
+        printf("Erro na criação de arquivo");
+        exit(1);
+    }
+    //Escrevendo no arquivo
+    fprintf(arquivo, "%s\n", cpfCliente);
+    fprintf(arquivo, "%s\n", nomeCliente);
+    fprintf(arquivo, "%d\n", idServico);
+    fprintf(arquivo, "%s\n", data);
+    fprintf(arquivo, "%s\n\n", hora);
+
+    fclose(arquivo);
+
 }
 
 void listarAgendamento(void) {
