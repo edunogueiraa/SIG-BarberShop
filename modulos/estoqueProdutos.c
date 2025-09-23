@@ -53,7 +53,6 @@ void cadastroEstoque(void) {
     printf("Valor (R$): \n");
     scanf("%s", valor);
 
-    printf("\n>>> Tecle <ENTER> para continuar...\n");
     getchar();
 
     // Criando o arquivo

@@ -58,8 +58,7 @@ void cadastroCliente(void) {
 
     printf("Celular  (apenas números): \n");
     scanf("%s", celular);
-
-    printf("\n>>> Tecle <ENTER> para continuar...\n");
+    
     getchar();
 
 
@@ -78,10 +77,6 @@ void cadastroCliente(void) {
     fprintf(arquivo, "%s\n\n", celular);
 
     fclose(arquivo);
-
-
-    printf("\n>>> Tecle <ENTER> para continuar...\n");
-    getchar();
 }
 
 void listarCliente(void) {
