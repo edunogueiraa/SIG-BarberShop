@@ -1,6 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+FILE * arquivo;
+char nome[50];
+char id[50];
+char tipo[50];
+char valor[50];
+
 void telaEstoque(void) {
     system("clear||cls");
     printf("_________________________________________________________________________________________________\n");
@@ -36,12 +42,35 @@ void cadastroEstoque(void) {
     printf("|_________________________________________________________________________________________________|\n");
         
     printf("\nNome: \n");
+    scanf("%s", nome);
+
     printf("ID: \n");
+    scanf("%s", id);
+
     printf("Tipo: \n");
+    scanf("%s", tipo);
+
     printf("Valor (R$): \n");
+    scanf("%s", valor);
 
     printf("\n>>> Tecle <ENTER> para continuar...\n");
     getchar();
+
+    // Criando o arquivo
+    arquivo = fopen("./dados/estoque.txt", "at");
+
+    if (arquivo == NULL)
+    {
+        printf("Erro na criação de arquivo");
+        exit(1);
+    }
+    // Escrevendo no arquivo
+    fprintf(arquivo, "%s\n", nome);
+    fprintf(arquivo, "%s\n", id);
+    fprintf(arquivo, "%s\n", tipo);
+    fprintf(arquivo, "%s\n\n", valor);
+
+    fclose(arquivo);
 }
 
 void listarEstoque(void) {
