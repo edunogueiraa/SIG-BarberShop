@@ -1,6 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+FILE * arquivo;
+char letra;
+char nome[50];
+char cpf[50];
+char email[50];
+char data[50];
+char celular[50];
+
+
 void telaCliente(void) {
     system("clear||cls");
     printf("_________________________________________________________________________________________________\n");
@@ -36,10 +45,40 @@ void cadastroCliente(void) {
     printf("|_________________________________________________________________________________________________|\n");
         
     printf("\nNome completo: \n");
+    scanf("%s", nome);
+
     printf("CPF: \n");
+    scanf("%s", cpf);
+
     printf("E-mail: \n");
+    scanf("%s", email);
+
     printf("Data de Nascimento (dd/mm/aaaa): \n");
+    scanf("%s", data);
+
     printf("Celular  (apenas números): \n");
+    scanf("%s", celular);
+
+    printf("\n>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+
+
+    //Criando o arquivo
+    arquivo = fopen("clientes.txt", "at");
+
+    if (arquivo == NULL) {
+        printf("Erro na criação de arquivo");
+        exit(1);
+    }
+    //Escrevendo no arquivo
+    fprintf(arquivo, "%s\n", nome);
+    fprintf(arquivo, "%s\n", cpf);
+    fprintf(arquivo, "%s\n", email);
+    fprintf(arquivo, "%s\n", data);
+    fprintf(arquivo, "%s\n\n", celular);
+
+    fclose(arquivo);
+
 
     printf("\n>>> Tecle <ENTER> para continuar...\n");
     getchar();
