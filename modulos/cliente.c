@@ -59,6 +59,7 @@ void cadastroCliente(void) {
 
     printf("Celular  (apenas números): ");
     scanf("%s", celular);
+    getchar();
     
     //Criando o arquivoCliente
     arquivoCliente = fopen("clientes.csv", "at");
