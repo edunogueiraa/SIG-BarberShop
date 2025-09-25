@@ -1,11 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-//FILE * arquivo;
-//char nome[50];
-//char id[50];
-//char tipo[50];
-//char valor[50];
 
 void telaEstoque(void) {
     system("clear||cls");
@@ -34,6 +29,12 @@ void telaEstoque(void) {
 }
 
 void cadastroEstoque(void) {
+    FILE * arquivoEstoque;
+    char nome[50];
+    char id[50];
+    char tipo[50];
+    char valor[50];
+
     system("clear||cls");
     printf("\n");
     printf("___________________________________________________________________________________________________\n");
@@ -41,35 +42,34 @@ void cadastroEstoque(void) {
     printf("|                                         CADASTRO PRODUTO                                        |\n");
     printf("|_________________________________________________________________________________________________|\n");
         
-/*    printf("\nNome: \n");
+    printf("Nome do produto: ");
     scanf("%s", nome);
 
-    printf("ID: \n");
+    printf("ID do produto (apenas números): ");
     scanf("%s", id);
 
-    printf("Tipo: \n");
+    printf("Tipo do produto: ");
     scanf("%s", tipo);
 
-    printf("Valor (R$): \n");
+    printf("Valor (R$): ");
     scanf("%s", valor);
-
     getchar();
 
     // Criando o arquivo
-    arquivo = fopen("./dados/estoque.txt", "at");
+    arquivoEstoque = fopen("./dados/estoque.csv", "at");
 
-    if (arquivo == NULL)
+    if (arquivoEstoque == NULL)
     {
         printf("Erro na criação de arquivo");
         exit(1);
     }
     // Escrevendo no arquivo
-    fprintf(arquivo, "%s\n", nome);
-    fprintf(arquivo, "%s\n", id);
-    fprintf(arquivo, "%s\n", tipo);
-    fprintf(arquivo, "%s\n\n", valor);
+    fprintf(arquivoEstoque, "%s;", nome);
+    fprintf(arquivoEstoque, "%s;", id);
+    fprintf(arquivoEstoque, "%s;", tipo);
+    fprintf(arquivoEstoque, "%s\n", valor);
 
-    fclose(arquivo); */
+    fclose(arquivoEstoque);
 }
 
 void listarEstoque(void) {
