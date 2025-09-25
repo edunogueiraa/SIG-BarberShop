@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-FILE * arquivo;
-char nome[50];
-char id[50];
-char tipo[50];
-char valor[50];
+//FILE * arquivo;
+//char nome[50];
+//char id[50];
+//char tipo[50];
+//char valor[50];
 
 void telaEstoque(void) {
     system("clear||cls");
@@ -41,7 +41,7 @@ void cadastroEstoque(void) {
     printf("|                                         CADASTRO PRODUTO                                        |\n");
     printf("|_________________________________________________________________________________________________|\n");
         
-    printf("\nNome: \n");
+/*    printf("\nNome: \n");
     scanf("%s", nome);
 
     printf("ID: \n");
@@ -69,7 +69,7 @@ void cadastroEstoque(void) {
     fprintf(arquivo, "%s\n", tipo);
     fprintf(arquivo, "%s\n\n", valor);
 
-    fclose(arquivo);
+    fclose(arquivo); */
 }
 
 void listarEstoque(void) {

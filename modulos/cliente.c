@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-FILE * arquivo;
+FILE * arquivoCliente;
 char letra;
 char nome[50];
 char cpf[50];
@@ -44,39 +45,36 @@ void cadastroCliente(void) {
     printf("|                                         CADASTRO CLIENTE                                        |\n");
     printf("|_________________________________________________________________________________________________|\n");
         
-    printf("\nNome completo: \n");
+    printf("Nome completo: ");
     scanf("%s", nome);
 
-    printf("CPF: \n");
+    printf("CPF: ");
     scanf("%s", cpf);
 
-    printf("E-mail: \n");
+    printf("E-mail: ");
     scanf("%s", email);
 
-    printf("Data de Nascimento (dd/mm/aaaa): \n");
+    printf("Data de Nascimento (dd/mm/aaaa): ");
     scanf("%s", data);
 
-    printf("Celular  (apenas números): \n");
+    printf("Celular  (apenas números): ");
     scanf("%s", celular);
     
-    getchar();
+    //Criando o arquivoCliente
+    arquivoCliente = fopen("clientes.csv", "at");
 
-
-    //Criando o arquivo
-    arquivo = fopen("./dados/clientes.txt", "at");
-
-    if (arquivo == NULL) {
-        printf("Erro na criação de arquivo");
+    if (arquivoCliente == NULL) {
+        printf("Erro na criação de arquivoCliente");
         exit(1);
     }
-    //Escrevendo no arquivo
-    fprintf(arquivo, "%s\n", nome);
-    fprintf(arquivo, "%s\n", cpf);
-    fprintf(arquivo, "%s\n", email);
-    fprintf(arquivo, "%s\n", data);
-    fprintf(arquivo, "%s\n\n", celular);
+    //Escrevendo no arquivoCliente
+    fprintf(arquivoCliente, "%s;", nome);
+    fprintf(arquivoCliente, "%s;", cpf);
+    fprintf(arquivoCliente, "%s;", email);
+    fprintf(arquivoCliente, "%s;", data);
+    fprintf(arquivoCliente, "%s\n", celular);
 
-    fclose(arquivo);
+    fclose(arquivoCliente);
 }
 
 void listarCliente(void) {
@@ -87,9 +85,47 @@ void listarCliente(void) {
     printf("|                                         LISTAR CLIENTE                                          |\n");
     printf("|_________________________________________________________________________________________________|\n");
 
-    printf("\nInforme o CPF (apenas numeros): \n");
-    printf("\n>>> Tecle <ENTER> para continuar...\n");
+    char cpfCliente[50];
+    printf("\nDigite o cpf do cliente: ");
+    scanf("%s", cpfCliente);
     getchar();
+
+    arquivoCliente = fopen("clientes.csv", "rt");
+
+    if (arquivoCliente == NULL) {
+        printf("Erro na abertura do arquivo clientes");
+        printf("\n>>> Tecle <ENTER> para continuar...\n");
+        getchar();
+        return;
+    }
+
+    while (!feof(arquivoCliente)){
+        fscanf(arquivoCliente, "%[^;]", nome);
+        fgetc(arquivoCliente);
+        fscanf(arquivoCliente, "%[^;]", cpf);
+        fgetc(arquivoCliente);
+        fscanf(arquivoCliente, "%[^;]", email);
+        fgetc(arquivoCliente);
+        fscanf(arquivoCliente, "%[^;]", data);
+        fgetc(arquivoCliente);
+        fscanf(arquivoCliente, "%[^;]", celular);
+        fgetc(arquivoCliente);
+
+        if(strcmp(cpf,cpfCliente) == 0) {
+            printf("\n\t\t\t <--- Cliente Encontrado ---> \n\n");
+            printf("\t\t\tNome: %s\n",nome);
+            printf("\t\t\tCPF: %s\n",cpf);
+            printf("\t\t\tEmail: %s\n",email);
+            printf("\t\t\tData: %s\n",data);
+            printf("\t\t\tCelular: %s\n",celular);
+            printf("\n>>> Tecle <ENTER> para continuar...\n");
+            getchar();
+            fclose(arquivoCliente);
+            return;
+        }
+    }
+    
+
 }
 
 void atualizarCliente(void) {
