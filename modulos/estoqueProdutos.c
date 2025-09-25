@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <string.h>
 
 void telaEstoque(void) {
     system("clear||cls");
@@ -73,6 +73,12 @@ void cadastroEstoque(void) {
 }
 
 void listarEstoque(void) {
+    FILE * arquivoEstoque;
+    char nome[50];
+    char id[50];
+    char tipo[50];
+    char valor[50];
+    
     system("clear||cls");
     printf("\n");
     printf("___________________________________________________________________________________________________\n");
@@ -80,9 +86,44 @@ void listarEstoque(void) {
     printf("|                                         LISTAR PRODUTO                                         |\n");
     printf("|_________________________________________________________________________________________________|\n");
 
+    char idProduto[50];
     printf("\nInforme o ID: \n");
-    printf("\n>>> Tecle <ENTER> para continuar...\n");
+    scanf("%s", idProduto);
     getchar();
+
+    arquivoEstoque = fopen("./dados/estoque.csv", "rt");
+
+    if (arquivoEstoque == NULL) {
+        printf("Erro na abertura do arquivo de estoque");
+        printf("\n>>> Tecle <ENTER> para continuar...\n");
+        getchar();
+        return;
+    }
+
+    while (!feof(arquivoEstoque))
+    {
+        fscanf(arquivoEstoque, "%[^;]", nome);
+        fgetc(arquivoEstoque);
+        fscanf(arquivoEstoque, "%[^;]", id);
+        fgetc(arquivoEstoque);
+        fscanf(arquivoEstoque, "%[^;]", tipo);
+        fgetc(arquivoEstoque);
+        fscanf(arquivoEstoque, "%[^;]", valor);
+        fgetc(arquivoEstoque);
+
+        if (strcmp(idProduto, id) == 0)
+        {
+            printf("\n\t\t\t <--- Produto Encontrado ---> \n\n");
+            printf("\t\t\tNome do produto: %s\n", nome);
+            printf("\t\t\tID do produto: %s\n", id);
+            printf("\t\t\tTipo do produto: %s\n", tipo);
+            printf("\t\t\tValor (R$): %s\n", valor);
+            printf("\n>>> Tecle <ENTER> para continuar...\n");
+            getchar();
+            fclose(arquivoEstoque);
+            return;
+        }
+    }
 }
 
 void atualizarEstoque(void) {
