@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <sys/stat.h>
+#include <errno.h>
 
 void telaServico(void) {
     system("clear||cls");
@@ -35,12 +36,50 @@ void cadastroServico(void) {
     printf("|                                         CADASTRO SERVIÇO                                        |\n");
     printf("|_________________________________________________________________________________________________|\n");
 
-    printf("\nNome do serviço: \n");
-    printf("Valor: \n");
-    printf("Duração: \n");
+    FILE *arquivoServico;
+    char nome[50];
+    char valor[50];
+    char duracao[50];
+
+    printf("\nNome do serviço: ");
+    scanf("%s", nome);
+
+    printf("Valor: ");
+    scanf("%s", valor);
+
+    printf("Duração: ");
+    scanf("%s", duracao);
 
     printf("\n>>> Tecle <ENTER> para continuar...\n");
     getchar();
+
+    // Função adaptada de:
+    // https://linux.die.net/man/2/mkdir e https://stackoverflow.com/questions/7430248/creating-a-new-directory-in-c
+    // Criando diretório para armazenamento de dados
+    int status = mkdir("dados", 0700);
+    if (status < 0 && errno != EEXIST)
+    {
+        printf("Houve um erro na criação do diretório de armazenamento de dados. O programa será finalizado.");
+        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
+        getchar();
+    }
+
+    // Criando o arquivo
+    arquivoServico = fopen("./dados/servico.csv", "at");
+
+    if (arquivoServico == NULL)
+    {
+        printf("Erro na criação de arquivo de Servico. O programa será finalizado.");
+        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
+        getchar();
+        exit(1);
+    }
+    // Escrevendo no arquivo
+    fprintf(arquivoServico, "%s;", nome);
+    fprintf(arquivoServico, "%s;", valor);
+    fprintf(arquivoServico, "%s\n", duracao);
+
+    fclose(arquivoServico);
 }
 
 void listarServico(void) {
