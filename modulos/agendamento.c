@@ -43,16 +43,19 @@ void cadastroAgendamento(void) {
     char data[50];
     char hora[50];
 
-    printf("\nDigite o CPF do cliente (apenas numeros): \n");
+    printf("\nDigite o CPF do cliente (apenas numeros): ");
     scanf("%s", cpfCliente);
 
-    printf("Digite o ID do serviço:  \n");
+    printf("Digite o nome do cliente: ");
+    scanf("%s", nomeCliente);
+
+    printf("Digite o ID do serviço: ");
     scanf("%d", &idServico);
 
-    printf("Data: \n");
+    printf("Data: ");
     scanf("%s", data);
 
-    printf("Horário: \n");
+    printf("Horário: ");
     scanf("%s", hora);
 
     // Função adaptada de:
@@ -73,11 +76,11 @@ void cadastroAgendamento(void) {
         exit(1);
     }
     //Escrevendo no arquivo
-    fprintf(arquivo, "%s\n", cpfCliente);
-    fprintf(arquivo, "%s\n", nomeCliente);
-    fprintf(arquivo, "%d\n", idServico);
-    fprintf(arquivo, "%s\n", data);
-    fprintf(arquivo, "%s\n\n", hora);
+    fprintf(arquivo, "%s;", cpfCliente);
+    fprintf(arquivo, "%s;", nomeCliente);
+    fprintf(arquivo, "%d;", idServico);
+    fprintf(arquivo, "%s;", data);
+    fprintf(arquivo, "%s\n", hora);
 
     fclose(arquivo);
 
