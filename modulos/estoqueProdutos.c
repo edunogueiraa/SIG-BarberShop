@@ -31,18 +31,19 @@ void telaEstoque(void) {
 }
 
 void cadastroEstoque(void) {
-    FILE * arquivoEstoque;
-    char nome[50];
-    char id[50];
-    char tipo[50];
-    char valor[50];
-
     system("clear||cls");
     printf("\n");
     printf("___________________________________________________________________________________________________\n");
     printf("|                                                                                                 |\n");
     printf("|                                         CADASTRO PRODUTO                                        |\n");
     printf("|_________________________________________________________________________________________________|\n");
+    
+    FILE * arquivoEstoque;
+    char nome[50];
+    char id[50];
+    char tipo[50];
+    char valor[50];
+
         
     printf("Nome do produto: ");
     scanf("%s", nome);
@@ -88,18 +89,19 @@ void cadastroEstoque(void) {
 }
 
 void listarEstoque(void) {
-    FILE * arquivoEstoque;
-    char nome[50];
-    char id[50];
-    char tipo[50];
-    char valor[50];
-    
     system("clear||cls");
     printf("\n");
     printf("___________________________________________________________________________________________________\n");
     printf("|                                                                                                 |\n");
     printf("|                                         LISTAR PRODUTO                                         |\n");
     printf("|_________________________________________________________________________________________________|\n");
+
+    FILE * arquivoEstoque;
+    char nome[50];
+    char id[50];
+    char tipo[50];
+    char valor[50];
+
 
     char idProduto[50];
     printf("\nInforme o ID: \n");
