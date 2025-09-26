@@ -66,7 +66,7 @@ void cadastroAgendamento(void) {
         getchar();
     }
 
-    arquivo = fopen("./dados/agendamentos.txt", "at");
+    arquivo = fopen("./dados/agendamentos.csv", "at");
 
     if (arquivo == NULL) {
         printf("Erro na criação de arquivo");
