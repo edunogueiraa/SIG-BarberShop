@@ -45,7 +45,7 @@ void cadastroServico(void) {
     printf("\nNome do serviço: ");
     scanf("%s", nome);
 
-    printf("\nID do serviço: ");
+    printf("ID do serviço: ");
     scanf("%s", id);
 
     printf("Valor: ");
@@ -53,8 +53,6 @@ void cadastroServico(void) {
 
     printf("Duração: ");
     scanf("%s", duracao);
-
-    printf("\n>>> Tecle <ENTER> para continuar...\n");
     getchar();
 
     // Função adaptada de:
