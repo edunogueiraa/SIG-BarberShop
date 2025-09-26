@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/stat.h>
 #include <errno.h>
 
@@ -93,10 +94,51 @@ void listarServico(void) {
     printf("|                                         LISTAR SERVIÇO                                          |\n");
     printf("|_________________________________________________________________________________________________|\n");
 
-    printf("\nDigite o ID do serviço: \n");
+    FILE *arquivoServico;
+    char nome[50];
+    char id[50];
+    char valor[50];
+    char duracao[50];
+    char idServico[50];
 
-    printf("\n>>> Tecle <ENTER> para continuar...\n");
+    printf("\nDigite o ID do serviço: \n");
+    scanf("%s", idServico);
     getchar();
+
+    arquivoServico = fopen("./dados/servico.csv", "rt");
+
+    if (arquivoServico == NULL)
+    {
+        printf("Erro na abertura do arquivo de serviço");
+        printf("\n>>> Tecle <ENTER> para continuar...\n");
+        getchar();
+        return;
+    }
+
+    while (!feof(arquivoServico))
+    {
+        fscanf(arquivoServico, "%[^;]", nome);
+        fgetc(arquivoServico);
+        fscanf(arquivoServico, "%[^;]", id);
+        fgetc(arquivoServico);
+        fscanf(arquivoServico, "%[^;]", valor);
+        fgetc(arquivoServico);
+        fscanf(arquivoServico, "%[^;]", duracao);
+        fgetc(arquivoServico);
+
+        if (strcmp(idServico, id) == 0)
+        {
+            printf("\n\t\t\t <--- Serviço Encontrado ---> \n\n");
+            printf("\t\t\tNome do serviço: %s\n", nome);
+            printf("\t\t\tID do serviço: %s\n", id);
+            printf("\t\t\tValor (R$): %s\n", valor);
+            printf("\t\t\tDuração do serviço: %s\n", duracao);
+            printf("\n>>> Tecle <ENTER> para continuar...\n");
+            getchar();
+            fclose(arquivoServico);
+            return;
+        }
+    }
 }
 
 void atualizarServico(void) {
