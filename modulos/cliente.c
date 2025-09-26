@@ -75,7 +75,7 @@ void cadastroCliente(void) {
     }
 
     //Criando o arquivoCliente
-    arquivoCliente = fopen("clientes.csv", "at");
+    arquivoCliente = fopen("./dados/clientes.csv", "at");
 
     if (arquivoCliente == NULL) {
         printf("Erro na criação de arquivo de Clientes. O programa será finalizado.");
@@ -106,7 +106,7 @@ void listarCliente(void) {
     scanf("%s", cpfCliente);
     getchar();
 
-    arquivoCliente = fopen("clientes.csv", "rt");
+    arquivoCliente = fopen("./dados/clientes.csv", "rt");
 
     if (arquivoCliente == NULL) {
         printf("Erro na abertura do arquivo clientes");
