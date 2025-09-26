@@ -44,7 +44,7 @@ void cadastroServico(void) {
     char duracao[50];
 
     printf("\nNome do serviço: ");
-    scanf("%s", nome);
+    scanf("%[^\n]", nome);
 
     printf("ID do serviço: ");
     scanf("%s", id);

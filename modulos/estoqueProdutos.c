@@ -46,7 +46,7 @@ void cadastroEstoque(void) {
 
         
     printf("\nNome do produto: ");
-    scanf("%s", nome);
+    scanf("%[^\n]", nome);
 
     printf("ID do produto (apenas números): ");
     scanf("%s", id);
