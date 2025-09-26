@@ -47,7 +47,7 @@ void cadastroCliente(void) {
     printf("|                                         CADASTRO CLIENTE                                        |\n");
     printf("|_________________________________________________________________________________________________|\n");
         
-    printf("Nome completo: ");
+    printf("\nNome completo: ");
     scanf("%s", nome);
 
     printf("CPF: ");

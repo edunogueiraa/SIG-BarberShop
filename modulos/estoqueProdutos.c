@@ -37,7 +37,7 @@ void cadastroEstoque(void) {
     printf("|                                                                                                 |\n");
     printf("|                                         CADASTRO PRODUTO                                        |\n");
     printf("|_________________________________________________________________________________________________|\n");
-    
+
     FILE * arquivoEstoque;
     char nome[50];
     char id[50];
@@ -45,7 +45,7 @@ void cadastroEstoque(void) {
     char valor[50];
 
         
-    printf("Nome do produto: ");
+    printf("\nNome do produto: ");
     scanf("%s", nome);
 
     printf("ID do produto (apenas números): ");
