@@ -38,11 +38,15 @@ void cadastroServico(void) {
 
     FILE *arquivoServico;
     char nome[50];
+    char id[50];
     char valor[50];
     char duracao[50];
 
     printf("\nNome do serviço: ");
     scanf("%s", nome);
+
+    printf("\nID do serviço: ");
+    scanf("%s", id);
 
     printf("Valor: ");
     scanf("%s", valor);
@@ -76,6 +80,7 @@ void cadastroServico(void) {
     }
     // Escrevendo no arquivo
     fprintf(arquivoServico, "%s;", nome);
+    fprintf(arquivoServico, "%s;", id);
     fprintf(arquivoServico, "%s;", valor);
     fprintf(arquivoServico, "%s\n", duracao);
 
