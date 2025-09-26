@@ -65,7 +65,9 @@ void cadastroCliente(void) {
     arquivoCliente = fopen("clientes.csv", "at");
 
     if (arquivoCliente == NULL) {
-        printf("Erro na criação de arquivoCliente");
+        printf("Erro na criação de arquivo de Clientes. O programa será finalizado.");
+        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
+        getchar();
         exit(1);
     }
     //Escrevendo no arquivoCliente

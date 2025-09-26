@@ -60,7 +60,9 @@ void cadastroEstoque(void) {
 
     if (arquivoEstoque == NULL)
     {
-        printf("Erro na criação de arquivo");
+        printf("Erro na criação de arquivo de Estoque. O programa será finalizado.");
+        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
+        getchar();
         exit(1);
     }
     // Escrevendo no arquivo
