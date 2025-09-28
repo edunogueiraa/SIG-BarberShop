@@ -123,7 +123,7 @@ void listarServico(void) {
         fgetc(arquivoServico);
         fscanf(arquivoServico, "%[^;]", valor);
         fgetc(arquivoServico);
-        fscanf(arquivoServico, "%[^;]", duracao);
+        fscanf(arquivoServico, "%[^\n]", duracao);
         fgetc(arquivoServico);
 
         if (strcmp(idServico, id) == 0)

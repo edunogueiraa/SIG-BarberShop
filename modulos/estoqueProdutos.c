@@ -125,7 +125,7 @@ void listarEstoque(void) {
         fgetc(arquivoEstoque);
         fscanf(arquivoEstoque, "%[^;]", tipo);
         fgetc(arquivoEstoque);
-        fscanf(arquivoEstoque, "%[^;]", valor);
+        fscanf(arquivoEstoque, "%[^\n]", valor);
         fgetc(arquivoEstoque);
 
         if (strcmp(idProduto, id) == 0)

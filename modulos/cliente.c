@@ -4,15 +4,6 @@
 #include <sys/stat.h>
 #include <errno.h>
 
-FILE * arquivoCliente;
-char letra;
-char nome[50];
-char cpf[50];
-char email[50];
-char data[50];
-char celular[50];
-
-
 void telaCliente(void) {
     system("clear||cls");
     printf("_________________________________________________________________________________________________\n");
@@ -46,6 +37,13 @@ void cadastroCliente(void) {
     printf("|                                                                                                 |\n");
     printf("|                                         CADASTRO CLIENTE                                        |\n");
     printf("|_________________________________________________________________________________________________|\n");
+
+    FILE * arquivoCliente;
+    char nome[50];
+    char cpf[50];
+    char email[50];
+    char data[50];
+    char celular[50];
         
     printf("\nNome completo: ");
     scanf("%[^\n]", nome);
@@ -101,6 +99,13 @@ void listarCliente(void) {
     printf("|                                         LISTAR CLIENTE                                          |\n");
     printf("|_________________________________________________________________________________________________|\n");
 
+    FILE * arquivoCliente;
+    char nome[50];
+    char cpf[50];
+    char email[50];
+    char data[50];
+    char celular[50];
+
     char cpfCliente[50];
     printf("\nDigite o cpf do cliente: ");
     scanf("%s", cpfCliente);
@@ -124,7 +129,7 @@ void listarCliente(void) {
         fgetc(arquivoCliente);
         fscanf(arquivoCliente, "%[^;]", data);
         fgetc(arquivoCliente);
-        fscanf(arquivoCliente, "%[^;]", celular);
+        fscanf(arquivoCliente, "%[^\n]", celular);
         fgetc(arquivoCliente);
 
         if(strcmp(cpf,cpfCliente) == 0) {
