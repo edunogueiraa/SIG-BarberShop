@@ -88,7 +88,7 @@ void cadastroEstoque(void) {
     fclose(arquivoEstoque);
 }
 
-void listarEstoque(void) {
+void exibirProduto(void) {
     system("clear||cls");
     printf("\n");
     printf("___________________________________________________________________________________________________\n");
@@ -189,7 +189,7 @@ void opcaoEstoque(void) {
                 break;
 
             case '2':
-                listarEstoque();
+                exibirProduto();
                 break;
 
             case '3':
