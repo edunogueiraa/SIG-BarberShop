@@ -48,7 +48,7 @@ void cadastroAgendamento(void) {
     printf("\nDigite o ID do agendamento: ");
     scanf("%s", id);
 
-    printf("\nDigite o CPF do cliente (apenas numeros): ");
+    printf("Digite o CPF do cliente (apenas numeros): ");
     scanf("%s", cpfCliente);
 
     // Futuramente esse nome deve ser consultado em clientes atraves do cpf
