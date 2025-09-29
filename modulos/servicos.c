@@ -86,7 +86,7 @@ void cadastroServico(void) {
     fclose(arquivoServico);
 }
 
-void listarServico(void) {
+void exibirServico(void) {
     system("clear||cls");
     printf("\n");
     printf("___________________________________________________________________________________________________\n");
@@ -187,7 +187,7 @@ void opcaoServicos(void) {
                 break;
 
             case '2':
-                listarServico();
+                exibirServico();
                 break;
 
             case '3':
