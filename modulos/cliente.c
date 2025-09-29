@@ -1,5 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <sys/stat.h>
+#include <errno.h>
 
 void telaCliente(void) {
     system("clear||cls");
@@ -34,18 +37,61 @@ void cadastroCliente(void) {
     printf("|                                                                                                 |\n");
     printf("|                                         CADASTRO CLIENTE                                        |\n");
     printf("|_________________________________________________________________________________________________|\n");
-        
-    printf("\nNome completo: \n");
-    printf("CPF: \n");
-    printf("E-mail: \n");
-    printf("Data de Nascimento (dd/mm/aaaa): \n");
-    printf("Celular  (apenas números): \n");
 
-    printf("\n>>> Tecle <ENTER> para continuar...\n");
+    FILE * arquivoCliente;
+    char nome[50];
+    char cpf[50];
+    char email[50];
+    char data[50];
+    char celular[50];
+        
+    printf("\nNome completo: ");
+    scanf("%[^\n]", nome);
+
+    printf("CPF: ");
+    scanf("%s", cpf);
+
+    printf("E-mail: ");
+    scanf("%s", email);
+
+    printf("Data de Nascimento (dd/mm/aaaa): ");
+    scanf("%s", data);
+
+    printf("Celular  (apenas números): ");
+    scanf("%s", celular);
     getchar();
+
+    // Função adaptada de:
+    // https://linux.die.net/man/2/mkdir e https://stackoverflow.com/questions/7430248/creating-a-new-directory-in-c
+    // Criando diretório para armazenamento de dados
+    int status = mkdir("dados", 0700);
+    if (status < 0 && errno != EEXIST)
+    {
+        printf("Houve um erro na criação do diretório de armazenamento de dados. O programa será finalizado.");
+        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
+        getchar();
+    }
+
+    //Criando o arquivoCliente
+    arquivoCliente = fopen("./dados/clientes.csv", "at");
+
+    if (arquivoCliente == NULL) {
+        printf("Erro na criação de arquivo de Clientes. O programa será finalizado.");
+        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
+        getchar();
+        exit(1);
+    }
+    //Escrevendo no arquivoCliente
+    fprintf(arquivoCliente, "%s;", nome);
+    fprintf(arquivoCliente, "%s;", cpf);
+    fprintf(arquivoCliente, "%s;", email);
+    fprintf(arquivoCliente, "%s;", data);
+    fprintf(arquivoCliente, "%s\n", celular);
+
+    fclose(arquivoCliente);
 }
 
-void listarCliente(void) {
+void exibirCliente(void) {
     system("clear||cls");
     printf("\n");
     printf("___________________________________________________________________________________________________\n");
@@ -53,9 +99,54 @@ void listarCliente(void) {
     printf("|                                         LISTAR CLIENTE                                          |\n");
     printf("|_________________________________________________________________________________________________|\n");
 
-    printf("\nInforme o CPF (apenas numeros): \n");
-    printf("\n>>> Tecle <ENTER> para continuar...\n");
+    FILE * arquivoCliente;
+    char nome[50];
+    char cpf[50];
+    char email[50];
+    char data[50];
+    char celular[50];
+
+    char cpfCliente[50];
+    printf("\nDigite o cpf do cliente: ");
+    scanf("%s", cpfCliente);
     getchar();
+
+    arquivoCliente = fopen("./dados/clientes.csv", "rt");
+
+    if (arquivoCliente == NULL) {
+        printf("Erro na abertura do arquivo clientes");
+        printf("\n>>> Tecle <ENTER> para continuar...\n");
+        getchar();
+        return;
+    }
+
+    while (!feof(arquivoCliente)){
+        fscanf(arquivoCliente, "%[^;]", nome);
+        fgetc(arquivoCliente);
+        fscanf(arquivoCliente, "%[^;]", cpf);
+        fgetc(arquivoCliente);
+        fscanf(arquivoCliente, "%[^;]", email);
+        fgetc(arquivoCliente);
+        fscanf(arquivoCliente, "%[^;]", data);
+        fgetc(arquivoCliente);
+        fscanf(arquivoCliente, "%[^\n]", celular);
+        fgetc(arquivoCliente);
+
+        if(strcmp(cpf,cpfCliente) == 0) {
+            printf("\n\t\t\t <--- Cliente Encontrado ---> \n\n");
+            printf("\t\t\tNome: %s\n",nome);
+            printf("\t\t\tCPF: %s\n",cpf);
+            printf("\t\t\tEmail: %s\n",email);
+            printf("\t\t\tData: %s\n",data);
+            printf("\t\t\tCelular: %s\n",celular);
+            printf("\n>>> Tecle <ENTER> para continuar...\n");
+            getchar();
+            fclose(arquivoCliente);
+            return;
+        }
+    }
+    
+
 }
 
 void atualizarCliente(void) {
@@ -102,7 +193,7 @@ void opcaoCliente(void) {
                 break;
 
             case '2':
-                listarCliente();
+                exibirCliente();
                 break;
 
             case '3':

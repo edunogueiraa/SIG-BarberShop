@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <string.h>
+#include <sys/stat.h>
+#include <errno.h>
 
 void telaServico(void) {
     system("clear||cls");
@@ -35,15 +37,56 @@ void cadastroServico(void) {
     printf("|                                         CADASTRO SERVIÇO                                        |\n");
     printf("|_________________________________________________________________________________________________|\n");
 
-    printf("\nNome do serviço: \n");
-    printf("Valor: \n");
-    printf("Duração: \n");
+    FILE *arquivoServico;
+    char nome[50];
+    char id[50];
+    char valor[50];
+    char duracao[50];
 
-    printf("\n>>> Tecle <ENTER> para continuar...\n");
+    printf("\nNome do serviço: ");
+    scanf("%[^\n]", nome);
+
+    printf("ID do serviço: ");
+    scanf("%s", id);
+
+    printf("Valor: ");
+    scanf("%s", valor);
+
+    printf("Duração: ");
+    scanf("%s", duracao);
     getchar();
+
+    // Função adaptada de:
+    // https://linux.die.net/man/2/mkdir e https://stackoverflow.com/questions/7430248/creating-a-new-directory-in-c
+    // Criando diretório para armazenamento de dados
+    int status = mkdir("dados", 0700);
+    if (status < 0 && errno != EEXIST)
+    {
+        printf("Houve um erro na criação do diretório de armazenamento de dados. O programa será finalizado.");
+        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
+        getchar();
+    }
+
+    // Criando o arquivo
+    arquivoServico = fopen("./dados/servico.csv", "at");
+
+    if (arquivoServico == NULL)
+    {
+        printf("Erro na criação de arquivo de Servico. O programa será finalizado.");
+        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
+        getchar();
+        exit(1);
+    }
+    // Escrevendo no arquivo
+    fprintf(arquivoServico, "%s;", nome);
+    fprintf(arquivoServico, "%s;", id);
+    fprintf(arquivoServico, "%s;", valor);
+    fprintf(arquivoServico, "%s\n", duracao);
+
+    fclose(arquivoServico);
 }
 
-void listarServico(void) {
+void exibirServico(void) {
     system("clear||cls");
     printf("\n");
     printf("___________________________________________________________________________________________________\n");
@@ -51,10 +94,51 @@ void listarServico(void) {
     printf("|                                         LISTAR SERVIÇO                                          |\n");
     printf("|_________________________________________________________________________________________________|\n");
 
-    printf("\nDigite o ID do serviço: \n");
+    FILE *arquivoServico;
+    char nome[50];
+    char id[50];
+    char valor[50];
+    char duracao[50];
+    char idServico[50];
 
-    printf("\n>>> Tecle <ENTER> para continuar...\n");
+    printf("\nDigite o ID do serviço: \n");
+    scanf("%s", idServico);
     getchar();
+
+    arquivoServico = fopen("./dados/servico.csv", "rt");
+
+    if (arquivoServico == NULL)
+    {
+        printf("Erro na abertura do arquivo de serviço");
+        printf("\n>>> Tecle <ENTER> para continuar...\n");
+        getchar();
+        return;
+    }
+
+    while (!feof(arquivoServico))
+    {
+        fscanf(arquivoServico, "%[^;]", nome);
+        fgetc(arquivoServico);
+        fscanf(arquivoServico, "%[^;]", id);
+        fgetc(arquivoServico);
+        fscanf(arquivoServico, "%[^;]", valor);
+        fgetc(arquivoServico);
+        fscanf(arquivoServico, "%[^\n]", duracao);
+        fgetc(arquivoServico);
+
+        if (strcmp(idServico, id) == 0)
+        {
+            printf("\n\t\t\t <--- Serviço Encontrado ---> \n\n");
+            printf("\t\t\tNome do serviço: %s\n", nome);
+            printf("\t\t\tID do serviço: %s\n", id);
+            printf("\t\t\tValor (R$): %s\n", valor);
+            printf("\t\t\tDuração do serviço: %s\n", duracao);
+            printf("\n>>> Tecle <ENTER> para continuar...\n");
+            getchar();
+            fclose(arquivoServico);
+            return;
+        }
+    }
 }
 
 void atualizarServico(void) {
@@ -103,7 +187,7 @@ void opcaoServicos(void) {
                 break;
 
             case '2':
-                listarServico();
+                exibirServico();
                 break;
 
             case '3':

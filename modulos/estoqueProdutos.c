@@ -1,5 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <sys/stat.h>
+#include <errno.h>
 
 void telaEstoque(void) {
     system("clear||cls");
@@ -34,17 +37,58 @@ void cadastroEstoque(void) {
     printf("|                                                                                                 |\n");
     printf("|                                         CADASTRO PRODUTO                                        |\n");
     printf("|_________________________________________________________________________________________________|\n");
-        
-    printf("\nNome: \n");
-    printf("ID: \n");
-    printf("Tipo: \n");
-    printf("Valor (R$): \n");
 
-    printf("\n>>> Tecle <ENTER> para continuar...\n");
+    FILE * arquivoEstoque;
+    char nome[50];
+    char id[50];
+    char tipo[50];
+    char valor[50];
+
+        
+    printf("\nNome do produto: ");
+    scanf("%[^\n]", nome);
+
+    printf("ID do produto (apenas números): ");
+    scanf("%s", id);
+
+    printf("Tipo do produto: ");
+    scanf("%s", tipo);
+
+    printf("Valor (R$): ");
+    scanf("%s", valor);
     getchar();
+
+    // Função adaptada de:
+    // https://linux.die.net/man/2/mkdir e https://stackoverflow.com/questions/7430248/creating-a-new-directory-in-c
+    // Criando diretório para armazenamento de dados
+    int status = mkdir("dados", 0700);
+    if (status < 0 && errno != EEXIST)
+    {
+        printf("Houve um erro na criação do diretório de armazenamento de dados. O programa será finalizado.");
+        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
+        getchar();
+    }
+
+    // Criando o arquivo
+    arquivoEstoque = fopen("./dados/estoque.csv", "at");
+
+    if (arquivoEstoque == NULL)
+    {
+        printf("Erro na criação de arquivo de Estoque. O programa será finalizado.");
+        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
+        getchar();
+        exit(1);
+    }
+    // Escrevendo no arquivo
+    fprintf(arquivoEstoque, "%s;", nome);
+    fprintf(arquivoEstoque, "%s;", id);
+    fprintf(arquivoEstoque, "%s;", tipo);
+    fprintf(arquivoEstoque, "%s\n", valor);
+
+    fclose(arquivoEstoque);
 }
 
-void listarEstoque(void) {
+void exibirProduto(void) {
     system("clear||cls");
     printf("\n");
     printf("___________________________________________________________________________________________________\n");
@@ -52,9 +96,51 @@ void listarEstoque(void) {
     printf("|                                         LISTAR PRODUTO                                         |\n");
     printf("|_________________________________________________________________________________________________|\n");
 
+    FILE * arquivoEstoque;
+    char nome[50];
+    char id[50];
+    char tipo[50];
+    char valor[50];
+
+
+    char idProduto[50];
     printf("\nInforme o ID: \n");
-    printf("\n>>> Tecle <ENTER> para continuar...\n");
+    scanf("%s", idProduto);
     getchar();
+
+    arquivoEstoque = fopen("./dados/estoque.csv", "rt");
+
+    if (arquivoEstoque == NULL) {
+        printf("Erro na abertura do arquivo de estoque");
+        printf("\n>>> Tecle <ENTER> para continuar...\n");
+        getchar();
+        return;
+    }
+
+    while (!feof(arquivoEstoque))
+    {
+        fscanf(arquivoEstoque, "%[^;]", nome);
+        fgetc(arquivoEstoque);
+        fscanf(arquivoEstoque, "%[^;]", id);
+        fgetc(arquivoEstoque);
+        fscanf(arquivoEstoque, "%[^;]", tipo);
+        fgetc(arquivoEstoque);
+        fscanf(arquivoEstoque, "%[^\n]", valor);
+        fgetc(arquivoEstoque);
+
+        if (strcmp(idProduto, id) == 0)
+        {
+            printf("\n\t\t\t <--- Produto Encontrado ---> \n\n");
+            printf("\t\t\tNome do produto: %s\n", nome);
+            printf("\t\t\tID do produto: %s\n", id);
+            printf("\t\t\tTipo do produto: %s\n", tipo);
+            printf("\t\t\tValor (R$): %s\n", valor);
+            printf("\n>>> Tecle <ENTER> para continuar...\n");
+            getchar();
+            fclose(arquivoEstoque);
+            return;
+        }
+    }
 }
 
 void atualizarEstoque(void) {
@@ -103,7 +189,7 @@ void opcaoEstoque(void) {
                 break;
 
             case '2':
-                listarEstoque();
+                exibirProduto();
                 break;
 
             case '3':
