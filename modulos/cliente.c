@@ -170,9 +170,114 @@ void deletarCliente(void) {
     printf("|                                         DELETAR CLIENTE                                         |\n");
     printf("|_________________________________________________________________________________________________|\n");
 
-    printf("\nInforme o CPF (apenas numeros): \n");
-    printf("\n>>> Tecle <ENTER> para continuar...\n");
+    FILE * arquivoCliente;
+    char nome[50];
+    char cpf[50];
+    char email[50];
+    char data[50];
+    char celular[50];
+
+    char cpfCliente[50];
+    printf("\nInforme o CPF (apenas numeros): ");
+    scanf("%[^\n]", cpfCliente);
     getchar();
+
+    arquivoCliente = fopen("./dados/clientes.csv", "rt");
+
+    if (arquivoCliente == NULL) {
+        printf("Erro na abertura do arquivo clientes");
+        printf("\n>>> Tecle <ENTER> para continuar...\n");
+        getchar();
+        return;
+    }
+
+    while (fscanf(arquivoCliente, "%[^;]", nome)) {
+        fgetc(arquivoCliente);
+        fscanf(arquivoCliente, "%[^;]", cpf);
+        fgetc(arquivoCliente);
+        fscanf(arquivoCliente, "%[^;]", email);
+        fgetc(arquivoCliente);
+        fscanf(arquivoCliente, "%[^;]", data);
+        fgetc(arquivoCliente);
+        fscanf(arquivoCliente, "%[^\n]", celular);
+        fgetc(arquivoCliente);
+
+        if (strcmp(cpf,cpfCliente) == 0) {
+            printf("\n\t\t\t <--- Cliente Encontrado ---> \n\n");
+            printf("\t\t\tNome: %s\n",nome);
+            printf("\t\t\tCPF: %s\n",cpf);
+            printf("\t\t\tEmail: %s\n",email);
+            printf("\t\t\tData: %s\n",data);
+            printf("\t\t\tCelular: %s\n",celular);
+            fclose(arquivoCliente);
+            break;
+        }
+    }
+
+    int excluir;
+    printf("\nTem certeza que deseja excluir esse cliente? (0 - excluir / 1 - cancelar operação): ");
+    scanf("%d", &excluir);
+    getchar();
+    printf("<%d>", excluir);
+
+    if (excluir == '0') {
+        FILE * arquivoAntigo = fopen("./dados/clientes.csv", "rt");
+        FILE * arquivoNovo = fopen("./dados/clientes_temp.csv", "wt");
+
+        while (fscanf(arquivoAntigo, "%[^;]", nome)) {
+            fgetc(arquivoAntigo);
+            fscanf(arquivoAntigo, "%[^;]", cpf);
+            fgetc(arquivoAntigo);
+            fscanf(arquivoAntigo, "%[^;]", email);
+            fgetc(arquivoAntigo);
+            fscanf(arquivoAntigo, "%[^;]", data);
+            fgetc(arquivoAntigo);
+            fscanf(arquivoAntigo, "%[^\n]", celular);
+            fgetc(arquivoAntigo);
+
+            if (strcmp(cpf, cpfCliente) != 0) {
+                int status = mkdir("dados", 0700);
+                if (status < 0 && errno != EEXIST)
+                {
+                    printf("Houve um erro na criação do diretório de armazenamento de dados. O programa será finalizado.");
+                    printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
+                    getchar();
+                }
+
+                // Escrevendo no arquivoCliente
+                fprintf(arquivoNovo, "%s;", nome);
+                fprintf(arquivoNovo, "%s;", cpf);
+                fprintf(arquivoNovo, "%s;", email);
+                fprintf(arquivoNovo, "%s;", data);
+                fprintf(arquivoNovo, "%s\n", celular);
+            }
+
+            fclose(arquivoNovo);
+            fclose(arquivoAntigo);
+        }
+
+        int retorno = remove("./dados/clientes.csv");
+        if (retorno != 0) {
+            printf("Houve um erro na exclusão. O programa será finalizado.");
+            printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
+            getchar();
+            exit(1);
+        }
+
+        int renomeacao = rename("./dados/clientes_temp.csv", "./dados/clientes.csv");
+        if (renomeacao != 0) {
+            printf("Houve um erro na renomeação do arquivo. O programa será finalizado.");
+            printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
+            getchar();
+            exit(1);
+        }
+        return;
+    } else {
+        printf("\nOperação cancelada.");
+        printf("\n>>> Tecle <ENTER> para continuar...\n");
+        getchar();
+        return;
+    }
 }
 
 void opcaoCliente(void) {
