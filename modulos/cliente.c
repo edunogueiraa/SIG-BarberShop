@@ -91,7 +91,7 @@ void cadastroCliente(void) {
     fclose(arquivoCliente);
 }
 
-void listarCliente(void) {
+void exibirCliente(void) {
     system("clear||cls");
     printf("\n");
     printf("___________________________________________________________________________________________________\n");
@@ -193,7 +193,7 @@ void opcaoCliente(void) {
                 break;
 
             case '2':
-                listarCliente();
+                exibirCliente();
                 break;
 
             case '3':
