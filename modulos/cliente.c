@@ -7,6 +7,9 @@
 // Assinatura de funções
 void cadastrarCliente(char nome[], char cpf[], char email[], char data[], char celular[]);
 void exibirCliente(char cpfCliente[]);
+void deletarCliente(char cpfCliente[]);
+void atualizarArquivo(char nome[], char cpf[], char email[], char data[], char celular[], FILE *arquivo);
+void trocarArquivos(char antigo[], char novo[]);
 void criarDiretorio(void);
 
 void telaCliente(void) {
@@ -312,6 +315,64 @@ void exibirCliente(char cpfCliente[]) {
             return;
         }
     }
+}
+
+void deletarCliente(char cpfCliente[]) {
+    FILE * arquivoAntigo = fopen("./dados/clientes.csv", "rt");
+    FILE * arquivoNovo = fopen("./dados/clientes_temp.csv", "wt");
+    char nome[50];
+    char cpf[50];
+    char email[50];
+    char data[50];
+    char celular[50];
+
+    
+    while (fscanf(arquivoAntigo, "%[^;]", nome) == 1) {
+        fgetc(arquivoAntigo);
+        fscanf(arquivoAntigo, "%[^;]", cpf);
+        fgetc(arquivoAntigo);
+        fscanf(arquivoAntigo, "%[^;]", email);
+        fgetc(arquivoAntigo);
+        fscanf(arquivoAntigo, "%[^;]", data);
+        fgetc(arquivoAntigo);
+        fscanf(arquivoAntigo, "%[^\n]", celular);
+        fgetc(arquivoAntigo);
+        
+        if (strcmp(cpf, cpfCliente) != 0) {
+            atualizarArquivo(nome, cpf, email, data, celular, arquivoNovo);
+        }
+    }
+    fclose(arquivoNovo);
+    fclose(arquivoAntigo);
+
+    trocarArquivos("./dados/clientes.csv", "./dados/clientes_temp.csv");
+}
+
+void atualizarArquivo(char nome[], char cpf[], char email[], char data[], char celular[], FILE * arquivo) {
+    fprintf(arquivo, "%s;", nome);
+    fprintf(arquivo, "%s;", cpf);
+    fprintf(arquivo, "%s;", email);
+    fprintf(arquivo, "%s;", data);
+    fprintf(arquivo, "%s\n", celular);
+}
+
+void trocarArquivos(char antigo[], char novo[]) {
+    int retorno = remove(antigo);
+    if (retorno != 0) {
+        printf("Houve um erro na exclusão. O programa será finalizado.");
+        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
+        getchar();
+        exit(1);
+    }
+
+    int renomeacao = rename(novo, antigo);
+    if (renomeacao != 0) {
+        printf("Houve um erro na renomeação do arquivo. O programa será finalizado.");
+        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
+        getchar();
+        exit(1);
+    }
+    return;
 }
 
 void criarDiretorio(void) {
