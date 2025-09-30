@@ -37,8 +37,6 @@ void cadastroCliente(void) {
     printf("|                                                                                                 |\n");
     printf("|                                         CADASTRO CLIENTE                                        |\n");
     printf("|_________________________________________________________________________________________________|\n");
-
-    FILE * arquivoCliente;
     char nome[50];
     char cpf[50];
     char email[50];
@@ -72,23 +70,7 @@ void cadastroCliente(void) {
         getchar();
     }
 
-    //Criando o arquivoCliente
-    arquivoCliente = fopen("./dados/clientes.csv", "at");
-
-    if (arquivoCliente == NULL) {
-        printf("Erro na criação de arquivo de Clientes. O programa será finalizado.");
-        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
-        getchar();
-        exit(1);
-    }
-    //Escrevendo no arquivoCliente
-    fprintf(arquivoCliente, "%s;", nome);
-    fprintf(arquivoCliente, "%s;", cpf);
-    fprintf(arquivoCliente, "%s;", email);
-    fprintf(arquivoCliente, "%s;", data);
-    fprintf(arquivoCliente, "%s\n", celular);
-
-    fclose(arquivoCliente);
+    cadastrarCliente(nome, cpf, email, data, celular);
 }
 
 void exibeCliente(void) {
@@ -313,4 +295,24 @@ void opcaoCliente(void) {
 
     } while (opcaoCliente != '0');
     
+}
+
+void cadastrarCliente(char nome[], char cpf[], char email[], char data[], char celular[]) {
+    FILE * arquivoCliente;
+    arquivoCliente = fopen("./dados/clientes.csv", "at");
+
+    if (arquivoCliente == NULL) {
+        printf("Erro na criação de arquivo de Clientes. O programa será finalizado.");
+        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
+        getchar();
+        exit(1);
+    }
+    //Escrevendo no arquivoCliente
+    fprintf(arquivoCliente, "%s;", nome);
+    fprintf(arquivoCliente, "%s;", cpf);
+    fprintf(arquivoCliente, "%s;", email);
+    fprintf(arquivoCliente, "%s;", data);
+    fprintf(arquivoCliente, "%s\n", celular);
+
+    fclose(arquivoCliente);
 }
