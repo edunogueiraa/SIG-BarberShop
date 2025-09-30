@@ -63,7 +63,6 @@ void cadastroCliente(void) {
     scanf("%s", celular);
     getchar();
 
-    criarDiretorio();
     cadastrarCliente(nome, cpf, email, data, celular);
 }
 
@@ -292,6 +291,7 @@ void opcaoCliente(void) {
 }
 
 void cadastrarCliente(char nome[], char cpf[], char email[], char data[], char celular[]) {
+    criarDiretorio();
     FILE * arquivoCliente;
     arquivoCliente = fopen("./dados/clientes.csv", "at");
 
