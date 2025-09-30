@@ -91,7 +91,7 @@ void cadastroCliente(void) {
     fclose(arquivoCliente);
 }
 
-void exibirCliente(void) {
+void exibeCliente(void) {
     system("clear||cls");
     printf("\n");
     printf("___________________________________________________________________________________________________\n");
@@ -149,7 +149,7 @@ void exibirCliente(void) {
 
 }
 
-void atualizarCliente(void) {
+void atualizaCliente(void) {
     system("clear||cls");
     printf("\n");
     printf("___________________________________________________________________________________________________\n");
@@ -162,7 +162,7 @@ void atualizarCliente(void) {
     getchar();
 }
 
-void deletarCliente(void) {
+void deletaCliente(void) {
     system("clear||cls");
     printf("\n");
     printf("___________________________________________________________________________________________________\n");
@@ -298,15 +298,15 @@ void opcaoCliente(void) {
                 break;
 
             case '2':
-                exibirCliente();
+                exibeCliente();
                 break;
 
             case '3':
-                atualizarCliente();
+                atualizaCliente();
                 break;
 
             case '4':
-                deletarCliente();
+                deletaCliente();
                 break;
 
         }

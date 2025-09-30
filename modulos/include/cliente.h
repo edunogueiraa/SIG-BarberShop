@@ -1,6 +1,6 @@
 void telaCliente(void);
 void cadastroCliente(void);
-void exibirCliente(void);
-void atualizarCliente(void);
-void deletarCliente(void);
+void exibeCliente(void);
+void atualizaCliente(void);
+void deletaCliente(void);
 void opcaoCliente(void);
