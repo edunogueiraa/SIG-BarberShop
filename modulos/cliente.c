@@ -122,7 +122,9 @@ void atualizaCliente(void) {
         printf("\n0 Finalizar operação\n");
         scanf("%d", &opcao);
         getchar();
-        receberNovoDado(cpfCliente, opcao);
+        if (opcao != 0) {
+            receberNovoDado(cpfCliente, opcao);
+        }
     } while (opcao != 0);
     
 }
@@ -283,15 +285,7 @@ void atualizarCliente(char cpfCliente[], int opcao, char dadoNovo[]) {
         fgetc(arquivoAntigo);
         
         if (strcmp(cpf, cpfCliente) == 0) {
-            if (opcao == 1) {
-                atualizarDado(nome, cpf, email, data, celular, opcao, dadoNovo, arquivoNovo);
-            } else if (opcao == 2) {
-                atualizarDado(nome, cpf, email, data, celular, opcao, dadoNovo, arquivoNovo);
-            } else if (opcao == 3) {
-                atualizarDado(nome, cpf, email, data, celular, opcao, dadoNovo, arquivoNovo);
-            } else if (opcao == 4) {
-                atualizarDado(nome, cpf, email, data, celular, opcao, dadoNovo, arquivoNovo);
-            }
+            atualizarDado(nome, cpf, email, data, celular, opcao, dadoNovo, arquivoNovo);
         } else {
             fprintf(arquivoNovo, "%s;", nome);
             fprintf(arquivoNovo, "%s;", cpf);
@@ -299,11 +293,11 @@ void atualizarCliente(char cpfCliente[], int opcao, char dadoNovo[]) {
             fprintf(arquivoNovo, "%s;", data);
             fprintf(arquivoNovo, "%s\n", celular);
         }
-        fclose(arquivoNovo);
-        fclose(arquivoAntigo);
-
-        trocarArquivos("./dados/clientes.csv", "./dados/clientes_temp.csv");
     }
+    fclose(arquivoNovo);
+    fclose(arquivoAntigo);
+
+    trocarArquivos("./dados/clientes.csv", "./dados/clientes_temp.csv");
 }
 
 void deletarCliente(char cpfCliente[]) {
