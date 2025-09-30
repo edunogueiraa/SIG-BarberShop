@@ -255,21 +255,17 @@ void deletarCliente(char cpfCliente[]) {
         fgetc(arquivoAntigo);
         
         if (strcmp(cpf, cpfCliente) != 0) {
-            atualizarArquivo(nome, cpf, email, data, celular, arquivoNovo);
+            fprintf(arquivoNovo, "%s;", nome);
+            fprintf(arquivoNovo, "%s;", cpf);
+            fprintf(arquivoNovo, "%s;", email);
+            fprintf(arquivoNovo, "%s;", data);
+            fprintf(arquivoNovo, "%s\n", celular);
         }
     }
     fclose(arquivoNovo);
     fclose(arquivoAntigo);
 
     trocarArquivos("./dados/clientes.csv", "./dados/clientes_temp.csv");
-}
-
-void atualizarArquivo(char nome[], char cpf[], char email[], char data[], char celular[], FILE * arquivo) {
-    fprintf(arquivo, "%s;", nome);
-    fprintf(arquivo, "%s;", cpf);
-    fprintf(arquivo, "%s;", email);
-    fprintf(arquivo, "%s;", data);
-    fprintf(arquivo, "%s\n", celular);
 }
 
 void trocarArquivos(char antigo[], char novo[]) {
