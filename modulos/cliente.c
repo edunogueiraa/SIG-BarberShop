@@ -290,7 +290,7 @@ void exibirCliente(char cpfCliente[]) {
         return;
     }
 
-    while (fscanf(arquivoCliente, "%[^;]", nome)) {
+    while (fscanf(arquivoCliente, "%[^;]", nome) == 1) {
         fgetc(arquivoCliente);
         fscanf(arquivoCliente, "%[^;]", cpf);
         fgetc(arquivoCliente);
