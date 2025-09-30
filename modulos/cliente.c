@@ -5,12 +5,19 @@
 #include <errno.h>
 
 // Assinatura de funções
-void cadastrarCliente(char nome[], char cpf[], char email[], char data[], char celular[]);
+
+// funções gerais
 void exibirCliente(char cpfCliente[]);
-void deletarCliente(char cpfCliente[]);
-void atualizarArquivo(char nome[], char cpf[], char email[], char data[], char celular[], FILE *arquivo);
 void trocarArquivos(char antigo[], char novo[]);
 void criarDiretorio(void);
+
+void cadastrarCliente(char nome[], char cpf[], char email[], char data[], char celular[]);
+
+void receberNovoDado(char cpfCliente[], int opcao);
+void atualizarCliente(char cpfCliente[], int opcao, char novoDado[]);
+void atualizarDado(char nome[], char cpf[], char email[], char data[], char celular[], int opcao, char novoDado[], FILE * arquivo);
+
+void deletarCliente(char cpfCliente[]);
 
 void telaCliente(void) {
     system("clear||cls");
