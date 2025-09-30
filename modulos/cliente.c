@@ -4,6 +4,10 @@
 #include <sys/stat.h>
 #include <errno.h>
 
+// Assinatura de funções
+void cadastrarCliente(char nome[], char cpf[], char email[], char data[], char celular[]);
+void criarDiretorio(void);
+
 void telaCliente(void) {
     system("clear||cls");
     printf("_________________________________________________________________________________________________\n");
@@ -59,17 +63,7 @@ void cadastroCliente(void) {
     scanf("%s", celular);
     getchar();
 
-    // Função adaptada de:
-    // https://linux.die.net/man/2/mkdir e https://stackoverflow.com/questions/7430248/creating-a-new-directory-in-c
-    // Criando diretório para armazenamento de dados
-    int status = mkdir("dados", 0700);
-    if (status < 0 && errno != EEXIST)
-    {
-        printf("Houve um erro na criação do diretório de armazenamento de dados. O programa será finalizado.");
-        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
-        getchar();
-    }
-
+    criarDiretorio();
     cadastrarCliente(nome, cpf, email, data, celular);
 }
 
@@ -315,4 +309,18 @@ void cadastrarCliente(char nome[], char cpf[], char email[], char data[], char c
     fprintf(arquivoCliente, "%s\n", celular);
 
     fclose(arquivoCliente);
+}
+
+void criarDiretorio(void) {
+    // Função adaptada de:
+    // https://linux.die.net/man/2/mkdir e https://stackoverflow.com/questions/7430248/creating-a-new-directory-in-c
+    // Criando diretório para armazenamento de dados
+    int status = mkdir("dados", 0700);
+    if (status < 0 && errno != EEXIST)
+    {
+        printf("Houve um erro na criação do diretório de armazenamento de dados. O programa será finalizado.");
+        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
+        getchar();
+        exit(1);
+    }
 }
