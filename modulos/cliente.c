@@ -6,6 +6,7 @@
 
 // Assinatura de funções
 void cadastrarCliente(char nome[], char cpf[], char email[], char data[], char celular[]);
+void exibirCliente(char cpfCliente[]);
 void criarDiretorio(void);
 
 void telaCliente(void) {
@@ -74,54 +75,15 @@ void exibeCliente(void) {
     printf("|                                         LISTAR CLIENTE                                          |\n");
     printf("|_________________________________________________________________________________________________|\n");
 
-    FILE * arquivoCliente;
-    char nome[50];
-    char cpf[50];
-    char email[50];
-    char data[50];
-    char celular[50];
 
     char cpfCliente[50];
     printf("\nDigite o cpf do cliente: ");
     scanf("%s", cpfCliente);
     getchar();
 
-    arquivoCliente = fopen("./dados/clientes.csv", "rt");
-
-    if (arquivoCliente == NULL) {
-        printf("Erro na abertura do arquivo clientes");
-        printf("\n>>> Tecle <ENTER> para continuar...\n");
-        getchar();
-        return;
-    }
-
-    while (!feof(arquivoCliente)){
-        fscanf(arquivoCliente, "%[^;]", nome);
-        fgetc(arquivoCliente);
-        fscanf(arquivoCliente, "%[^;]", cpf);
-        fgetc(arquivoCliente);
-        fscanf(arquivoCliente, "%[^;]", email);
-        fgetc(arquivoCliente);
-        fscanf(arquivoCliente, "%[^;]", data);
-        fgetc(arquivoCliente);
-        fscanf(arquivoCliente, "%[^\n]", celular);
-        fgetc(arquivoCliente);
-
-        if(strcmp(cpf,cpfCliente) == 0) {
-            printf("\n\t\t\t <--- Cliente Encontrado ---> \n\n");
-            printf("\t\t\tNome: %s\n",nome);
-            printf("\t\t\tCPF: %s\n",cpf);
-            printf("\t\t\tEmail: %s\n",email);
-            printf("\t\t\tData: %s\n",data);
-            printf("\t\t\tCelular: %s\n",celular);
-            printf("\n>>> Tecle <ENTER> para continuar...\n");
-            getchar();
-            fclose(arquivoCliente);
-            return;
-        }
-    }
-    
-
+    exibirCliente(cpfCliente);
+    printf("\n>>> Tecle <ENTER> para continuar...\n");
+    getchar();
 }
 
 void atualizaCliente(void) {
@@ -309,6 +271,47 @@ void cadastrarCliente(char nome[], char cpf[], char email[], char data[], char c
     fprintf(arquivoCliente, "%s\n", celular);
 
     fclose(arquivoCliente);
+}
+
+void exibirCliente(char cpfCliente[]) {
+    FILE * arquivoCliente;
+    char nome[50];
+    char cpf[50];
+    char email[50];
+    char data[50];
+    char celular[50];
+
+    arquivoCliente = fopen("./dados/clientes.csv", "rt");
+
+    if (arquivoCliente == NULL) {
+        printf("Erro na abertura do arquivo clientes");
+        printf("\n>>> Tecle <ENTER> para continuar...\n");
+        getchar();
+        return;
+    }
+
+    while (fscanf(arquivoCliente, "%[^;]", nome)) {
+        fgetc(arquivoCliente);
+        fscanf(arquivoCliente, "%[^;]", cpf);
+        fgetc(arquivoCliente);
+        fscanf(arquivoCliente, "%[^;]", email);
+        fgetc(arquivoCliente);
+        fscanf(arquivoCliente, "%[^;]", data);
+        fgetc(arquivoCliente);
+        fscanf(arquivoCliente, "%[^\n]", celular);
+        fgetc(arquivoCliente);
+
+        if(strcmp(cpf,cpfCliente) == 0) {
+            printf("\n\t\t\t <--- Cliente Encontrado ---> \n\n");
+            printf("\t\t\tNome: %s\n",nome);
+            printf("\t\t\tCPF: %s\n",cpf);
+            printf("\t\t\tEmail: %s\n",email);
+            printf("\t\t\tData: %s\n",data);
+            printf("\t\t\tCelular: %s\n",celular);
+            fclose(arquivoCliente);
+            return;
+        }
+    }
 }
 
 void criarDiretorio(void) {
