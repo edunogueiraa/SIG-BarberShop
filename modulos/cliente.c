@@ -228,33 +228,6 @@ void receberNovoDado(char cpfCliente[], int opcao) {
     }
     atualizarCliente(cpfCliente, opcao, dado);
 }
-void atualizarDado(char nome[], char cpf[], char email[], char data[], char celular[], int opcao, char novoDado[], FILE * arquivo) {
-    if (opcao == 1) {
-        fprintf(arquivo, "%s;", novoDado);
-        fprintf(arquivo, "%s;", cpf);
-        fprintf(arquivo, "%s;", email);
-        fprintf(arquivo, "%s;", data);
-        fprintf(arquivo, "%s\n", celular);
-    } else if (opcao == 2) {
-        fprintf(arquivo, "%s;", nome);
-        fprintf(arquivo, "%s;", cpf);
-        fprintf(arquivo, "%s;", novoDado);
-        fprintf(arquivo, "%s;", data);
-        fprintf(arquivo, "%s\n", celular);
-    } else if (opcao == 3) {
-        fprintf(arquivo, "%s;", nome);
-        fprintf(arquivo, "%s;", cpf);
-        fprintf(arquivo, "%s;", email);
-        fprintf(arquivo, "%s;", novoDado);
-        fprintf(arquivo, "%s\n", celular);
-    } else if (opcao == 4) {
-        fprintf(arquivo, "%s;", nome);
-        fprintf(arquivo, "%s;", cpf);
-        fprintf(arquivo, "%s;", email);
-        fprintf(arquivo, "%s;", data);
-        fprintf(arquivo, "%s\n", novoDado);
-    }
-}
 void atualizarCliente(char cpfCliente[], int opcao, char dadoNovo[]) {
     FILE * arquivoAntigo = fopen("./dados/clientes.csv", "rt");
     FILE * arquivoNovo = fopen("./dados/clientes_temp.csv", "wt");
@@ -289,6 +262,33 @@ void atualizarCliente(char cpfCliente[], int opcao, char dadoNovo[]) {
     fclose(arquivoAntigo);
 
     trocarArquivos("./dados/clientes.csv", "./dados/clientes_temp.csv");
+}
+void atualizarDado(char nome[], char cpf[], char email[], char data[], char celular[], int opcao, char novoDado[], FILE * arquivo) {
+    if (opcao == 1) {
+        fprintf(arquivo, "%s;", novoDado);
+        fprintf(arquivo, "%s;", cpf);
+        fprintf(arquivo, "%s;", email);
+        fprintf(arquivo, "%s;", data);
+        fprintf(arquivo, "%s\n", celular);
+    } else if (opcao == 2) {
+        fprintf(arquivo, "%s;", nome);
+        fprintf(arquivo, "%s;", cpf);
+        fprintf(arquivo, "%s;", novoDado);
+        fprintf(arquivo, "%s;", data);
+        fprintf(arquivo, "%s\n", celular);
+    } else if (opcao == 3) {
+        fprintf(arquivo, "%s;", nome);
+        fprintf(arquivo, "%s;", cpf);
+        fprintf(arquivo, "%s;", email);
+        fprintf(arquivo, "%s;", novoDado);
+        fprintf(arquivo, "%s\n", celular);
+    } else if (opcao == 4) {
+        fprintf(arquivo, "%s;", nome);
+        fprintf(arquivo, "%s;", cpf);
+        fprintf(arquivo, "%s;", email);
+        fprintf(arquivo, "%s;", data);
+        fprintf(arquivo, "%s\n", novoDado);
+    }
 }
 
 void deletarCliente(char cpfCliente[]) {
