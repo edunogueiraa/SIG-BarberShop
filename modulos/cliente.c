@@ -193,21 +193,21 @@ void opcaoCliente(void) {
 
 void cadastrarCliente(Cliente * cliente) {
     criarDiretorio();
-    cliente->arquivoCliente = fopen("./dados/clientes.csv", "at");
+    cliente->arquivo = fopen("./dados/clientes.csv", "at");
 
-    if (cliente->arquivoCliente == NULL) {
+    if (cliente->arquivo == NULL) {
         printf("Erro na criação de arquivo de Clientes. O programa será finalizado.");
         printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
         getchar();
         exit(1);
     }
-    fprintf(cliente->arquivoCliente, "%s;", cliente->nome);
-    fprintf(cliente->arquivoCliente, "%s;", cliente->cpf);
-    fprintf(cliente->arquivoCliente, "%s;", cliente->email);
-    fprintf(cliente->arquivoCliente, "%s;", cliente->data);
-    fprintf(cliente->arquivoCliente, "%s\n", cliente->celular);
+    fprintf(cliente->arquivo, "%s;", cliente->nome);
+    fprintf(cliente->arquivo, "%s;", cliente->cpf);
+    fprintf(cliente->arquivo, "%s;", cliente->email);
+    fprintf(cliente->arquivo, "%s;", cliente->data);
+    fprintf(cliente->arquivo, "%s\n", cliente->celular);
 
-    fclose(cliente->arquivoCliente);
+    fclose(cliente->arquivo);
 }
 
 // Funcões de atualização de cliente
@@ -295,19 +295,19 @@ void deletarCliente(char cpfCliente[]) {
     Cliente * cliente;
     cliente = malloc(sizeof(Cliente));
 
-    cliente->arquivoCliente = fopen("./dados/clientes.csv", "rt");
+    cliente->arquivo = fopen("./dados/clientes.csv", "rt");
     FILE * arquivoNovo = fopen("./dados/clientes_temp.csv", "wt");
 
-    while (fscanf(cliente->arquivoCliente, "%[^;]", cliente->nome) == 1) {
-        fgetc(cliente->arquivoCliente);
-        fscanf(cliente->arquivoCliente, "%[^;]", cliente->cpf);
-        fgetc(cliente->arquivoCliente);
-        fscanf(cliente->arquivoCliente, "%[^;]", cliente->email);
-        fgetc(cliente->arquivoCliente);
-        fscanf(cliente->arquivoCliente, "%[^;]", cliente->data);
-        fgetc(cliente->arquivoCliente);
-        fscanf(cliente->arquivoCliente, "%[^\n]", cliente->celular);
-        fgetc(cliente->arquivoCliente);
+    while (fscanf(cliente->arquivo, "%[^;]", cliente->nome) == 1) {
+        fgetc(cliente->arquivo);
+        fscanf(cliente->arquivo, "%[^;]", cliente->cpf);
+        fgetc(cliente->arquivo);
+        fscanf(cliente->arquivo, "%[^;]", cliente->email);
+        fgetc(cliente->arquivo);
+        fscanf(cliente->arquivo, "%[^;]", cliente->data);
+        fgetc(cliente->arquivo);
+        fscanf(cliente->arquivo, "%[^\n]", cliente->celular);
+        fgetc(cliente->arquivo);
         
         if (strcmp(cliente->cpf, cpfCliente) != 0) {
             fprintf(arquivoNovo, "%s;", cliente->nome);
@@ -318,7 +318,7 @@ void deletarCliente(char cpfCliente[]) {
         }
     }
     fclose(arquivoNovo);
-    fclose(cliente->arquivoCliente);
+    fclose(cliente->arquivo);
 
     trocarArquivos("./dados/clientes.csv", "./dados/clientes_temp.csv");
 }
@@ -327,25 +327,25 @@ void exibirCliente(char cpfCliente[]) {
     Cliente * cliente;
     cliente = malloc(sizeof(Cliente));
 
-    cliente->arquivoCliente = fopen("./dados/clientes.csv", "rt");
+    cliente->arquivo = fopen("./dados/clientes.csv", "rt");
 
-    if (cliente->arquivoCliente == NULL) {
+    if (cliente->arquivo == NULL) {
         printf("Erro na abertura do arquivo clientes");
         printf("\n>>> Tecle <ENTER> para continuar...\n");
         getchar();
         return;
     }
 
-    while (fscanf(cliente->arquivoCliente, "%[^;]", cliente->nome) == 1) {
-        fgetc(cliente->arquivoCliente);
-        fscanf(cliente->arquivoCliente, "%[^;]", cliente->cpf);
-        fgetc(cliente->arquivoCliente);
-        fscanf(cliente->arquivoCliente, "%[^;]", cliente->email);
-        fgetc(cliente->arquivoCliente);
-        fscanf(cliente->arquivoCliente, "%[^;]", cliente->data);
-        fgetc(cliente->arquivoCliente);
-        fscanf(cliente->arquivoCliente, "%[^\n]", cliente->celular);
-        fgetc(cliente->arquivoCliente);
+    while (fscanf(cliente->arquivo, "%[^;]", cliente->nome) == 1) {
+        fgetc(cliente->arquivo);
+        fscanf(cliente->arquivo, "%[^;]", cliente->cpf);
+        fgetc(cliente->arquivo);
+        fscanf(cliente->arquivo, "%[^;]", cliente->email);
+        fgetc(cliente->arquivo);
+        fscanf(cliente->arquivo, "%[^;]", cliente->data);
+        fgetc(cliente->arquivo);
+        fscanf(cliente->arquivo, "%[^\n]", cliente->celular);
+        fgetc(cliente->arquivo);
 
         if(strcmp(cliente->cpf, cpfCliente) == 0) {
             printf("\n\t\t\t <--- Cliente Encontrado ---> \n\n");
@@ -354,7 +354,7 @@ void exibirCliente(char cpfCliente[]) {
             printf("\t\t\tEmail: %s\n", cliente->email);
             printf("\t\t\tData: %s\n", cliente->data);
             printf("\t\t\tCelular: %s\n", cliente->celular);
-            fclose(cliente->arquivoCliente);
+            fclose(cliente->arquivo);
             return;
         }
     }

@@ -1,5 +1,5 @@
 struct cliente {
-    FILE * arquivoCliente;
+    FILE * arquivo;
     char nome[50];
     char cpf[50];
     char email[50];
