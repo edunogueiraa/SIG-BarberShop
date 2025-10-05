@@ -12,7 +12,7 @@ void exibirCliente(char cpfCliente[]);
 void trocarArquivos(char antigo[], char novo[]);
 void criarDiretorio(void);
 
-void cadastrarCliente(char nome[], char cpf[], char email[], char data[], char celular[]);
+void cadastrarCliente(Cliente * cliente);
 
 void receberNovoDado(char cpfCliente[], int opcao);
 void atualizarCliente(char cpfCliente[], int opcao, char novoDado[]);
@@ -73,7 +73,7 @@ void cadastroCliente(void) {
     scanf("%s", cliente->celular);
     getchar();
 
-    cadastrarCliente(nome, cpf, email, data, celular);
+    cadastrarCliente(cliente);
 }
 
 void exibeCliente(void) {
@@ -191,25 +191,23 @@ void opcaoCliente(void) {
     } while (opcao != '0');
 }
 
-void cadastrarCliente(char nome[], char cpf[], char email[], char data[], char celular[]) {
+void cadastrarCliente(Cliente * cliente) {
     criarDiretorio();
-    FILE * arquivoCliente;
-    arquivoCliente = fopen("./dados/clientes.csv", "at");
+    cliente->arquivoCliente = fopen("./dados/clientes.csv", "at");
 
-    if (arquivoCliente == NULL) {
+    if (cliente->arquivoCliente == NULL) {
         printf("Erro na criação de arquivo de Clientes. O programa será finalizado.");
         printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
         getchar();
         exit(1);
     }
-    //Escrevendo no arquivoCliente
-    fprintf(arquivoCliente, "%s;", nome);
-    fprintf(arquivoCliente, "%s;", cpf);
-    fprintf(arquivoCliente, "%s;", email);
-    fprintf(arquivoCliente, "%s;", data);
-    fprintf(arquivoCliente, "%s\n", celular);
+    fprintf(cliente->arquivoCliente, "%s;", cliente->nome);
+    fprintf(cliente->arquivoCliente, "%s;", cliente->cpf);
+    fprintf(cliente->arquivoCliente, "%s;", cliente->email);
+    fprintf(cliente->arquivoCliente, "%s;", cliente->data);
+    fprintf(cliente->arquivoCliente, "%s\n", cliente->celular);
 
-    fclose(arquivoCliente);
+    fclose(cliente->arquivoCliente);
 }
 
 // Funcões de atualização de cliente
