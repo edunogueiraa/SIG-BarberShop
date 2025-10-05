@@ -292,35 +292,33 @@ void atualizarCliente(char cpfCliente[], int opcao, char dadoNovo[]) {
 }
 
 void deletarCliente(char cpfCliente[]) {
-    FILE * arquivoAntigo = fopen("./dados/clientes.csv", "rt");
-    FILE * arquivoNovo = fopen("./dados/clientes_temp.csv", "wt");
-    char nome[50];
-    char cpf[50];
-    char email[50];
-    char data[50];
-    char celular[50];
+    Cliente * cliente;
+    cliente = malloc(sizeof(Cliente));
 
-    while (fscanf(arquivoAntigo, "%[^;]", nome) == 1) {
-        fgetc(arquivoAntigo);
-        fscanf(arquivoAntigo, "%[^;]", cpf);
-        fgetc(arquivoAntigo);
-        fscanf(arquivoAntigo, "%[^;]", email);
-        fgetc(arquivoAntigo);
-        fscanf(arquivoAntigo, "%[^;]", data);
-        fgetc(arquivoAntigo);
-        fscanf(arquivoAntigo, "%[^\n]", celular);
-        fgetc(arquivoAntigo);
+    cliente->arquivoCliente = fopen("./dados/clientes.csv", "rt");
+    FILE * arquivoNovo = fopen("./dados/clientes_temp.csv", "wt");
+
+    while (fscanf(cliente->arquivoCliente, "%[^;]", cliente->nome) == 1) {
+        fgetc(cliente->arquivoCliente);
+        fscanf(cliente->arquivoCliente, "%[^;]", cliente->cpf);
+        fgetc(cliente->arquivoCliente);
+        fscanf(cliente->arquivoCliente, "%[^;]", cliente->email);
+        fgetc(cliente->arquivoCliente);
+        fscanf(cliente->arquivoCliente, "%[^;]", cliente->data);
+        fgetc(cliente->arquivoCliente);
+        fscanf(cliente->arquivoCliente, "%[^\n]", cliente->celular);
+        fgetc(cliente->arquivoCliente);
         
-        if (strcmp(cpf, cpfCliente) != 0) {
-            fprintf(arquivoNovo, "%s;", nome);
-            fprintf(arquivoNovo, "%s;", cpf);
-            fprintf(arquivoNovo, "%s;", email);
-            fprintf(arquivoNovo, "%s;", data);
-            fprintf(arquivoNovo, "%s\n", celular);
+        if (strcmp(cliente->cpf, cpfCliente) != 0) {
+            fprintf(arquivoNovo, "%s;", cliente->nome);
+            fprintf(arquivoNovo, "%s;", cliente->cpf);
+            fprintf(arquivoNovo, "%s;", cliente->email);
+            fprintf(arquivoNovo, "%s;", cliente->data);
+            fprintf(arquivoNovo, "%s\n", cliente->celular);
         }
     }
     fclose(arquivoNovo);
-    fclose(arquivoAntigo);
+    fclose(cliente->arquivoCliente);
 
     trocarArquivos("./dados/clientes.csv", "./dados/clientes_temp.csv");
 }
