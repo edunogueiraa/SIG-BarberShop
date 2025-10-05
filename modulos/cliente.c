@@ -53,26 +53,24 @@ void cadastroCliente(void) {
     printf("|                                                                                                 |\n");
     printf("|                                         CADASTRO CLIENTE                                        |\n");
     printf("|_________________________________________________________________________________________________|\n");
-    char nome[50];
-    char cpf[50];
-    char email[50];
-    char data[50];
-    char celular[50];
+    
+    Cliente * cliente;
+    cliente = malloc(sizeof(Cliente));
         
     printf("\nNome completo: ");
-    scanf("%[^\n]", nome);
+    scanf("%[^\n]", cliente->nome);
 
     printf("CPF: ");
-    scanf("%s", cpf);
+    scanf("%s", cliente->cpf);
 
     printf("E-mail: ");
-    scanf("%s", email);
+    scanf("%s", cliente->email);
 
     printf("Data de Nascimento (dd/mm/aaaa): ");
-    scanf("%s", data);
+    scanf("%s", cliente->data);
 
     printf("Celular  (apenas números): ");
-    scanf("%s", celular);
+    scanf("%s", cliente->celular);
     getchar();
 
     cadastrarCliente(nome, cpf, email, data, celular);
