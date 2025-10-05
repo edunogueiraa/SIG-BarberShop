@@ -326,41 +326,37 @@ void deletarCliente(char cpfCliente[]) {
 }
 
 void exibirCliente(char cpfCliente[]) {
-    FILE * arquivoCliente;
-    char nome[50];
-    char cpf[50];
-    char email[50];
-    char data[50];
-    char celular[50];
+    Cliente * cliente;
+    cliente = malloc(sizeof(Cliente));
 
-    arquivoCliente = fopen("./dados/clientes.csv", "rt");
+    cliente->arquivoCliente = fopen("./dados/clientes.csv", "rt");
 
-    if (arquivoCliente == NULL) {
+    if (cliente->arquivoCliente == NULL) {
         printf("Erro na abertura do arquivo clientes");
         printf("\n>>> Tecle <ENTER> para continuar...\n");
         getchar();
         return;
     }
 
-    while (fscanf(arquivoCliente, "%[^;]", nome) == 1) {
-        fgetc(arquivoCliente);
-        fscanf(arquivoCliente, "%[^;]", cpf);
-        fgetc(arquivoCliente);
-        fscanf(arquivoCliente, "%[^;]", email);
-        fgetc(arquivoCliente);
-        fscanf(arquivoCliente, "%[^;]", data);
-        fgetc(arquivoCliente);
-        fscanf(arquivoCliente, "%[^\n]", celular);
-        fgetc(arquivoCliente);
+    while (fscanf(cliente->arquivoCliente, "%[^;]", cliente->nome) == 1) {
+        fgetc(cliente->arquivoCliente);
+        fscanf(cliente->arquivoCliente, "%[^;]", cliente->cpf);
+        fgetc(cliente->arquivoCliente);
+        fscanf(cliente->arquivoCliente, "%[^;]", cliente->email);
+        fgetc(cliente->arquivoCliente);
+        fscanf(cliente->arquivoCliente, "%[^;]", cliente->data);
+        fgetc(cliente->arquivoCliente);
+        fscanf(cliente->arquivoCliente, "%[^\n]", cliente->celular);
+        fgetc(cliente->arquivoCliente);
 
-        if(strcmp(cpf,cpfCliente) == 0) {
+        if(strcmp(cliente->cpf, cpfCliente) == 0) {
             printf("\n\t\t\t <--- Cliente Encontrado ---> \n\n");
-            printf("\t\t\tNome: %s\n",nome);
-            printf("\t\t\tCPF: %s\n",cpf);
-            printf("\t\t\tEmail: %s\n",email);
-            printf("\t\t\tData: %s\n",data);
-            printf("\t\t\tCelular: %s\n",celular);
-            fclose(arquivoCliente);
+            printf("\t\t\tNome: %s\n", cliente->nome);
+            printf("\t\t\tCPF: %s\n", cliente->cpf);
+            printf("\t\t\tEmail: %s\n", cliente->email);
+            printf("\t\t\tData: %s\n", cliente->data);
+            printf("\t\t\tCelular: %s\n", cliente->celular);
+            fclose(cliente->arquivoCliente);
             return;
         }
     }
