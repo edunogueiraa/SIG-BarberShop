@@ -1,3 +1,4 @@
+# Arquivos de dados, armazenamento
 *.txt
 *.csv
 
@@ -65,6 +66,7 @@ dkms.conf
 !.vscode/launch.json
 !.vscode/extensions.json
 !.vscode/*.code-snippets
+.json
 
 # Local History for Visual Studio Code
 .history/
