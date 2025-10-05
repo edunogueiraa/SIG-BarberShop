@@ -164,18 +164,15 @@ void deletaCliente(void) {
 }
 
 void opcaoCliente(void) {
-
-    char opcaoCliente = '9';
+    char opcao = '9';
 
     do {
-
         telaCliente();
         printf("Digite a opção desejada: ");
-        scanf("%c", &opcaoCliente);
+        scanf("%c", &opcao);
         getchar();
 
-        switch (opcaoCliente) {
-
+        switch (opcao) {
             case '1':
                 cadastroCliente();
                 break;
@@ -191,11 +188,8 @@ void opcaoCliente(void) {
             case '4':
                 deletaCliente();
                 break;
-
         }
-
-    } while (opcaoCliente != '0');
-    
+    } while (opcao != '0');
 }
 
 void cadastrarCliente(char nome[], char cpf[], char email[], char data[], char celular[]) {
