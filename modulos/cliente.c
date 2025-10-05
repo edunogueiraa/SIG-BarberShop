@@ -16,7 +16,7 @@ void cadastrarCliente(Cliente * cliente);
 
 void receberNovoDado(char cpfCliente[], int opcao);
 void atualizarCliente(char cpfCliente[], int opcao, char novoDado[]);
-void atualizarDado(char nome[], char cpf[], char email[], char data[], char celular[], int opcao, char novoDado[], FILE * arquivo);
+void atualizarDado(Cliente * cliente, int opcao, char novoDado[], FILE * arquivo);
 
 void deletarCliente(char cpfCliente[]);
 
@@ -247,7 +247,7 @@ void atualizarCliente(char cpfCliente[], int opcao, char dadoNovo[]) {
         fgetc(cliente->arquivo);
         
         if (strcmp(cliente->cpf, cpfCliente) == 0) {
-            atualizarDado(cliente->nome, cliente->cpf, cliente->email, cliente->data, cliente->celular, opcao, dadoNovo, arquivoNovo);
+            atualizarDado(cliente, opcao, dadoNovo, arquivoNovo);
         } else {
             fprintf(arquivoNovo, "%s;", cliente->nome);
             fprintf(arquivoNovo, "%s;", cliente->cpf);
@@ -261,30 +261,30 @@ void atualizarCliente(char cpfCliente[], int opcao, char dadoNovo[]) {
 
     trocarArquivos("./dados/clientes.csv", "./dados/clientes_temp.csv");
 }
-void atualizarDado(char nome[], char cpf[], char email[], char data[], char celular[], int opcao, char novoDado[], FILE * arquivo) {
+void atualizarDado(Cliente * cliente, int opcao, char novoDado[], FILE * arquivo) {
     if (opcao == 1) {
         fprintf(arquivo, "%s;", novoDado);
-        fprintf(arquivo, "%s;", cpf);
-        fprintf(arquivo, "%s;", email);
-        fprintf(arquivo, "%s;", data);
-        fprintf(arquivo, "%s\n", celular);
+        fprintf(arquivo, "%s;", cliente->cpf);
+        fprintf(arquivo, "%s;", cliente->email);
+        fprintf(arquivo, "%s;", cliente->data);
+        fprintf(arquivo, "%s\n", cliente->celular);
     } else if (opcao == 2) {
-        fprintf(arquivo, "%s;", nome);
-        fprintf(arquivo, "%s;", cpf);
+        fprintf(arquivo, "%s;", cliente->nome);
+        fprintf(arquivo, "%s;", cliente->cpf);
         fprintf(arquivo, "%s;", novoDado);
-        fprintf(arquivo, "%s;", data);
-        fprintf(arquivo, "%s\n", celular);
+        fprintf(arquivo, "%s;", cliente->data);
+        fprintf(arquivo, "%s\n", cliente->celular);
     } else if (opcao == 3) {
-        fprintf(arquivo, "%s;", nome);
-        fprintf(arquivo, "%s;", cpf);
-        fprintf(arquivo, "%s;", email);
+        fprintf(arquivo, "%s;", cliente->nome);
+        fprintf(arquivo, "%s;", cliente->cpf);
+        fprintf(arquivo, "%s;", cliente->email);
         fprintf(arquivo, "%s;", novoDado);
-        fprintf(arquivo, "%s\n", celular);
+        fprintf(arquivo, "%s\n", cliente->celular);
     } else if (opcao == 4) {
-        fprintf(arquivo, "%s;", nome);
-        fprintf(arquivo, "%s;", cpf);
-        fprintf(arquivo, "%s;", email);
-        fprintf(arquivo, "%s;", data);
+        fprintf(arquivo, "%s;", cliente->nome);
+        fprintf(arquivo, "%s;", cliente->cpf);
+        fprintf(arquivo, "%s;", cliente->email);
+        fprintf(arquivo, "%s;", cliente->data);
         fprintf(arquivo, "%s\n", novoDado);
     }
 }
