@@ -59,6 +59,7 @@ void cadastroAgendamento(Agendamento) {
 
     printf("Horário: ");
     scanf("%s", agen->hora);
+    getchar();
 
     // Função adaptada de:
     // https://linux.die.net/man/2/mkdir e https://stackoverflow.com/questions/7430248/creating-a-new-directory-in-c
