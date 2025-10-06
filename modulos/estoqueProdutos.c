@@ -31,7 +31,7 @@ void telaEstoque(void) {
     
 }
 
-void cadastroEstoque(Estoque) {
+void cadastroEstoque(void) {
     system("clear||cls");
     printf("\n");
     printf("___________________________________________________________________________________________________\n");
@@ -85,7 +85,7 @@ void cadastroEstoque(Estoque) {
     fclose(estoque->arquivoEstoque);
 }
 
-void exibeProduto(Estoque) {
+void exibeProduto(void) {
     system("clear||cls");
     printf("\n");
     printf("___________________________________________________________________________________________________\n");
@@ -180,11 +180,11 @@ void opcaoEstoque(void) {
         switch (opcao) {
 
             case '1':
-                cadastroEstoque(estoque);
+                cadastroEstoque();
                 break;
 
             case '2':
-                exibeProduto(estoque);
+                exibeProduto();
                 break;
 
             case '3':

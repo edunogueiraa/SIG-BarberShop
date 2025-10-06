@@ -9,8 +9,8 @@ struct estoque {
 typedef struct estoque Estoque;
 
 void telaEstoque(void);
-void cadastroEstoque(Estoque);
-void exibeProduto(Estoque);
+void cadastroEstoque(void);
+void exibeProduto(void);
 void atualizarEstoque(void);
 void deletarEstoque(void);
 void opcaoEstoque(void);
