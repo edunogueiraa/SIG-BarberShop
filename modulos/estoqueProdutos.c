@@ -167,8 +167,6 @@ void deletarEstoque(void) {
 }
 
 void opcaoEstoque(void) {
-
-    Estoque estoque;
     char opcao = '9';
 
     do {
