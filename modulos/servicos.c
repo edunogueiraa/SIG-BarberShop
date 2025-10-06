@@ -30,7 +30,7 @@ void telaServico(void) {
     printf("|_________________________________________________________________________________________________|\n\n");
 }
 
-void cadastroServico(Servico) {
+void cadastroServico(void) {
     system("clear||cls");
     printf("\n");
     printf("___________________________________________________________________________________________________\n");
@@ -84,7 +84,7 @@ void cadastroServico(Servico) {
     fclose(servico->arquivoServico);
 }
 
-void exibeServico(Servico) {
+void exibeServico(void) {
     system("clear||cls");
     printf("\n");
     printf("___________________________________________________________________________________________________\n");
@@ -165,8 +165,6 @@ void deletarServico(void) {
 }
 
 void opcaoServicos(void) {
-
-    Servico servico;
     char opcao = '9';
 
     do {
@@ -179,11 +177,11 @@ void opcaoServicos(void) {
         switch (opcao) {
 
             case '1':
-                cadastroServico(servico);
+                cadastroServico();
                 break;
 
             case '2':
-                exibeServico(servico);
+                exibeServico();
                 break;
 
             case '3':

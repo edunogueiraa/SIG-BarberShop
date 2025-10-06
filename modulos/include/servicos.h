@@ -9,8 +9,8 @@ struct servico {
 typedef struct servico Servico;
 
 void telaServicos(void);
-void cadastroServicos(Servico);
-void exibeServicos(Servico);
+void cadastroServicos(void);
+void exibeServicos(void);
 void atualizarServicos(void);
 void deletarServicos(void);
 void opcaoServicos(void);
