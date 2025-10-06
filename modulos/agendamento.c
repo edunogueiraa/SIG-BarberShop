@@ -39,7 +39,7 @@ void cadastroAgendamento(void) {
     printf("|_________________________________________________________________________________________________|\n");
 
     Agendamento *agendamento;
-    agendamento = malloc(sizeof(Agendamento));
+    agendamento = (Agendamento*) malloc(sizeof(Agendamento));
 
     printf("\nDigite o ID do agendamento: ");
     scanf("%s", agendamento->id);
@@ -99,7 +99,7 @@ void listarAgendamento(void) {
     printf("|_________________________________________________________________________________________________|\n");
 
     Agendamento *agendamento;
-    agendamento = malloc(sizeof(Agendamento));
+    agendamento = (Agendamento*) malloc(sizeof(Agendamento));
 
     char idAgendamento[50];
     printf("\nDigite o ID do agendamento: ");

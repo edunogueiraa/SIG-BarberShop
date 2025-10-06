@@ -39,7 +39,7 @@ void cadastroServico(void) {
     printf("|_________________________________________________________________________________________________|\n");
 
     Servico *servico;
-    servico = malloc(sizeof(Servico));
+    servico = (Servico*) malloc(sizeof(Servico));
 
     printf("\nNome do serviço: ");
     scanf("%[^\n]", servico->nome);
@@ -93,7 +93,7 @@ void exibeServico(void) {
     printf("|_________________________________________________________________________________________________|\n");
 
     Servico *servico;
-    servico = malloc(sizeof(Servico));
+    servico = (Servico*) malloc(sizeof(Servico));
 
     char idServico[50];
     printf("\nDigite o ID do serviço: \n");

@@ -55,7 +55,7 @@ void cadastroCliente(void) {
     printf("|_________________________________________________________________________________________________|\n");
     
     Cliente * cliente;
-    cliente = malloc(sizeof(Cliente));
+    cliente = (Cliente*) malloc(sizeof(Cliente));
         
     printf("\nNome completo: ");
     scanf("%[^\n]", cliente->nome);
@@ -230,7 +230,7 @@ void receberNovoDado(char cpfCliente[], int opcao) {
 }
 void atualizarCliente(char cpfCliente[], int opcao, char dadoNovo[]) {
     Cliente * cliente;
-    cliente = malloc(sizeof(Cliente));
+    cliente = (Cliente*) malloc(sizeof(Cliente));
 
     cliente->arquivo = fopen("./dados/clientes.csv", "rt");
     FILE * arquivoNovo = fopen("./dados/clientes_temp.csv", "wt");
@@ -291,7 +291,7 @@ void atualizarDado(Cliente * cliente, int opcao, char novoDado[], FILE * arquivo
 
 void deletarCliente(char cpfCliente[]) {
     Cliente * cliente;
-    cliente = malloc(sizeof(Cliente));
+    cliente = (Cliente*) malloc(sizeof(Cliente));
 
     cliente->arquivo = fopen("./dados/clientes.csv", "rt");
     FILE * arquivoNovo = fopen("./dados/clientes_temp.csv", "wt");
@@ -323,7 +323,7 @@ void deletarCliente(char cpfCliente[]) {
 
 void exibirCliente(char cpfCliente[]) {
     Cliente * cliente;
-    cliente = malloc(sizeof(Cliente));
+    cliente = (Cliente*) malloc(sizeof(Cliente));
 
     cliente->arquivo = fopen("./dados/clientes.csv", "rt");
 

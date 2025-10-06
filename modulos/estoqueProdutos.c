@@ -40,7 +40,7 @@ void cadastroEstoque(void) {
     printf("|_________________________________________________________________________________________________|\n");
 
     Estoque *estoque;
-    estoque = malloc(sizeof(Estoque));
+    estoque = (Estoque*) malloc(sizeof(Estoque));
 
     printf("\nNome do produto: ");
     scanf("%[^\n]", estoque->nome);
@@ -94,7 +94,7 @@ void exibeProduto(void) {
     printf("|_________________________________________________________________________________________________|\n");
 
     Estoque *estoque;
-    estoque = malloc(sizeof(Estoque));
+    estoque = (Estoque*) malloc(sizeof(Estoque));
 
     char idProduto[50];
     printf("\nInforme o ID: \n");
