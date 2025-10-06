@@ -3,6 +3,7 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <errno.h>
+#include "include/estoqueProdutos.h"
 
 void telaEstoque(void) {
     system("clear||cls");
@@ -30,7 +31,7 @@ void telaEstoque(void) {
     
 }
 
-void cadastroEstoque(void) {
+void cadastroEstoque(Estoque) {
     system("clear||cls");
     printf("\n");
     printf("___________________________________________________________________________________________________\n");
@@ -38,24 +39,20 @@ void cadastroEstoque(void) {
     printf("|                                         CADASTRO PRODUTO                                        |\n");
     printf("|_________________________________________________________________________________________________|\n");
 
-    FILE * arquivoEstoque;
-    char nome[50];
-    char id[50];
-    char tipo[50];
-    char valor[50];
+    Estoque *estoque;
+    estoque = malloc(sizeof(Estoque));
 
-        
     printf("\nNome do produto: ");
-    scanf("%[^\n]", nome);
+    scanf("%[^\n]", estoque->nome);
 
     printf("ID do produto (apenas números): ");
-    scanf("%s", id);
+    scanf("%s", estoque->id);
 
     printf("Tipo do produto: ");
-    scanf("%s", tipo);
+    scanf("%s", estoque->tipo);
 
     printf("Valor (R$): ");
-    scanf("%s", valor);
+    scanf("%s", estoque->valor);
     getchar();
 
     // Função adaptada de:
@@ -70,9 +67,9 @@ void cadastroEstoque(void) {
     }
 
     // Criando o arquivo
-    arquivoEstoque = fopen("./dados/estoque.csv", "at");
+    estoque->arquivoEstoque = fopen("./dados/estoque.csv", "at");
 
-    if (arquivoEstoque == NULL)
+    if (estoque->arquivoEstoque == NULL)
     {
         printf("Erro na criação de arquivo de Estoque. O programa será finalizado.");
         printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
@@ -80,15 +77,15 @@ void cadastroEstoque(void) {
         exit(1);
     }
     // Escrevendo no arquivo
-    fprintf(arquivoEstoque, "%s;", nome);
-    fprintf(arquivoEstoque, "%s;", id);
-    fprintf(arquivoEstoque, "%s;", tipo);
-    fprintf(arquivoEstoque, "%s\n", valor);
+    fprintf(estoque->arquivoEstoque, "%s;", estoque->nome);
+    fprintf(estoque->arquivoEstoque, "%s;", estoque->id);
+    fprintf(estoque->arquivoEstoque, "%s;", estoque->tipo);
+    fprintf(estoque->arquivoEstoque, "%s\n", estoque->valor);
 
-    fclose(arquivoEstoque);
+    fclose(estoque->arquivoEstoque);
 }
 
-void exibirProduto(void) {
+void exibeProduto(Estoque) {
     system("clear||cls");
     printf("\n");
     printf("___________________________________________________________________________________________________\n");
@@ -96,48 +93,44 @@ void exibirProduto(void) {
     printf("|                                         LISTAR PRODUTO                                         |\n");
     printf("|_________________________________________________________________________________________________|\n");
 
-    FILE * arquivoEstoque;
-    char nome[50];
-    char id[50];
-    char tipo[50];
-    char valor[50];
-
+    Estoque *estoque;
+    estoque = malloc(sizeof(Estoque));
 
     char idProduto[50];
     printf("\nInforme o ID: \n");
     scanf("%s", idProduto);
     getchar();
 
-    arquivoEstoque = fopen("./dados/estoque.csv", "rt");
+    estoque->arquivoEstoque = fopen("./dados/estoque.csv", "rt");
 
-    if (arquivoEstoque == NULL) {
+    if (estoque->arquivoEstoque == NULL) {
         printf("Erro na abertura do arquivo de estoque");
         printf("\n>>> Tecle <ENTER> para continuar...\n");
         getchar();
         return;
     }
 
-    while (!feof(arquivoEstoque))
+    while (!feof(estoque->arquivoEstoque))
     {
-        fscanf(arquivoEstoque, "%[^;]", nome);
-        fgetc(arquivoEstoque);
-        fscanf(arquivoEstoque, "%[^;]", id);
-        fgetc(arquivoEstoque);
-        fscanf(arquivoEstoque, "%[^;]", tipo);
-        fgetc(arquivoEstoque);
-        fscanf(arquivoEstoque, "%[^\n]", valor);
-        fgetc(arquivoEstoque);
+        fscanf(estoque->arquivoEstoque, "%[^;]", estoque->nome);
+        fgetc(estoque->arquivoEstoque);
+        fscanf(estoque->arquivoEstoque, "%[^;]", estoque->id);
+        fgetc(estoque->arquivoEstoque);
+        fscanf(estoque->arquivoEstoque, "%[^;]", estoque->tipo);
+        fgetc(estoque->arquivoEstoque);
+        fscanf(estoque->arquivoEstoque, "%[^\n]", estoque->valor);
+        fgetc(estoque->arquivoEstoque);
 
-        if (strcmp(idProduto, id) == 0)
+        if (strcmp(idProduto, estoque->id) == 0)
         {
             printf("\n\t\t\t <--- Produto Encontrado ---> \n\n");
-            printf("\t\t\tNome do produto: %s\n", nome);
-            printf("\t\t\tID do produto: %s\n", id);
-            printf("\t\t\tTipo do produto: %s\n", tipo);
-            printf("\t\t\tValor (R$): %s\n", valor);
+            printf("\t\t\tNome do produto: %s\n", estoque->nome);
+            printf("\t\t\tID do produto: %s\n", estoque->id);
+            printf("\t\t\tTipo do produto: %s\n", estoque->tipo);
+            printf("\t\t\tValor (R$): %s\n", estoque->valor);
             printf("\n>>> Tecle <ENTER> para continuar...\n");
             getchar();
-            fclose(arquivoEstoque);
+            fclose(estoque->arquivoEstoque);
             return;
         }
     }
@@ -174,22 +167,24 @@ void deletarEstoque(void) {
 }
 
 void opcaoEstoque(void) {
-    char opcaoEstoque = '9';
+
+    Estoque estoque;
+    char opcao = '9';
 
     do {
         telaEstoque();
         printf("Digite a opção desejada: ");
-        scanf("%c", &opcaoEstoque);
+        scanf("%c", &opcao);
         getchar();
 
-        switch (opcaoEstoque) {
+        switch (opcao) {
 
             case '1':
-                cadastroEstoque();
+                cadastroEstoque(estoque);
                 break;
 
             case '2':
-                exibirProduto();
+                exibeProduto(estoque);
                 break;
 
             case '3':
@@ -201,5 +196,5 @@ void opcaoEstoque(void) {
                 break;
 
         }
-    } while (opcaoEstoque != '0');
+    } while (opcao != '0');
 }

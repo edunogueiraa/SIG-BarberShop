@@ -3,6 +3,7 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <errno.h>
+#include "include/servicos.h"
 
 void telaServico(void) {
     system("clear||cls");
@@ -29,7 +30,7 @@ void telaServico(void) {
     printf("|_________________________________________________________________________________________________|\n\n");
 }
 
-void cadastroServico(void) {
+void cadastroServico(Servico) {
     system("clear||cls");
     printf("\n");
     printf("___________________________________________________________________________________________________\n");
@@ -37,23 +38,20 @@ void cadastroServico(void) {
     printf("|                                         CADASTRO SERVIÇO                                        |\n");
     printf("|_________________________________________________________________________________________________|\n");
 
-    FILE *arquivoServico;
-    char nome[50];
-    char id[50];
-    char valor[50];
-    char duracao[50];
+    Servico *servico;
+    servico = malloc(sizeof(Servico));
 
     printf("\nNome do serviço: ");
-    scanf("%[^\n]", nome);
+    scanf("%[^\n]", servico->nome);
 
     printf("ID do serviço: ");
-    scanf("%s", id);
+    scanf("%s", servico->id);
 
     printf("Valor: ");
-    scanf("%s", valor);
+    scanf("%s", servico->valor);
 
     printf("Duração: ");
-    scanf("%s", duracao);
+    scanf("%s", servico->duracao);
     getchar();
 
     // Função adaptada de:
@@ -68,9 +66,9 @@ void cadastroServico(void) {
     }
 
     // Criando o arquivo
-    arquivoServico = fopen("./dados/servico.csv", "at");
+    servico->arquivoServico = fopen("./dados/servico.csv", "at");
 
-    if (arquivoServico == NULL)
+    if (servico->arquivoServico == NULL)
     {
         printf("Erro na criação de arquivo de Servico. O programa será finalizado.");
         printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
@@ -78,15 +76,15 @@ void cadastroServico(void) {
         exit(1);
     }
     // Escrevendo no arquivo
-    fprintf(arquivoServico, "%s;", nome);
-    fprintf(arquivoServico, "%s;", id);
-    fprintf(arquivoServico, "%s;", valor);
-    fprintf(arquivoServico, "%s\n", duracao);
+    fprintf(servico->arquivoServico, "%s;", servico->nome);
+    fprintf(servico->arquivoServico, "%s;", servico->id);
+    fprintf(servico->arquivoServico, "%s;", servico->valor);
+    fprintf(servico->arquivoServico, "%s\n", servico->duracao);
 
-    fclose(arquivoServico);
+    fclose(servico->arquivoServico);
 }
 
-void exibirServico(void) {
+void exibeServico(Servico) {
     system("clear||cls");
     printf("\n");
     printf("___________________________________________________________________________________________________\n");
@@ -94,20 +92,17 @@ void exibirServico(void) {
     printf("|                                         LISTAR SERVIÇO                                          |\n");
     printf("|_________________________________________________________________________________________________|\n");
 
-    FILE *arquivoServico;
-    char nome[50];
-    char id[50];
-    char valor[50];
-    char duracao[50];
-    char idServico[50];
+    Servico *servico;
+    servico = malloc(sizeof(Servico));
 
+    char idServico[50];
     printf("\nDigite o ID do serviço: \n");
     scanf("%s", idServico);
     getchar();
 
-    arquivoServico = fopen("./dados/servico.csv", "rt");
+    servico->arquivoServico = fopen("./dados/servico.csv", "rt");
 
-    if (arquivoServico == NULL)
+    if (servico->arquivoServico == NULL)
     {
         printf("Erro na abertura do arquivo de serviço");
         printf("\n>>> Tecle <ENTER> para continuar...\n");
@@ -115,27 +110,27 @@ void exibirServico(void) {
         return;
     }
 
-    while (!feof(arquivoServico))
+    while (!feof(servico->arquivoServico))
     {
-        fscanf(arquivoServico, "%[^;]", nome);
-        fgetc(arquivoServico);
-        fscanf(arquivoServico, "%[^;]", id);
-        fgetc(arquivoServico);
-        fscanf(arquivoServico, "%[^;]", valor);
-        fgetc(arquivoServico);
-        fscanf(arquivoServico, "%[^\n]", duracao);
-        fgetc(arquivoServico);
+        fscanf(servico->arquivoServico, "%[^;]", servico->nome);
+        fgetc(servico->arquivoServico);
+        fscanf(servico->arquivoServico, "%[^;]", servico->id);
+        fgetc(servico->arquivoServico);
+        fscanf(servico->arquivoServico, "%[^;]", servico->valor);
+        fgetc(servico->arquivoServico);
+        fscanf(servico->arquivoServico, "%[^\n]", servico->duracao);
+        fgetc(servico->arquivoServico);
 
-        if (strcmp(idServico, id) == 0)
+        if (strcmp(idServico, servico->id) == 0)
         {
             printf("\n\t\t\t <--- Serviço Encontrado ---> \n\n");
-            printf("\t\t\tNome do serviço: %s\n", nome);
-            printf("\t\t\tID do serviço: %s\n", id);
-            printf("\t\t\tValor (R$): %s\n", valor);
-            printf("\t\t\tDuração do serviço: %s\n", duracao);
+            printf("\t\t\tNome do serviço: %s\n", servico->nome);
+            printf("\t\t\tID do serviço: %s\n", servico->id);
+            printf("\t\t\tValor (R$): %s\n", servico->valor);
+            printf("\t\t\tDuração do serviço: %s\n", servico->duracao);
             printf("\n>>> Tecle <ENTER> para continuar...\n");
             getchar();
-            fclose(arquivoServico);
+            fclose(servico->arquivoServico);
             return;
         }
     }
@@ -171,23 +166,24 @@ void deletarServico(void) {
 
 void opcaoServicos(void) {
 
-    char opcaoServico = '9';
+    Servico servico;
+    char opcao = '9';
 
     do {
 
         telaServico();
         printf("Digite a opção desejada: ");
-        scanf("%c", &opcaoServico);
+        scanf("%c", &opcao);
         getchar();
 
-        switch (opcaoServico) {
+        switch (opcao) {
 
             case '1':
-                cadastroServico();
+                cadastroServico(servico);
                 break;
 
             case '2':
-                exibirServico();
+                exibeServico(servico);
                 break;
 
             case '3':
@@ -199,7 +195,7 @@ void opcaoServicos(void) {
                 break;
         }
 
-    } while (opcaoServico != '0');
+    } while (opcao != '0');
 
 }
 
