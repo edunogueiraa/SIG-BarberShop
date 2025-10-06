@@ -30,7 +30,7 @@ void telaAgendamento(void) {
     printf("|_________________________________________________________________________________________________|\n\n");
 }
 
-void cadastroAgendamento(Agendamento) {
+void cadastroAgendamento(void) {
     system("clear||cls");
     printf("\n");
     printf("___________________________________________________________________________________________________\n");
@@ -90,7 +90,7 @@ void cadastroAgendamento(Agendamento) {
 
 }
 
-void listarAgendamento(Agendamento) {
+void listarAgendamento(void) {
     system("clear||cls");
     printf("\n");
     printf("___________________________________________________________________________________________________\n");
@@ -174,8 +174,6 @@ void deletarAgendamento(void) {
 }
 
 void opcaoAgendamento() {
-    Agendamento agendamento;
-
     char opcao = '9';
 
     do{
@@ -188,11 +186,11 @@ void opcaoAgendamento() {
         switch (opcao) {
 
             case '1':
-                cadastroAgendamento(agendamento);
+                cadastroAgendamento();
                 break;
 
             case '2':
-                listarAgendamento(agendamento);
+                listarAgendamento();
                 break;
 
             case '3':
