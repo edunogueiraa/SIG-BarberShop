@@ -1,3 +1,6 @@
+#define True 1;
+#define False 0;
+
 struct estoque {
     int status;
     char nome[50];
