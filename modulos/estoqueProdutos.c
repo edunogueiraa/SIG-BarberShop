@@ -39,22 +39,19 @@ void cadastroEstoque(void) {
     printf("|                                         CADASTRO PRODUTO                                        |\n");
     printf("|_________________________________________________________________________________________________|\n");
 
-    Estoque *estoque;
-    estoque = (Estoque*) malloc(sizeof(Estoque));
-
+    Estoque * estoque;
+    estoque = (Estoque *) malloc(sizeof(Estoque));
+    
     printf("\nNome do produto: ");
     scanf("%[^\n]", estoque->nome);
-
     printf("ID do produto (apenas números): ");
     scanf("%s", estoque->id);
-
     printf("Tipo do produto: ");
     scanf("%s", estoque->tipo);
-
     printf("Valor (R$): ");
     scanf("%s", estoque->valor);
     getchar();
-
+    
     // Função adaptada de:
     // https://linux.die.net/man/2/mkdir e https://stackoverflow.com/questions/7430248/creating-a-new-directory-in-c
     // Criando diretório para armazenamento de dados
@@ -65,11 +62,12 @@ void cadastroEstoque(void) {
         printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
         getchar();
     }
-
+    
     // Criando o arquivo
-    estoque->arquivoEstoque = fopen("./dados/estoque.csv", "at");
+    FILE * arquivo;
+    arquivo = fopen("./dados/estoque.bin", "ab");
 
-    if (estoque->arquivoEstoque == NULL)
+    if (arquivo == NULL)
     {
         printf("Erro na criação de arquivo de Estoque. O programa será finalizado.");
         printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
@@ -77,12 +75,11 @@ void cadastroEstoque(void) {
         exit(1);
     }
     // Escrevendo no arquivo
-    fprintf(estoque->arquivoEstoque, "%s;", estoque->nome);
-    fprintf(estoque->arquivoEstoque, "%s;", estoque->id);
-    fprintf(estoque->arquivoEstoque, "%s;", estoque->tipo);
-    fprintf(estoque->arquivoEstoque, "%s\n", estoque->valor);
+    estoque->status = True;
+    fwrite(estoque, sizeof(Estoque), 1, arquivo);
 
-    fclose(estoque->arquivoEstoque);
+    fclose(arquivo);
+    free(estoque);
 }
 
 void exibeProduto(void) {
