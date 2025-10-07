@@ -1,6 +1,7 @@
 # Arquivos de dados, armazenamento
 *.txt
 *.csv
+*.bin
 
 # Created by https://www.toptal.com/developers/gitignore/api/c,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=c,visualstudiocode
