@@ -87,39 +87,29 @@ void exibeProduto(void) {
     printf("\n");
     printf("___________________________________________________________________________________________________\n");
     printf("|                                                                                                 |\n");
-    printf("|                                         LISTAR PRODUTO                                         |\n");
+    printf("|                                          EXIBIR PRODUTO                                         |\n");
     printf("|_________________________________________________________________________________________________|\n");
 
-    Estoque *estoque;
-    estoque = (Estoque*) malloc(sizeof(Estoque));
-
+    Estoque * estoque;
+    estoque = (Estoque *) malloc(sizeof(Estoque));
+    
     char idProduto[50];
     printf("\nInforme o ID: \n");
     scanf("%s", idProduto);
     getchar();
+    
+    FILE * arquivo;
+    arquivo = fopen("./dados/estoque.bin", "rt");
 
-    estoque->arquivoEstoque = fopen("./dados/estoque.csv", "rt");
-
-    if (estoque->arquivoEstoque == NULL) {
+    if (arquivo == NULL) {
         printf("Erro na abertura do arquivo de estoque");
         printf("\n>>> Tecle <ENTER> para continuar...\n");
         getchar();
         return;
     }
 
-    while (!feof(estoque->arquivoEstoque))
-    {
-        fscanf(estoque->arquivoEstoque, "%[^;]", estoque->nome);
-        fgetc(estoque->arquivoEstoque);
-        fscanf(estoque->arquivoEstoque, "%[^;]", estoque->id);
-        fgetc(estoque->arquivoEstoque);
-        fscanf(estoque->arquivoEstoque, "%[^;]", estoque->tipo);
-        fgetc(estoque->arquivoEstoque);
-        fscanf(estoque->arquivoEstoque, "%[^\n]", estoque->valor);
-        fgetc(estoque->arquivoEstoque);
-
-        if (strcmp(idProduto, estoque->id) == 0)
-        {
+    while (fread(estoque, sizeof(Estoque), 1, arquivo)) {
+        if (strcmp(idProduto, estoque->id) == 0 && estoque->status == True) {
             printf("\n\t\t\t <--- Produto Encontrado ---> \n\n");
             printf("\t\t\tNome do produto: %s\n", estoque->nome);
             printf("\t\t\tID do produto: %s\n", estoque->id);
@@ -127,7 +117,7 @@ void exibeProduto(void) {
             printf("\t\t\tValor (R$): %s\n", estoque->valor);
             printf("\n>>> Tecle <ENTER> para continuar...\n");
             getchar();
-            fclose(estoque->arquivoEstoque);
+            fclose(arquivo);
             return;
         }
     }
