@@ -1,3 +1,6 @@
+#define True = 1;
+#define False = 0;
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h> 

@@ -1,5 +1,5 @@
 struct estoque {
-    FILE * arquivoEstoque;
+    int status;
     char nome[50];
     char id[50];
     char tipo[50];
