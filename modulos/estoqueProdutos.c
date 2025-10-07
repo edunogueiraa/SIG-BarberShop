@@ -23,9 +23,10 @@ void telaEstoque(void) {
     printf("|_________________________________________________________________________________________________|\n");
     printf("|                                                                                                 |\n");
     printf("|                                   1 Cadastrar Produto                                           |\n");
-    printf("|                                   2 Listar Produtos                                             |\n");
-    printf("|                                   3 Atualizar Produto                                           |\n");
-    printf("|                                   4 Deletar Produto                                             |\n");
+    printf("|                                   2 Exibir Produto                                              |\n");
+    printf("|                                   3 Listar Produtos                                             |\n");
+    printf("|                                   4 Atualizar Produto                                           |\n");
+    printf("|                                   5 Deletar Produto                                             |\n");
     printf("|                                   0 Sair                                                        |\n");
     printf("|_________________________________________________________________________________________________|\n\n");
     
@@ -123,6 +124,28 @@ void exibeProduto(void) {
     }
 }
 
+void listaEstoque(void) {
+    Estoque * estoque;
+    estoque = (Estoque *) malloc(sizeof(Estoque));
+
+    FILE * arquivo;
+    arquivo = fopen("./dados/estoque.bin", "rb");
+
+    while (fread(estoque, sizeof(Estoque), 1, arquivo)) {
+        if (estoque->status == True) {
+            printf("\t\t\tNome do produto: %s\n", estoque->nome);
+            printf("\t\t\tID do produto: %s\n", estoque->id);
+            printf("\t\t\tTipo do produto: %s\n", estoque->tipo);
+            printf("\t\t\tValor (R$): %s\n\n", estoque->valor);
+        }
+    }
+    printf("\n>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+
+    fclose(arquivo);
+    free(estoque);
+}
+
 void atualizarEstoque(void) {
     system("clear||cls");
     printf("\n");
@@ -173,10 +196,14 @@ void opcaoEstoque(void) {
                 break;
 
             case '3':
-                atualizarEstoque();
+                listaEstoque();
                 break;
 
             case '4':
+                atualizarEstoque();
+                break;
+
+            case '5':
                 deletarEstoque();
                 break;
 
