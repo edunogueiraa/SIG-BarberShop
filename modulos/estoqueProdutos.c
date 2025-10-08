@@ -11,6 +11,8 @@ void cadastrarEstoque(Estoque * estoque);
 
 void exibirProduto(char idProduto[]);
 
+void deletarProduto(char idProduto[]);
+
 void telaEstoque(void) {
     system("clear||cls");
     printf("_________________________________________________________________________________________________\n");
@@ -130,9 +132,28 @@ void deletarEstoque(void) {
     printf("|                                         DELETAR PRODUTO                                         |\n");
     printf("|_________________________________________________________________________________________________|\n");
 
-    printf("\nInforme O ID: \n");
-    printf("\n>>> Tecle <ENTER> para continuar...\n");
+    char idProduto[50];
+    printf("\nInforme o ID: \n");
+    scanf("%s", idProduto);
     getchar();
+
+    exibirProduto(idProduto);
+
+    int excluir;
+    printf("\nTem certeza que deseja excluir esse produto? (0 - excluir / 1 - cancelar operação): ");
+    scanf("%d", &excluir);
+    getchar();
+
+    if (excluir == 0) {
+        deletarProduto(idProduto);
+        printf("\nProduto removido com sucesso.");
+        printf("\n>>> Tecle <ENTER> para continuar...\n");
+        getchar();
+    } else {
+        printf("\nOperação cancelada.");
+        printf("\n>>> Tecle <ENTER> para continuar...\n");
+        getchar();
+    }
 }
 
 void opcaoEstoque(void) {
@@ -214,6 +235,28 @@ void exibirProduto(char idProduto[]) {
         }
     }
 }
+
+void deletarProduto(char idProduto[]) {
+    Estoque * estoque;
+    estoque = (Estoque *) malloc(sizeof(Estoque));
+
+    FILE * arquivo;
+    arquivo = fopen("./dados/estoque.bin", "r+b");
+
+    int encontrado = False;
+    
+    while (fread(estoque, sizeof(Estoque), 1, arquivo) && encontrado == False) {
+        if (strcmp(idProduto, estoque->id) == 0) {
+            estoque->status = False;
+            encontrado = True;
+            fseek(arquivo, (-1) * sizeof(Estoque), SEEK_CUR);
+            fwrite(estoque, sizeof(Estoque), 1, arquivo);
+            fclose(arquivo);
+        }
+    }
+    free(estoque);
+}
+
 void criaDiretorio(void) {
     // Função adaptada de:
     // https://linux.die.net/man/2/mkdir e https://stackoverflow.com/questions/7430248/creating-a-new-directory-in-c
