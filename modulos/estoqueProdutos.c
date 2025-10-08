@@ -5,6 +5,8 @@
 #include <errno.h>
 #include "include/estoqueProdutos.h"
 
+void criarDiretorio(void);
+
 void telaEstoque(void) {
     system("clear||cls");
     printf("_________________________________________________________________________________________________\n");
@@ -53,16 +55,7 @@ void cadastroEstoque(void) {
     scanf("%s", estoque->valor);
     getchar();
     
-    // Função adaptada de:
-    // https://linux.die.net/man/2/mkdir e https://stackoverflow.com/questions/7430248/creating-a-new-directory-in-c
-    // Criando diretório para armazenamento de dados
-    int status = mkdir("dados", 0700);
-    if (status < 0 && errno != EEXIST)
-    {
-        printf("Houve um erro na criação do diretório de armazenamento de dados. O programa será finalizado.");
-        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
-        getchar();
-    }
+    criarDiretorio();
     
     // Criando o arquivo
     FILE * arquivo;
@@ -209,4 +202,17 @@ void opcaoEstoque(void) {
 
         }
     } while (opcao != '0');
+}
+
+void criaDiretorio(void) {
+    // Função adaptada de:
+    // https://linux.die.net/man/2/mkdir e https://stackoverflow.com/questions/7430248/creating-a-new-directory-in-c
+    // Criando diretório para armazenamento de dados
+    int status = mkdir("dados", 0700);
+    if (status < 0 && errno != EEXIST)
+    {
+        printf("Houve um erro na criação do diretório de armazenamento de dados. O programa será finalizado.");
+        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
+        getchar();
+    }
 }
