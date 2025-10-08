@@ -23,9 +23,10 @@ void telaServico(void) {
     printf("|_________________________________________________________________________________________________|\n");
     printf("|                                                                                                 |\n");
     printf("|                                   1 Cadastrar                                                   |\n");
-    printf("|                                   2 Listar                                                      |\n");
-    printf("|                                   3 Atualizar                                                   |\n");
-    printf("|                                   4 Deletar                                                     |\n");
+    printf("|                                   2 Exibir                                                      |\n");
+    printf("|                                   3 Listar                                                      |\n");
+    printf("|                                   4 Atualizar                                                   |\n");
+    printf("|                                   5 Deletar                                                     |\n");
     printf("|                                   0 Sair                                                        |\n");
     printf("|_________________________________________________________________________________________________|\n\n");
 }
@@ -54,6 +55,8 @@ void cadastroServico(void) {
     scanf("%s", servico->duracao);
     getchar();
 
+    servico->status = True;
+
     // Função adaptada de:
     // https://linux.die.net/man/2/mkdir e https://stackoverflow.com/questions/7430248/creating-a-new-directory-in-c
     // Criando diretório para armazenamento de dados
@@ -66,22 +69,49 @@ void cadastroServico(void) {
     }
 
     // Criando o arquivo
-    servico->arquivoServico = fopen("./dados/servico.csv", "at");
+    FILE * arquivo;
+    arquivo = fopen("./dados/servicos.bin", "ab");
 
-    if (servico->arquivoServico == NULL)
-    {
-        printf("Erro na criação de arquivo de Servico. O programa será finalizado.");
-        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
-        getchar();
+    if (arquivo == NULL) {
+        printf("Erro na criação de arquivo Servico");
         exit(1);
     }
-    // Escrevendo no arquivo
-    fprintf(servico->arquivoServico, "%s;", servico->nome);
-    fprintf(servico->arquivoServico, "%s;", servico->id);
-    fprintf(servico->arquivoServico, "%s;", servico->valor);
-    fprintf(servico->arquivoServico, "%s\n", servico->duracao);
 
-    fclose(servico->arquivoServico);
+    fwrite(servico,sizeof(Servico),1,arquivo);
+
+    fclose(arquivo);
+    free(servico);
+}
+
+void listarServico(void){
+    Servico *servico;
+    servico = (Servico*) malloc(sizeof(Servico));
+
+    FILE * arquivo;
+    arquivo = fopen("./dados/servicos.bin", "rb");
+
+    if (arquivo == NULL) {
+        printf("Erro na abertura do arquivo Servico");
+        printf("\n>>> Tecle <ENTER> para continuar...\n");
+        getchar();
+        return;
+    }
+
+    while (fread(servico,sizeof(Servico),1,arquivo)){
+        if (servico->status == True) {
+            printf("\n\n");
+            printf("\t\t\tNome do serviço: %s\n", servico->nome);
+            printf("\t\t\tID do serviço: %s\n", servico->id);
+            printf("\t\t\tValor (R$): %s\n", servico->valor);
+            printf("\t\t\tDuração do serviço: %s\n", servico->duracao);
+        }
+    }
+
+    printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
+    getchar();
+
+    fclose(arquivo);
+    free(servico);
 }
 
 void exibeServico(void) {
@@ -89,51 +119,42 @@ void exibeServico(void) {
     printf("\n");
     printf("___________________________________________________________________________________________________\n");
     printf("|                                                                                                 |\n");
-    printf("|                                         LISTAR SERVIÇO                                          |\n");
+    printf("|                                         EXIBIR SERVIÇO                                          |\n");
     printf("|_________________________________________________________________________________________________|\n");
 
     Servico *servico;
     servico = (Servico*) malloc(sizeof(Servico));
+    FILE * arquivo;
 
     char idServico[50];
     printf("\nDigite o ID do serviço: \n");
     scanf("%s", idServico);
     getchar();
 
-    servico->arquivoServico = fopen("./dados/servico.csv", "rt");
+    arquivo = fopen("./dados/servicos.bin", "rb");
 
-    if (servico->arquivoServico == NULL)
-    {
+    if (arquivo == NULL) {
         printf("Erro na abertura do arquivo de serviço");
         printf("\n>>> Tecle <ENTER> para continuar...\n");
         getchar();
         return;
     }
 
-    while (!feof(servico->arquivoServico))
-    {
-        fscanf(servico->arquivoServico, "%[^;]", servico->nome);
-        fgetc(servico->arquivoServico);
-        fscanf(servico->arquivoServico, "%[^;]", servico->id);
-        fgetc(servico->arquivoServico);
-        fscanf(servico->arquivoServico, "%[^;]", servico->valor);
-        fgetc(servico->arquivoServico);
-        fscanf(servico->arquivoServico, "%[^\n]", servico->duracao);
-        fgetc(servico->arquivoServico);
-
-        if (strcmp(idServico, servico->id) == 0)
-        {
-            printf("\n\t\t\t <--- Serviço Encontrado ---> \n\n");
-            printf("\t\t\tNome do serviço: %s\n", servico->nome);
-            printf("\t\t\tID do serviço: %s\n", servico->id);
-            printf("\t\t\tValor (R$): %s\n", servico->valor);
-            printf("\t\t\tDuração do serviço: %s\n", servico->duracao);
-            printf("\n>>> Tecle <ENTER> para continuar...\n");
-            getchar();
-            fclose(servico->arquivoServico);
-            return;
+        while (fread(servico,sizeof(Servico),1,arquivo)){
+            if(strcmp(idServico,servico->id) == 0 && servico->status == True){
+                printf("\n\t\t\t <--- Servico Encontrado ---> \n\n");
+                printf("\t\t\tNome do serviço: %s\n", servico->nome);
+                printf("\t\t\tID do serviço: %s\n", servico->id);
+                printf("\t\t\tValor (R$): %s\n", servico->valor);
+                printf("\t\t\tDuração do serviço: %s\n", servico->duracao);
+                printf("\n>>> Tecle <ENTER> para continuar...\n");
+                getchar();
+                fclose(arquivo);
+                return;
+            }
         }
-    }
+
+    free(servico);
 }
 
 void atualizarServico(void) {
@@ -185,10 +206,14 @@ void opcaoServicos(void) {
                 break;
 
             case '3':
+                listarServico();
+                break;
+            
+            case '4':
                 atualizarServico();
                 break;
 
-            case '4':
+            case '5':
                 deletarServico();
                 break;
         }

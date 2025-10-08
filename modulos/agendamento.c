@@ -152,7 +152,7 @@ void exibeAgendamento(void) {
 
         while (fread(agendamento,sizeof(Agendamento),1,arquivo)){
             if(strcmp(idAgendamento,agendamento->id) == 0 && agendamento->status == True){
-                printf("\n\t\t\t <--- Cliente Encontrado ---> \n\n");
+                printf("\n\t\t\t <--- Agendamento Encontrado ---> \n\n");
                 printf("\t\t\tID: %s\n",agendamento->id);
                 printf("\t\t\tCPF: %s\n",agendamento->cpfCliente);
                 printf("\t\t\tNome: %s\n",agendamento->nomeCliente);
