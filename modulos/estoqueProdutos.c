@@ -7,7 +7,7 @@
 
 void criarDiretorio(void);
 
-void cadastrarEstoque(Estoque * estoque);
+void cadastrarProduto(Estoque * estoque);
 
 void exibirProduto(char idProduto[]);
 
@@ -62,7 +62,7 @@ void cadastroEstoque(void) {
     getchar();
     
     criarDiretorio();
-    cadastrarEstoque(estoque);
+    cadastrarProduto(estoque);
     
     free(estoque);
 }
@@ -107,7 +107,7 @@ void listaEstoque(void) {
     free(estoque);
 }
 
-void atualizarEstoque(void) {
+void atualizaProduto(void) {
     system("clear||cls");
     printf("\n");
     printf("___________________________________________________________________________________________________\n");
@@ -124,7 +124,7 @@ void atualizarEstoque(void) {
     getchar();
 }
 
-void deletarEstoque(void) {
+void deletaProduto(void) {
     system("clear||cls");
     printf("\n");
     printf("___________________________________________________________________________________________________\n");
@@ -180,18 +180,18 @@ void opcaoEstoque(void) {
                 break;
 
             case '4':
-                atualizarEstoque();
+                atualizaProduto();
                 break;
 
             case '5':
-                deletarEstoque();
+                deletaProduto();
                 break;
 
         }
     } while (opcao != '0');
 }
 
-void cadastrarEstoque(Estoque * estoque) {
+void cadastrarProduto(Estoque * estoque) {
     FILE * arquivo;
     arquivo = fopen("./dados/estoque.bin", "ab");
 
