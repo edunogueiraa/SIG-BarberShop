@@ -7,6 +7,8 @@
 
 void criarDiretorio(void);
 
+void cadastrarEstoque(Estoque * estoque);
+
 void telaEstoque(void) {
     system("clear||cls");
     printf("_________________________________________________________________________________________________\n");
@@ -56,23 +58,8 @@ void cadastroEstoque(void) {
     getchar();
     
     criarDiretorio();
+    cadastrarEstoque(estoque);
     
-    // Criando o arquivo
-    FILE * arquivo;
-    arquivo = fopen("./dados/estoque.bin", "ab");
-
-    if (arquivo == NULL)
-    {
-        printf("Erro na criação de arquivo de Estoque. O programa será finalizado.");
-        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
-        getchar();
-        exit(1);
-    }
-    // Escrevendo no arquivo
-    estoque->status = True;
-    fwrite(estoque, sizeof(Estoque), 1, arquivo);
-
-    fclose(arquivo);
     free(estoque);
 }
 
@@ -202,6 +189,24 @@ void opcaoEstoque(void) {
 
         }
     } while (opcao != '0');
+}
+
+void cadastrarEstoque(Estoque * estoque) {
+    FILE * arquivo;
+    arquivo = fopen("./dados/estoque.bin", "ab");
+
+    if (arquivo == NULL)
+    {
+        printf("Erro na criação de arquivo de Estoque. O programa será finalizado.");
+        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
+        getchar();
+        exit(1);
+    }
+
+    estoque->status = True;
+    fwrite(estoque, sizeof(Estoque), 1, arquivo);
+
+    fclose(arquivo);
 }
 
 void criaDiretorio(void) {
