@@ -11,6 +11,8 @@ void cadastrarProduto(Estoque * estoque);
 
 void exibirProduto(char idProduto[]);
 
+void atualizarProduto(char idProduto[], int opcao);
+
 void deletarProduto(char idProduto[]);
 
 void telaEstoque(void) {
@@ -115,13 +117,27 @@ void atualizaProduto(void) {
     printf("|                                         ATUALIZAR PRODUTO                                       |\n");
     printf("|_________________________________________________________________________________________________|\n");
 
-    printf("\nInforme o ID: \n");
-    printf("\nNome: \n");
-    printf("ID: \n");
-    printf("Tipo: \n");
-    printf("Valor (R$): \n");
-    printf("\n>>> Tecle <ENTER> para continuar...\n");
+    char idProduto[50];
+    printf("\nInforme o CPF (apenas numeros): ");
+    scanf("%[^\n]", idProduto);
     getchar();
+
+    int opcao = 0;
+    do {
+        system("clear||cls");
+        exibirProduto(idProduto);
+
+        printf("\nQual dado você deseja alterar?\n");
+        printf("\n1 Nome");
+        printf("\n2 Tipo");
+        printf("\n3 Valor");
+        printf("\n0 Finalizar operação\n");
+        scanf("%d", &opcao);
+        getchar();
+        if (opcao != 0) {
+            atualizarProduto(idProduto, opcao);
+        }
+    } while (opcao != 0);
 }
 
 void deletaProduto(void) {
@@ -234,6 +250,44 @@ void exibirProduto(char idProduto[]) {
             return;
         }
     }
+}
+
+void atualizarProduto(char idProduto[], int opcao) {
+    char dado[50];
+    if (opcao == 1) {
+        printf("\nNome do produto: ");
+        scanf("%[^\n]", dado);
+    } else if (opcao == 2) {
+        printf("\nTipo do produto: ");
+        scanf("%[^\n]", dado);
+    } else if (opcao == 3) {
+        printf("\nValor do produto: ");
+        scanf("%[^\n]", dado);
+    }
+
+    Estoque * estoque;
+    estoque = (Estoque *) malloc(sizeof(Estoque));
+
+    FILE * arquivo = fopen("./dados/estoque.bin", "r+b");
+    int encontrado = False;
+
+    while (fread(estoque, sizeof(Estoque), 1, arquivo) && encontrado == False) {
+        if (strcmp(idProduto, estoque->id) == 0) {
+            if (opcao == 1) {
+                strcpy(estoque->nome, dado);
+            } else if (opcao == 2) {
+                strcpy(estoque->tipo, dado);
+            } else if (opcao == 3) {
+                strcpy(estoque->valor, dado);
+            }
+            
+            encontrado = True;
+            fseek(arquivo, (-1) * sizeof(Estoque), SEEK_CUR);
+            fwrite(estoque, sizeof(Estoque), 1, arquivo);
+            fclose(arquivo);
+        }
+    }
+    free(estoque);
 }
 
 void deletarProduto(char idProduto[]) {
