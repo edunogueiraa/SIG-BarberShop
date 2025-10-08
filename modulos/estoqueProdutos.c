@@ -79,6 +79,8 @@ void exibeProduto(void) {
     getchar();
 
     exibirProduto(idProduto);
+    printf("\n>>> Tecle <ENTER> para continuar...\n");
+    getchar();
 }
 
 void listaEstoque(void) {
@@ -208,15 +210,9 @@ void exibirProduto(char idProduto[]) {
             printf("\t\t\tTipo do produto: %s\n", estoque->tipo);
             printf("\t\t\tValor (R$): %s\n", estoque->valor);
             fclose(arquivo);
-            printf("\n>>> Tecle <ENTER> para continuar...\n");
-            getchar();
             return;
         }
     }
-
-    printf("\n>>> Nenhum produto com esse ID foi encontrado.\n");
-    printf("\n>>> Tecle <ENTER> para continuar...\n");
-    getchar();
 }
 void criaDiretorio(void) {
     // Função adaptada de:
