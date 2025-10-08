@@ -90,7 +90,7 @@ void cadastroAgendamento(void) {
 
 }
 
-void listarAgendamento(void){
+void listarAgendamento(void) {
     Agendamento *agendamento;
     agendamento = (Agendamento*) malloc(sizeof(Agendamento));
 
@@ -177,10 +177,63 @@ void atualizarAgendamento(void) {
     printf("|                                         ATUALIZAR AGENDAMENTO                                   |\n");
     printf("|_________________________________________________________________________________________________|\n");
 
-    printf("\nDigite o ID do agendamento: \n");
+    Agendamento *agendamento;
+    agendamento = (Agendamento*) malloc(sizeof(Agendamento));
 
-    printf("\n>>> Tecle <ENTER> para continuar...\n");
+    FILE * arquivo;
+    int encontrado = False;
+    char idAgendamento[50];
+    
+    printf("\nDigite o ID do agendamento: ");
+    scanf("%s", idAgendamento);
     getchar();
+
+    arquivo = fopen("./dados/agendamentos.bin", "r+b");
+    while(fread(agendamento,sizeof(Agendamento),1,arquivo) && (!encontrado)){
+        if (strcmp(idAgendamento,agendamento->id) == 0) {
+            printf("Digite o CPF do cliente (apenas numeros): ");
+            char cpf[50];    
+            scanf("%s", cpf);
+            strcpy(agendamento->cpfCliente,cpf);
+
+            char nome[50]; 
+            printf("Digite o nome do cliente: ");    
+            scanf("%s", nome);
+            strcpy(agendamento->nomeCliente,nome);
+
+            char idServico[50]; 
+            printf("Digite o ID do serviço: ");    
+            scanf("%s", idServico);
+            strcpy(agendamento->idServico,idServico);
+
+            char data[50]; 
+            printf("Data: ");    
+            scanf("%s", data);
+            strcpy(agendamento->data,data);
+
+            char horario[50]; 
+            printf("Horário: ");    
+            scanf("%s", horario);
+            strcpy(agendamento->hora,horario);
+            getchar();
+     
+            encontrado = True;
+
+            //voltar uma posição para a exclusao
+            fseek(arquivo,(-1)*sizeof(Agendamento),SEEK_CUR);
+            fwrite(agendamento,sizeof(Agendamento),1,arquivo);
+        }
+    }
+
+    if(!encontrado){
+        printf("Agendamento não encontrado");
+        return;
+    }
+
+    printf("Atualização feita com sucesso!");
+    fclose(arquivo);
+    free(agendamento);
+
 }
 
 void deletarAgendamento(void) {
@@ -191,10 +244,36 @@ void deletarAgendamento(void) {
     printf("|                                         DELETAR AGENDAMENTO                                     |\n");
     printf("|_________________________________________________________________________________________________|\n");
 
-    printf("\nDigite o ID do agendamento: \n");
+    Agendamento *agendamento;
+    agendamento = (Agendamento*) malloc(sizeof(Agendamento));
 
-    printf("\n>>> Tecle <ENTER> para continuar...\n");
+    FILE * arquivo;
+    int encontrado = False;
+    char idAgendamento[50];
+    
+    printf("\nDigite o ID do agendamento: ");
+    scanf("%s", idAgendamento);
     getchar();
+
+    arquivo = fopen("./dados/agendamentos.bin", "r+b");
+    while(fread(agendamento,sizeof(Agendamento),1,arquivo) && (!encontrado)){
+        if (strcmp(idAgendamento,agendamento->id) == 0) {
+            agendamento->status = False;
+            encontrado = True;
+
+            //voltar uma posição para a exclusao
+            fseek(arquivo,(-1)*sizeof(Agendamento),SEEK_CUR);
+            fwrite(agendamento,sizeof(Agendamento),1,arquivo);
+        }
+    }
+
+    fclose(arquivo);
+    free(agendamento);
+
+    if(!encontrado){
+        printf("Agendamento não encontrado");
+    }
+    
 }
 
 void opcaoAgendamento() {
