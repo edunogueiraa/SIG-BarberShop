@@ -9,6 +9,8 @@ void criarDiretorio(void);
 
 void cadastrarEstoque(Estoque * estoque);
 
+void exibirProduto(char idProduto[]);
+
 void telaEstoque(void) {
     system("clear||cls");
     printf("_________________________________________________________________________________________________\n");
@@ -70,38 +72,13 @@ void exibeProduto(void) {
     printf("|                                                                                                 |\n");
     printf("|                                          EXIBIR PRODUTO                                         |\n");
     printf("|_________________________________________________________________________________________________|\n");
-
-    Estoque * estoque;
-    estoque = (Estoque *) malloc(sizeof(Estoque));
     
     char idProduto[50];
     printf("\nInforme o ID: \n");
     scanf("%s", idProduto);
     getchar();
-    
-    FILE * arquivo;
-    arquivo = fopen("./dados/estoque.bin", "rt");
 
-    if (arquivo == NULL) {
-        printf("Erro na abertura do arquivo de estoque");
-        printf("\n>>> Tecle <ENTER> para continuar...\n");
-        getchar();
-        return;
-    }
-
-    while (fread(estoque, sizeof(Estoque), 1, arquivo)) {
-        if (strcmp(idProduto, estoque->id) == 0 && estoque->status == True) {
-            printf("\n\t\t\t <--- Produto Encontrado ---> \n\n");
-            printf("\t\t\tNome do produto: %s\n", estoque->nome);
-            printf("\t\t\tID do produto: %s\n", estoque->id);
-            printf("\t\t\tTipo do produto: %s\n", estoque->tipo);
-            printf("\t\t\tValor (R$): %s\n", estoque->valor);
-            printf("\n>>> Tecle <ENTER> para continuar...\n");
-            getchar();
-            fclose(arquivo);
-            return;
-        }
-    }
+    exibirProduto(idProduto);
 }
 
 void listaEstoque(void) {
@@ -209,6 +186,38 @@ void cadastrarEstoque(Estoque * estoque) {
     fclose(arquivo);
 }
 
+void exibirProduto(char idProduto[]) {
+    Estoque * estoque;
+    estoque = (Estoque *) malloc(sizeof(Estoque));
+
+    FILE * arquivo;
+    arquivo = fopen("./dados/estoque.bin", "rt");
+
+    if (arquivo == NULL) {
+        printf("Erro na abertura do arquivo de estoque");
+        printf("\n>>> Tecle <ENTER> para continuar...\n");
+        getchar();
+        return;
+    }
+
+    while (fread(estoque, sizeof(Estoque), 1, arquivo)) {
+        if (strcmp(idProduto, estoque->id) == 0 && estoque->status == True) {
+            printf("\n\t\t\t <--- Produto Encontrado ---> \n\n");
+            printf("\t\t\tNome do produto: %s\n", estoque->nome);
+            printf("\t\t\tID do produto: %s\n", estoque->id);
+            printf("\t\t\tTipo do produto: %s\n", estoque->tipo);
+            printf("\t\t\tValor (R$): %s\n", estoque->valor);
+            fclose(arquivo);
+            printf("\n>>> Tecle <ENTER> para continuar...\n");
+            getchar();
+            return;
+        }
+    }
+
+    printf("\n>>> Nenhum produto com esse ID foi encontrado.\n");
+    printf("\n>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+}
 void criaDiretorio(void) {
     // Função adaptada de:
     // https://linux.die.net/man/2/mkdir e https://stackoverflow.com/questions/7430248/creating-a-new-directory-in-c
