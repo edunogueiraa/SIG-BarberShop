@@ -147,7 +147,7 @@ void atualizaCliente(void) {
         printf("\n2 Email");
         printf("\n3 Data de nascimento");
         printf("\n4 Celular");
-        printf("\n0 Finalizar operação\n");
+        printf("\n0 Finalizar operação\n\n");
         scanf("%d", &opcao);
         getchar();
         if (opcao != 0) {

@@ -133,7 +133,7 @@ void atualizaProduto(void) {
         printf("\n1 Nome");
         printf("\n2 Tipo");
         printf("\n3 Valor");
-        printf("\n0 Finalizar operação\n");
+        printf("\n0 Finalizar operação\n\n");
         scanf("%d", &opcao);
         getchar();
         if (opcao != 0) {
