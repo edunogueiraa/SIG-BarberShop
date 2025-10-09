@@ -324,34 +324,24 @@ void exibirCliente(char cpfCliente[]) {
     Cliente * cliente;
     cliente = (Cliente*) malloc(sizeof(Cliente));
 
-    cliente->arquivo = fopen("./dados/clientes.csv", "rt");
+    FILE * arquivo = fopen("./dados/clientes.bin", "rb");
 
-    if (cliente->arquivo == NULL) {
+    if (arquivo == NULL) {
         printf("Erro na abertura do arquivo clientes");
         printf("\n>>> Tecle <ENTER> para continuar...\n");
         getchar();
         return;
     }
 
-    while (fscanf(cliente->arquivo, "%[^;]", cliente->nome) == 1) {
-        fgetc(cliente->arquivo);
-        fscanf(cliente->arquivo, "%[^;]", cliente->cpf);
-        fgetc(cliente->arquivo);
-        fscanf(cliente->arquivo, "%[^;]", cliente->email);
-        fgetc(cliente->arquivo);
-        fscanf(cliente->arquivo, "%[^;]", cliente->data);
-        fgetc(cliente->arquivo);
-        fscanf(cliente->arquivo, "%[^\n]", cliente->celular);
-        fgetc(cliente->arquivo);
-
-        if(strcmp(cliente->cpf, cpfCliente) == 0) {
+    while (fread(cliente, sizeof(Cliente), 1, arquivo)) {
+        if(strcmp(cliente->cpf, cpfCliente) == 0 && cliente->status == True) {
             printf("\n\t\t\t <--- Cliente Encontrado ---> \n\n");
             printf("\t\t\tNome: %s\n", cliente->nome);
             printf("\t\t\tCPF: %s\n", cliente->cpf);
             printf("\t\t\tEmail: %s\n", cliente->email);
             printf("\t\t\tData: %s\n", cliente->data);
             printf("\t\t\tCelular: %s\n", cliente->celular);
-            fclose(cliente->arquivo);
+            fclose(arquivo);
             return;
         }
     }
