@@ -6,18 +6,13 @@
 #include "include/cliente.h"
 
 // Assinatura de funções
-
-// funções gerais
 void exibirCliente(char cpfCliente[]);
 void trocarArquivos(char antigo[], char novo[]);
 void criarDiretorio(void);
-
 void cadastrarCliente(Cliente * cliente);
-
 void receberNovoDado(char cpfCliente[], int opcao);
 void atualizarCliente(char cpfCliente[], int opcao, char novoDado[]);
 void atualizarDado(Cliente * cliente, int opcao, char novoDado[], FILE * arquivo);
-
 void deletarCliente(char cpfCliente[]);
 
 void telaCliente(void) {
