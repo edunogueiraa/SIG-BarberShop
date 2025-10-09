@@ -10,9 +10,7 @@ void exibirCliente(char cpfCliente[]);
 void trocarArquivos(char antigo[], char novo[]);
 void criarDiretorio(void);
 void cadastrarCliente(Cliente * cliente);
-void receberNovoDado(char cpfCliente[], int opcao);
 void atualizarCliente(char cpfCliente[], int opcao);
-void atualizarDado(Cliente * cliente, int opcao, char novoDado[], FILE * arquivo);
 void deletarCliente(char cpfCliente[]);
 
 void telaCliente(void) {
@@ -242,10 +240,6 @@ void cadastrarCliente(Cliente * cliente) {
     fclose(arquivo);
 }
 
-// Funcões de atualização de cliente
-void receberNovoDado(char cpfCliente[], int opcao) {
-    atualizarCliente(cpfCliente, opcao);
-}
 void atualizarCliente(char cpfCliente[], int opcao) {
     char dado[50];
     if (opcao == 1) {
@@ -288,33 +282,6 @@ void atualizarCliente(char cpfCliente[], int opcao) {
     }
     fclose(arquivo);
     free(cliente);
-}
-void atualizarDado(Cliente * cliente, int opcao, char novoDado[], FILE * arquivo) {
-    if (opcao == 1) {
-        fprintf(arquivo, "%s;", novoDado);
-        fprintf(arquivo, "%s;", cliente->cpf);
-        fprintf(arquivo, "%s;", cliente->email);
-        fprintf(arquivo, "%s;", cliente->data);
-        fprintf(arquivo, "%s\n", cliente->celular);
-    } else if (opcao == 2) {
-        fprintf(arquivo, "%s;", cliente->nome);
-        fprintf(arquivo, "%s;", cliente->cpf);
-        fprintf(arquivo, "%s;", novoDado);
-        fprintf(arquivo, "%s;", cliente->data);
-        fprintf(arquivo, "%s\n", cliente->celular);
-    } else if (opcao == 3) {
-        fprintf(arquivo, "%s;", cliente->nome);
-        fprintf(arquivo, "%s;", cliente->cpf);
-        fprintf(arquivo, "%s;", cliente->email);
-        fprintf(arquivo, "%s;", novoDado);
-        fprintf(arquivo, "%s\n", cliente->celular);
-    } else if (opcao == 4) {
-        fprintf(arquivo, "%s;", cliente->nome);
-        fprintf(arquivo, "%s;", cliente->cpf);
-        fprintf(arquivo, "%s;", cliente->email);
-        fprintf(arquivo, "%s;", cliente->data);
-        fprintf(arquivo, "%s\n", novoDado);
-    }
 }
 
 void deletarCliente(char cpfCliente[]) {
