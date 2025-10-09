@@ -5,14 +5,11 @@
 #include <errno.h>
 #include "include/estoqueProdutos.h"
 
+// Assinatura de funções
 void criarDiretorio(void);
-
 void cadastrarProduto(Estoque * estoque);
-
 void exibirProduto(char idProduto[]);
-
 void atualizarProduto(char idProduto[], int opcao);
-
 void deletarProduto(char idProduto[]);
 
 void telaEstoque(void) {
