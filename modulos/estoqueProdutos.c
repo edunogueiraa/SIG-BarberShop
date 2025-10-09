@@ -85,6 +85,12 @@ void exibeProduto(void) {
 }
 
 void listaEstoque(void) {
+    system("clear||cls");
+    printf("\n");
+    printf("___________________________________________________________________________________________________\n");
+    printf("|                                                                                                 |\n");
+    printf("|                                         ESTOQUE COMPLETO                                        |\n");
+    printf("|_________________________________________________________________________________________________|\n");
     Estoque * estoque;
     estoque = (Estoque *) malloc(sizeof(Estoque));
 

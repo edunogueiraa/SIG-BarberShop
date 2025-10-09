@@ -92,6 +92,12 @@ void exibeCliente(void) {
 }
 
 void listaClientes(void) {
+    system("clear||cls");
+    printf("\n");
+    printf("___________________________________________________________________________________________________\n");
+    printf("|                                                                                                 |\n");
+    printf("|                                        LISTA DE CLIENTES                                        |\n");
+    printf("|_________________________________________________________________________________________________|\n");
     Cliente * cliente;
     cliente = (Cliente *)malloc(sizeof(Cliente));
     
