@@ -1,4 +1,8 @@
+#define True 1
+#define False 0
+
 struct cliente {
+    int status;
     FILE * arquivo;
     char nome[50];
     char cpf[50];
