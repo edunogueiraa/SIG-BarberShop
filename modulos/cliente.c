@@ -292,32 +292,20 @@ void deletarCliente(char cpfCliente[]) {
     Cliente * cliente;
     cliente = (Cliente*) malloc(sizeof(Cliente));
 
-    cliente->arquivo = fopen("./dados/clientes.csv", "rt");
-    FILE * arquivoNovo = fopen("./dados/clientes_temp.csv", "wt");
+    FILE * arquivo = fopen("./dados/clientes.bin", "r+b");
 
-    while (fscanf(cliente->arquivo, "%[^;]", cliente->nome) == 1) {
-        fgetc(cliente->arquivo);
-        fscanf(cliente->arquivo, "%[^;]", cliente->cpf);
-        fgetc(cliente->arquivo);
-        fscanf(cliente->arquivo, "%[^;]", cliente->email);
-        fgetc(cliente->arquivo);
-        fscanf(cliente->arquivo, "%[^;]", cliente->data);
-        fgetc(cliente->arquivo);
-        fscanf(cliente->arquivo, "%[^\n]", cliente->celular);
-        fgetc(cliente->arquivo);
-        
-        if (strcmp(cliente->cpf, cpfCliente) != 0) {
-            fprintf(arquivoNovo, "%s;", cliente->nome);
-            fprintf(arquivoNovo, "%s;", cliente->cpf);
-            fprintf(arquivoNovo, "%s;", cliente->email);
-            fprintf(arquivoNovo, "%s;", cliente->data);
-            fprintf(arquivoNovo, "%s\n", cliente->celular);
+    int encontrado = False;
+    while (fread(cliente, sizeof(Cliente), 1, arquivo) && encontrado == False) {
+        if (strcmp(cliente->cpf, cpfCliente) == 0) {
+            cliente->status = False;
+            encontrado = True;
+            fseek(arquivo, (-1) * sizeof(Cliente), SEEK_CUR);
+            fwrite(cliente, sizeof(Cliente), 1, arquivo);
+            fclose(arquivo);
         }
     }
-    fclose(arquivoNovo);
-    fclose(cliente->arquivo);
-
-    trocarArquivos("./dados/clientes.csv", "./dados/clientes_temp.csv");
+    free(cliente);
+    fclose(arquivo);
 }
 
 void exibirCliente(char cpfCliente[]) {
