@@ -33,7 +33,8 @@ void telaCliente(void) {
     printf("|_________________________________________________________________________________________________|\n");
     printf("|                                                                                                 |\n");
     printf("|                                   1 Cadastrar                                                   |\n");
-    printf("|                                   2 Listar                                                      |\n");
+    printf("|                                   2 Exibir                                                      |\n");
+    printf("|                                   3 Listar                                                      |\n");
     printf("|                                   3 Atualizar                                                   |\n");
     printf("|                                   4 Deletar                                                     |\n");
     printf("|                                   0 Sair                                                        |\n");
@@ -86,6 +87,33 @@ void exibeCliente(void) {
     getchar();
 
     exibirCliente(cpfCliente);
+    printf("\n>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+}
+
+void listaClientes(void) {
+    Cliente * cliente;
+    cliente = (Cliente *)malloc(sizeof(Cliente));
+    
+    FILE * arquivo = fopen("./dados/clientes.bin", "rb");
+
+    if (arquivo == NULL) {
+        printf("Erro na abertura do arquivo clientes");
+        printf("\n>>> Tecle <ENTER> para continuar...\n");
+        getchar();
+        return;
+    }
+
+    while (fread(cliente, sizeof(Cliente), 1, arquivo)) {
+        printf("\n\t\t\tNome: %s\n", cliente->nome);
+        printf("\t\t\tCPF: %s\n", cliente->cpf);
+        printf("\t\t\tEmail: %s\n", cliente->email);
+        printf("\t\t\tData: %s\n", cliente->data);
+        printf("\t\t\tCelular: %s\n", cliente->celular);
+    }
+    fclose(arquivo);
+    free(cliente);
+
     printf("\n>>> Tecle <ENTER> para continuar...\n");
     getchar();
 }
@@ -165,21 +193,25 @@ void opcaoCliente(void) {
         printf("Digite a opção desejada: ");
         scanf("%c", &opcao);
         getchar();
-
+        
         switch (opcao) {
             case '1':
-                cadastroCliente();
-                break;
-
+            cadastroCliente();
+            break;
+            
             case '2':
-                exibeCliente();
-                break;
-
+            exibeCliente();
+            break;
+            
             case '3':
-                atualizaCliente();
+                listaClientes();
                 break;
 
             case '4':
+                atualizaCliente();
+                break;
+
+            case '5':
                 deletaCliente();
                 break;
         }
