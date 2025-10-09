@@ -91,8 +91,7 @@ void listaEstoque(void) {
     Estoque * estoque;
     estoque = (Estoque *) malloc(sizeof(Estoque));
 
-    FILE * arquivo;
-    arquivo = fopen("./dados/estoque.bin", "rb");
+    FILE * arquivo = fopen("./dados/estoque.bin", "rb");
 
     while (fread(estoque, sizeof(Estoque), 1, arquivo)) {
         if (estoque->status == True) {
@@ -208,8 +207,7 @@ void opcaoEstoque(void) {
 }
 
 void cadastrarProduto(Estoque * estoque) {
-    FILE * arquivo;
-    arquivo = fopen("./dados/estoque.bin", "ab");
+    FILE * arquivo = fopen("./dados/estoque.bin", "ab");
 
     if (arquivo == NULL)
     {
@@ -229,8 +227,7 @@ void exibirProduto(char idProduto[]) {
     Estoque * estoque;
     estoque = (Estoque *) malloc(sizeof(Estoque));
 
-    FILE * arquivo;
-    arquivo = fopen("./dados/estoque.bin", "rt");
+    FILE * arquivo = fopen("./dados/estoque.bin", "rt");
 
     if (arquivo == NULL) {
         printf("Erro na abertura do arquivo de estoque");
@@ -294,8 +291,7 @@ void deletarProduto(char idProduto[]) {
     Estoque * estoque;
     estoque = (Estoque *) malloc(sizeof(Estoque));
 
-    FILE * arquivo;
-    arquivo = fopen("./dados/estoque.bin", "r+b");
+    FILE * arquivo = fopen("./dados/estoque.bin", "r+b");
 
     int encontrado = False;
     
