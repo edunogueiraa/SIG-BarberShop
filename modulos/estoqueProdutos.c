@@ -92,10 +92,10 @@ void listaEstoque(void) {
 
     while (fread(estoque, sizeof(Estoque), 1, arquivo)) {
         if (estoque->status == True) {
-            printf("\t\t\tNome do produto: %s\n", estoque->nome);
+            printf("\n\t\t\tNome do produto: %s\n", estoque->nome);
             printf("\t\t\tID do produto: %s\n", estoque->id);
             printf("\t\t\tTipo do produto: %s\n", estoque->tipo);
-            printf("\t\t\tValor (R$): %s\n\n", estoque->valor);
+            printf("\t\t\tValor (R$): %s\n", estoque->valor);
         }
     }
     printf("\n>>> Tecle <ENTER> para continuar...\n");
