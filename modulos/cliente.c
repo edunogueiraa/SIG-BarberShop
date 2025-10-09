@@ -193,21 +193,20 @@ void opcaoCliente(void) {
 
 void cadastrarCliente(Cliente * cliente) {
     criarDiretorio();
-    cliente->arquivo = fopen("./dados/clientes.csv", "at");
+    FILE * arquivo = fopen("./dados/clientes.bin", "ab");
 
-    if (cliente->arquivo == NULL) {
+    if (arquivo == NULL) {
         printf("Erro na criação de arquivo de Clientes. O programa será finalizado.");
         printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
         getchar();
         exit(1);
     }
-    fprintf(cliente->arquivo, "%s;", cliente->nome);
-    fprintf(cliente->arquivo, "%s;", cliente->cpf);
-    fprintf(cliente->arquivo, "%s;", cliente->email);
-    fprintf(cliente->arquivo, "%s;", cliente->data);
-    fprintf(cliente->arquivo, "%s\n", cliente->celular);
+    
+    cliente->status = True;
+    fwrite(cliente, sizeof(Cliente), 1, arquivo);
 
-    fclose(cliente->arquivo);
+    free(cliente);
+    fclose(arquivo);
 }
 
 // Funcões de atualização de cliente
