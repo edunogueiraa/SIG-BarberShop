@@ -14,6 +14,6 @@ typedef struct servico Servico;
 void telaServico(void);
 void cadastroServico(void);
 void exibeServico(void);
-void atualizarServico(void);
-void deletarServico(void);
+void atualizaServico(void);
+void deletaServico(void);
 void opcaoServicos(void);
