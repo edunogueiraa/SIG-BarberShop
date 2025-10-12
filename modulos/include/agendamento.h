@@ -15,9 +15,9 @@ typedef struct agendamento Agendamento;
 
 void telaAgendamento(void);
 void cadastroAgendamento(void);
-void listarAgendamento(void);
+void listaAgendamento(void);
 void exibeAgendamento(void);
-void atualizarAgendamento(void);
-void deletarAgendamento(void);
+void atualizaAgendamento(void);
+void deletaAgendamento(void);
 void opcaoAgendamento(void);
 
