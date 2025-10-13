@@ -33,8 +33,8 @@ void telaCliente(void) {
     printf("|                                   1 Cadastrar                                                   |\n");
     printf("|                                   2 Exibir                                                      |\n");
     printf("|                                   3 Listar                                                      |\n");
-    printf("|                                   3 Atualizar                                                   |\n");
-    printf("|                                   4 Deletar                                                     |\n");
+    printf("|                                   4 Atualizar                                                   |\n");
+    printf("|                                   5 Deletar                                                     |\n");
     printf("|                                   0 Sair                                                        |\n");
     printf("|_________________________________________________________________________________________________|\n\n");
 
@@ -200,12 +200,12 @@ void opcaoCliente(void) {
         
         switch (opcao) {
             case '1':
-            cadastroCliente();
-            break;
+                cadastroCliente();
+                break;
             
             case '2':
-            exibeCliente();
-            break;
+                exibeCliente();
+                break;
             
             case '3':
                 listaClientes();
