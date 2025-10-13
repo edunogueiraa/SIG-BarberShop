@@ -1,5 +1,8 @@
+#define True 1
+#define False 0
+
 struct estoque {
-    FILE * arquivoEstoque;
+    int status;
     char nome[50];
     char id[50];
     char tipo[50];

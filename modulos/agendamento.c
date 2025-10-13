@@ -5,6 +5,17 @@
 #include <string.h>
 #include "include/agendamento.h"
 
+//Inscriçoes de funcoes
+
+void exibirAgendamento(char idAgendamento[]);
+void trocarArquivosAgendamento(char antigo[], char novo[]);
+void criarDiretorioAgendamento(void);
+void cadastrarAgendamento(Agendamento * agendamento);
+void atualizarAgendamento(char idAgendamento[], int opcao);
+void deletarAgendamento(char idAgendamento[]);
+
+
+//Funcoes principais
 void telaAgendamento(void) {
     system("clear||cls");
     printf("_________________________________________________________________________________________________\n");
@@ -23,9 +34,10 @@ void telaAgendamento(void) {
     printf("|_________________________________________________________________________________________________|\n");
     printf("|                                                                                                 |\n");
     printf("|                                   1 Cadastrar                                                   |\n");
-    printf("|                                   2 Listar                                                      |\n");
-    printf("|                                   3 Atualizar                                                   |\n");
-    printf("|                                   4 Deletar                                                     |\n");
+    printf("|                                   2 Exibir                                                      |\n");
+    printf("|                                   3 Listar                                                      |\n");
+    printf("|                                   4 Atualizar                                                   |\n");
+    printf("|                                   5 Deletar                                                     |\n");
     printf("|                                   0 Sair                                                        |\n");
     printf("|_________________________________________________________________________________________________|\n\n");
 }
@@ -47,7 +59,6 @@ void cadastroAgendamento(void) {
     printf("Digite o CPF do cliente (apenas numeros): ");
     scanf("%s", agendamento->cpfCliente);
 
-    // Futuramente esse nome deve ser consultado em clientes atraves do cpf
     printf("Digite o nome do cliente: ");
     scanf("%s", agendamento->nomeCliente);
 
@@ -61,91 +72,60 @@ void cadastroAgendamento(void) {
     scanf("%s", agendamento->hora);
     getchar();
 
-    // Função adaptada de:
-    // https://linux.die.net/man/2/mkdir e https://stackoverflow.com/questions/7430248/creating-a-new-directory-in-c
-    // Criando diretório para armazenamento de dados
-    int status = mkdir("dados", 0700);
-    if (status < 0 && errno != EEXIST)
-    {
-        printf("Houve um erro na criação do diretório de armazenamento de dados. O programa será finalizado.");
-        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
-        getchar();
-    }
-
-    agendamento->arquivoAgendamento = fopen("./dados/agendamentos.csv", "at");
-
-    if (agendamento->arquivoAgendamento == NULL) {
-        printf("Erro na criação de arquivoAgendamento");
-        exit(1);
-    }
-    //Escrevendo no arquivoAgendamento
-    fprintf(agendamento->arquivoAgendamento, "%s;", agendamento->id);
-    fprintf(agendamento->arquivoAgendamento, "%s;", agendamento->cpfCliente);
-    fprintf(agendamento->arquivoAgendamento, "%s;", agendamento->nomeCliente);
-    fprintf(agendamento->arquivoAgendamento, "%s;", agendamento->idServico);
-    fprintf(agendamento->arquivoAgendamento, "%s;", agendamento->data);
-    fprintf(agendamento->arquivoAgendamento, "%s\n", agendamento->hora);
-
-    fclose(agendamento->arquivoAgendamento);
+    cadastrarAgendamento(agendamento);
 
 }
 
-void listarAgendamento(void) {
-    system("clear||cls");
-    printf("\n");
-    printf("___________________________________________________________________________________________________\n");
-    printf("|                                                                                                 |\n");
-    printf("|                                         LISTAR AGENDAMENTO                                      |\n");
-    printf("|_________________________________________________________________________________________________|\n");
-
+void listaAgendamento(void) {
     Agendamento *agendamento;
     agendamento = (Agendamento*) malloc(sizeof(Agendamento));
 
-    char idAgendamento[50];
-    printf("\nDigite o ID do agendamento: ");
-    scanf("%s", idAgendamento);
-    getchar();
+    FILE * arquivo = fopen("./dados/agendamentos.bin", "rb");
 
-    agendamento->arquivoAgendamento = fopen("./dados/agendamentos.csv", "rt");
-
-    if (agendamento->arquivoAgendamento == NULL) {
+    if (arquivo == NULL) {
         printf("Erro na abertura do arquivo Agendamento");
         printf("\n>>> Tecle <ENTER> para continuar...\n");
         getchar();
         return;
     }
 
-    while (!feof(agendamento->arquivoAgendamento)){
-        fscanf(agendamento->arquivoAgendamento, "%[^;]", agendamento->id);
-        fgetc(agendamento->arquivoAgendamento);
-        fscanf(agendamento->arquivoAgendamento, "%[^;]", agendamento->cpfCliente);
-        fgetc(agendamento->arquivoAgendamento);
-        fscanf(agendamento->arquivoAgendamento, "%[^;]", agendamento->nomeCliente);
-        fgetc(agendamento->arquivoAgendamento);
-        fscanf(agendamento->arquivoAgendamento, "%[^;]", agendamento->idServico);
-        fgetc(agendamento->arquivoAgendamento);
-        fscanf(agendamento->arquivoAgendamento, "%[^;]", agendamento->data);
-        fgetc(agendamento->arquivoAgendamento);
-        fscanf(agendamento->arquivoAgendamento, "%[^\n]", agendamento->hora);
-        fgetc(agendamento->arquivoAgendamento);
-
-        if(strcmp(agendamento->id,idAgendamento) == 0) {
-            printf("\n\t\t\t <--- Cliente Encontrado ---> \n\n");
+    while (fread(agendamento,sizeof(Agendamento),1,arquivo)){
+        if (agendamento->status == True) {
+            printf("\n\n");
             printf("\t\t\tID: %s\n",agendamento->id);
             printf("\t\t\tCPF: %s\n",agendamento->cpfCliente);
             printf("\t\t\tNome: %s\n",agendamento->nomeCliente);
             printf("\t\t\tID Servico: %s\n",agendamento->idServico);
             printf("\t\t\tData: %s\n",agendamento->data);
             printf("\t\t\tHora: %s\n",agendamento->hora);
-            printf("\n>>> Tecle <ENTER> para continuar...\n");
-            getchar();
-            fclose(agendamento->arquivoAgendamento);
-            return;
+            
         }
     }
+    fclose(arquivo);
+    free(agendamento);
+
+    printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
+    getchar();
 }
 
-void atualizarAgendamento(void) {
+void exibeAgendamento(void) {
+    system("clear||cls");
+    printf("\n");
+    printf("___________________________________________________________________________________________________\n");
+    printf("|                                                                                                 |\n");
+    printf("|                                         EXIBIR AGENDAMENTO                                      |\n");
+    printf("|_________________________________________________________________________________________________|\n");
+
+    char idAgendamento[50];
+    printf("\nDigite o ID do agendamento: ");
+    scanf("%s", idAgendamento);
+    getchar();
+
+    exibirAgendamento(idAgendamento);
+
+}
+
+void atualizaAgendamento(void) {
     system("clear||cls");
     printf("\n");
     printf("___________________________________________________________________________________________________\n");
@@ -153,13 +133,33 @@ void atualizarAgendamento(void) {
     printf("|                                         ATUALIZAR AGENDAMENTO                                   |\n");
     printf("|_________________________________________________________________________________________________|\n");
 
-    printf("\nDigite o ID do agendamento: \n");
-
-    printf("\n>>> Tecle <ENTER> para continuar...\n");
+    char idAgendamento[50];
+    printf("\nInforme o id (apenas numeros): ");
+    scanf("%[^\n]", idAgendamento);
     getchar();
+
+    int opcao;
+    do {
+        system("clear||cls");
+        exibirAgendamento(idAgendamento);
+
+        printf("\nQual dado você deseja alterar?\n");
+        printf("\n1 CPF");
+        printf("\n2 Nome");
+        printf("\n3 ID Servico");
+        printf("\n4 Data");
+        printf("\n5 Hora");
+        printf("\n0 Finalizar operação\n\n");
+        scanf("%d", &opcao);
+        getchar();
+        if (opcao != 0) {
+            atualizarAgendamento(idAgendamento, opcao);
+        }
+    } while (opcao != 0);
+
 }
 
-void deletarAgendamento(void) {
+void deletaAgendamento(void) {
     system("clear||cls");
     printf("\n");
     printf("___________________________________________________________________________________________________\n");
@@ -167,13 +167,33 @@ void deletarAgendamento(void) {
     printf("|                                         DELETAR AGENDAMENTO                                     |\n");
     printf("|_________________________________________________________________________________________________|\n");
 
-    printf("\nDigite o ID do agendamento: \n");
-
-    printf("\n>>> Tecle <ENTER> para continuar...\n");
+    char idAgendamento[50];
+    printf("\nInforme o id (apenas numeros): ");
+    scanf("%[^\n]", idAgendamento);
     getchar();
+    
+    exibirAgendamento(idAgendamento);
+
+    int excluir;
+    printf("\nTem certeza que deseja excluir esse agendamento? (0 - excluir / 1 - cancelar operação): ");
+    scanf("%d", &excluir);
+    getchar();
+
+    if (excluir == 0) {
+        deletarAgendamento(idAgendamento);
+        printf("\nAgendamento removido com sucesso.");
+        printf("\n>>> Tecle <ENTER> para continuar...\n");
+        getchar();
+    } else {
+        printf("\nOperação cancelada.");
+        printf("\n>>> Tecle <ENTER> para continuar...\n");
+        getchar();
+    }
+    
 }
 
 void opcaoAgendamento() {
+
     char opcao = '9';
 
     do{
@@ -190,18 +210,174 @@ void opcaoAgendamento() {
                 break;
 
             case '2':
-                listarAgendamento();
+                exibeAgendamento();
                 break;
 
             case '3':
-                atualizarAgendamento();
+                listaAgendamento();
                 break;
 
             case '4':
-                deletarAgendamento();
+                atualizaAgendamento();
+                break;
+
+            case '5':
+                deletaAgendamento();
                 break;
         }
 
     } while (opcao != '0');
 
+}
+
+//Funcoes adicionais
+
+void cadastrarAgendamento(Agendamento * agendamento) {
+    criarDiretorioAgendamento();
+    FILE * arquivo = fopen("./dados/agendamentos.bin", "ab");
+
+    if (arquivo == NULL) {
+        printf("Erro na criação de arquivo de Clientes. O programa será finalizado.");
+        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
+        getchar();
+        exit(1);
+    }
+    
+    agendamento->status = True;
+    fwrite(agendamento, sizeof(Agendamento), 1, arquivo);
+
+    free(agendamento);
+    fclose(arquivo);
+}
+
+void atualizarAgendamento(char idAgendamento[], int opcao) {
+    char dado[50];
+    if (opcao == 1) {
+        printf("\nCPF: ");
+        scanf("%[^\n]", dado);
+    } else if (opcao == 2) {
+        printf("\nNome: ");
+        scanf("%[^\n]", dado);
+    } else if (opcao == 3) {
+        printf("\nID Servico: ");
+        scanf("%[^\n]", dado);
+    } else if (opcao == 4) {
+        printf("\nData: ");
+        scanf("%[^\n]", dado);
+    } else if (opcao == 5) {
+        printf("\nHora: ");
+        scanf("%[^\n]", dado);
+    }
+
+    Agendamento *agendamento;
+    agendamento = (Agendamento*) malloc(sizeof(Agendamento));
+
+    FILE * arquivo = fopen("./dados/agendamentos.bin", "r+b");
+    int encontrado = False;
+
+    while (fread(agendamento, sizeof(Agendamento), 1, arquivo) && encontrado == False) {
+        if (strcmp(idAgendamento, agendamento->id) == 0) {
+            if (opcao == 1) {
+                strcpy(agendamento->cpfCliente, dado);
+            } else if (opcao == 2) {
+                strcpy(agendamento->nomeCliente, dado);
+            } else if (opcao == 3) {
+                strcpy(agendamento->idServico, dado);
+            } else if (opcao == 4) {
+                strcpy(agendamento->data, dado);
+            } else if (opcao == 5) {
+                strcpy(agendamento->hora, dado);
+            }
+            
+            encontrado = True;
+            fseek(arquivo, (-1) * sizeof(Agendamento), SEEK_CUR);
+            fwrite(agendamento, sizeof(Agendamento), 1, arquivo);
+        }
+    }
+    fclose(arquivo);
+    free(agendamento);
+}
+
+void deletarAgendamento(char idAgendamento[]) {
+    Agendamento * agendamento;
+    agendamento = (Agendamento*) malloc(sizeof(Agendamento));
+
+    FILE * arquivo = fopen("./dados/agendamentos.bin", "r+b");
+
+    int encontrado = False;
+    while (fread(agendamento, sizeof(Agendamento), 1, arquivo) && encontrado == False) {
+        if (strcmp(agendamento->id, idAgendamento) == 0) {
+            agendamento->status = False;
+            encontrado = True;
+            fseek(arquivo, (-1) * sizeof(Agendamento), SEEK_CUR);
+            fwrite(agendamento, sizeof(Agendamento), 1, arquivo);
+        }
+    }
+    free(agendamento);
+    fclose(arquivo);
+}
+
+void exibirAgendamento(char idAgendamento[]) {
+    Agendamento *agendamento;
+    agendamento = (Agendamento*) malloc(sizeof(Agendamento));
+
+    FILE * arquivo = fopen("./dados/agendamentos.bin", "rb");
+
+    if (arquivo == NULL) {
+        printf("Erro na abertura do arquivo Agendamento");
+        printf("\n>>> Tecle <ENTER> para continuar...\n");
+        getchar();
+        return;
+    }
+
+        while (fread(agendamento,sizeof(Agendamento),1,arquivo)){
+            if(strcmp(idAgendamento,agendamento->id) == 0 && agendamento->status == True){
+                printf("\n\t\t\t <--- Agendamento Encontrado ---> \n\n");
+                printf("\t\t\tID: %s\n",agendamento->id);
+                printf("\t\t\tCPF: %s\n",agendamento->cpfCliente);
+                printf("\t\t\tNome: %s\n",agendamento->nomeCliente);
+                printf("\t\t\tID Servico: %s\n",agendamento->idServico);
+                printf("\t\t\tData: %s\n",agendamento->data);
+                printf("\t\t\tHora: %s\n",agendamento->hora);
+                printf("\n>>> Tecle <ENTER> para continuar...\n");
+                getchar();
+                fclose(arquivo);
+                return;
+            }
+        }
+
+    free(agendamento);
+}
+
+void trocarArquivosAgendamento(char antigo[], char novo[]) {
+    int retorno = remove(antigo);
+    if (retorno != 0) {
+        printf("Houve um erro na exclusão. O programa será finalizado.");
+        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
+        getchar();
+        exit(1);
+    }
+
+    int renomeacao = rename(novo, antigo);
+    if (renomeacao != 0) {
+        printf("Houve um erro na renomeação do arquivo. O programa será finalizado.");
+        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
+        getchar();
+        exit(1);
+    }
+    return;
+}
+
+void criarDiretorioAgendamento(void) {
+    // Função adaptada de:
+    // https://linux.die.net/man/2/mkdir e https://stackoverflow.com/questions/7430248/creating-a-new-directory-in-c
+    // Criando diretório para armazenamento de dados
+    int status = mkdir("dados", 0700);
+    if (status < 0 && errno != EEXIST)
+    {
+        printf("Houve um erro na criação do diretório de armazenamento de dados. O programa será finalizado.");
+        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
+        getchar();
+        exit(1);
+    }
 }
