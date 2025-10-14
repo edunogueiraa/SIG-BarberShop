@@ -79,7 +79,7 @@ void exibeCliente(void) {
     printf("|_________________________________________________________________________________________________|\n");
 
 
-    char cpfCliente[50];
+    char cpfCliente[15];
     printf("\nDigite o cpf do cliente: ");
     scanf("%s", cpfCliente);
     getchar();
@@ -130,7 +130,7 @@ void atualizaCliente(void) {
     printf("|                                         ATUALIZAR CLIENTE                                       |\n");
     printf("|_________________________________________________________________________________________________|\n");
 
-    char cpfCliente[50];
+    char cpfCliente[15];
     printf("\nInforme o CPF (apenas numeros): ");
     scanf("%[^\n]", cpfCliente);
     getchar();
@@ -163,7 +163,7 @@ void deletaCliente(void) {
     printf("|                                         DELETAR CLIENTE                                         |\n");
     printf("|_________________________________________________________________________________________________|\n");
 
-    char cpfCliente[50];
+    char cpfCliente[15];
     printf("\nInforme o CPF (apenas numeros): ");
     scanf("%[^\n]", cpfCliente);
     getchar();
