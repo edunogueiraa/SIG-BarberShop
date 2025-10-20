@@ -383,8 +383,8 @@ void excluirBancoCliente(void) {
     trocarArquivosCliente("./dados/clientes.bin", "./dados/clientes_temp.bin");
     
     printf("Limpeza do banco concluída com sucesso!\n");
-    printf("Serviços mantidos: %d\n", clientesMantidos);
-    printf("Serviços removidos: %d\n", clientesRemovidos);
+    printf("Clientes mantidos: %d\n", clientesMantidos);
+    printf("Clientes removidos: %d\n", clientesRemovidos);
 }
 
 void trocarArquivosCliente(char antigo[], char novo[]) {
