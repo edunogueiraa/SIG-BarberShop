@@ -12,6 +12,7 @@ void criarDiretorio(void);
 void cadastrarCliente(Cliente * cliente);
 void atualizarCliente(char cpfCliente[], int opcao);
 void deletarCliente(char cpfCliente[]);
+void excluirBancoCliente(void);
 
 void telaCliente(void) {
     system("clear||cls");
@@ -329,6 +330,42 @@ void exibirCliente(char cpfCliente[]) {
             return;
         }
     }
+}
+
+void excluirBancoCliente(void) {
+    Cliente * cliente;
+    cliente = (Cliente *) malloc(sizeof(Cliente));
+    
+    FILE * arquivo = fopen("./dados/clientes.bin", "rb");
+    
+    FILE * arquivoTemp = fopen("./dados/clientes_temp.bin", "wb");
+    if (arquivoTemp == NULL) {
+        printf("Erro na criação de arquivo de cliente temporario. O programa será finalizado.");
+        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
+        getchar();
+        exit(1);
+    }
+
+    int clientesMantidos = 0;
+    int clientesRemovidos = 0;
+    while (fread(cliente, sizeof(Cliente), 1, arquivo) == 1) {
+        if (cliente->status == True) {
+            fwrite(cliente, sizeof(Cliente), 1, arquivoTemp);
+            clientesMantidos++;
+        } else {
+            clientesRemovidos++;
+        }
+    }
+    
+    free(cliente);
+    fclose(arquivo);
+    fclose(arquivoTemp);
+    
+    trocarArquivos("./dados/clientes.bin", "./dados/clientes_temp.bin");
+    
+    printf("Limpeza do banco concluída com sucesso!\n");
+    printf("Serviços mantidos: %d\n", clientesMantidos);
+    printf("Serviços removidos: %d\n", clientesRemovidos);
 }
 
 void trocarArquivos(char antigo[], char novo[]) {
