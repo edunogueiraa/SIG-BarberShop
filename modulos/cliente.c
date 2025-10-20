@@ -4,6 +4,7 @@
 #include <sys/stat.h>
 #include <errno.h>
 #include "include/cliente.h"
+#include "include/utils.h"
 
 // Assinatura de funções
 void cadastrarCliente(Cliente * cliente);
@@ -52,22 +53,12 @@ void cadastroCliente(void) {
     
     Cliente * cliente;
     cliente = (Cliente*) malloc(sizeof(Cliente));
-        
-    printf("\nNome completo: ");
-    scanf("%[^\n]", cliente->nome);
 
-    printf("CPF: ");
-    scanf("%s", cliente->cpf);
-
-    printf("E-mail: ");
-    scanf("%s", cliente->email);
-
-    printf("Data de Nascimento (dd/mm/aaaa): ");
-    scanf("%s", cliente->data);
-
-    printf("Celular  (apenas números): ");
-    scanf("%s", cliente->celular);
-    getchar();
+    recebeNome(cliente->nome);
+    recebeCpf(cliente->cpf);
+    recebeEmail(cliente->email);
+    recebeDataNascimento(cliente->data);
+    recebeCelular(cliente->celular);
 
     cadastrarCliente(cliente);
 }
@@ -82,9 +73,7 @@ void exibeCliente(void) {
 
 
     char cpfCliente[15];
-    printf("\nDigite o cpf do cliente: ");
-    scanf("%s", cpfCliente);
-    getchar();
+    recebeCpf(cpfCliente);
 
     exibirCliente(cpfCliente);
     printf("\n>>> Tecle <ENTER> para continuar...\n");
@@ -133,9 +122,7 @@ void atualizaCliente(void) {
     printf("|_________________________________________________________________________________________________|\n");
 
     char cpfCliente[15];
-    printf("\nInforme o CPF (apenas numeros): ");
-    scanf("%[^\n]", cpfCliente);
-    getchar();
+    recebeCpf(cpfCliente);
 
     int opcao;
     do {
@@ -166,9 +153,7 @@ void deletaCliente(void) {
     printf("|_________________________________________________________________________________________________|\n");
 
     char cpfCliente[15];
-    printf("\nInforme o CPF (apenas numeros): ");
-    scanf("%[^\n]", cpfCliente);
-    getchar();
+    recebeCpf(cpfCliente);
     
     exibirCliente(cpfCliente);
     printf("\n>>> Tecle <ENTER> para continuar...\n");
