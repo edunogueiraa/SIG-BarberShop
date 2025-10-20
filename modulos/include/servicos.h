@@ -16,4 +16,5 @@ void cadastroServico(void);
 void exibeServico(void);
 void atualizaServico(void);
 void deletaServico(void);
+void limparBancoServico(void); 
 void opcaoServicos(void);

@@ -54,17 +54,17 @@ int main() {
 
                 do{
                     opcaoSair = telaSair();
-                    if (opcaoSair == '1') {
+                    if (opcaoSair == '0') {
                         opcaoPrincipal = '0';
                         printf("\nEncerrando sistema!\n\n");
                         sleep(1);
                         printf("\nAté logo!\n\n");
-                    } else if (opcaoSair == '2') {
+                    } else if (opcaoSair == '1') {
                         opcaoPrincipal = '1';
                     } else {
                         printf("\nOpção inválida!");
                     }
-                } while (opcaoSair != '1' && opcaoSair != '2');
+                } while (opcaoSair != '0' && opcaoSair != '1');
                 break;
         }
     } while (opcaoPrincipal != '0');

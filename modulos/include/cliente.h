@@ -4,10 +4,10 @@
 struct cliente {
     int status;
     char nome[50];
-    char cpf[50];
+    char cpf[15];
     char email[50];
-    char data[50];
-    char celular[50];
+    char data[11];
+    char celular[12];
 };
 
 typedef struct cliente Cliente;

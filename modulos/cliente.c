@@ -6,12 +6,13 @@
 #include "include/cliente.h"
 
 // Assinatura de funções
-void exibirCliente(char cpfCliente[]);
-void trocarArquivos(char antigo[], char novo[]);
-void criarDiretorio(void);
 void cadastrarCliente(Cliente * cliente);
+void exibirCliente(char cpfCliente[]);
 void atualizarCliente(char cpfCliente[], int opcao);
 void deletarCliente(char cpfCliente[]);
+void excluirBancoCliente(void);
+void trocarArquivosCliente(char antigo[], char novo[]);
+void criarDiretorio(void);
 
 void telaCliente(void) {
     system("clear||cls");
@@ -35,6 +36,7 @@ void telaCliente(void) {
     printf("|                                   3 Listar                                                      |\n");
     printf("|                                   4 Atualizar                                                   |\n");
     printf("|                                   5 Deletar                                                     |\n");
+    printf("|                                   6 Limpar Banco                                                |\n");
     printf("|                                   0 Sair                                                        |\n");
     printf("|_________________________________________________________________________________________________|\n\n");
 
@@ -79,7 +81,7 @@ void exibeCliente(void) {
     printf("|_________________________________________________________________________________________________|\n");
 
 
-    char cpfCliente[50];
+    char cpfCliente[15];
     printf("\nDigite o cpf do cliente: ");
     scanf("%s", cpfCliente);
     getchar();
@@ -130,7 +132,7 @@ void atualizaCliente(void) {
     printf("|                                         ATUALIZAR CLIENTE                                       |\n");
     printf("|_________________________________________________________________________________________________|\n");
 
-    char cpfCliente[50];
+    char cpfCliente[15];
     printf("\nInforme o CPF (apenas numeros): ");
     scanf("%[^\n]", cpfCliente);
     getchar();
@@ -163,7 +165,7 @@ void deletaCliente(void) {
     printf("|                                         DELETAR CLIENTE                                         |\n");
     printf("|_________________________________________________________________________________________________|\n");
 
-    char cpfCliente[50];
+    char cpfCliente[15];
     printf("\nInforme o CPF (apenas numeros): ");
     scanf("%[^\n]", cpfCliente);
     getchar();
@@ -187,6 +189,20 @@ void deletaCliente(void) {
         printf("\n>>> Tecle <ENTER> para continuar...\n");
         getchar();
     }
+}
+
+void limparBancoCliente(void) {
+    system("clear||cls");
+    printf("\n");
+    printf("___________________________________________________________________________________________________\n");
+    printf("|                                                                                                 |\n");
+    printf("|                                         LIMPAR BANCO CLIENTE                                    |\n");
+    printf("|_________________________________________________________________________________________________|\n");
+
+    excluirBancoCliente();
+
+    printf("\n>>> Tecle <ENTER> para continuar.\n");
+    getchar();
 }
 
 void opcaoCliente(void) {
@@ -218,6 +234,10 @@ void opcaoCliente(void) {
             case '5':
                 deletaCliente();
                 break;
+
+            case '6':
+                limparBancoCliente();
+                break;
         }
     } while (opcao != '0');
 }
@@ -238,6 +258,33 @@ void cadastrarCliente(Cliente * cliente) {
 
     free(cliente);
     fclose(arquivo);
+}
+
+void exibirCliente(char cpfCliente[]) {
+    Cliente * cliente;
+    cliente = (Cliente*) malloc(sizeof(Cliente));
+
+    FILE * arquivo = fopen("./dados/clientes.bin", "rb");
+
+    if (arquivo == NULL) {
+        printf("Erro na abertura do arquivo clientes");
+        printf("\n>>> Tecle <ENTER> para continuar...\n");
+        getchar();
+        return;
+    }
+
+    while (fread(cliente, sizeof(Cliente), 1, arquivo)) {
+        if(strcmp(cliente->cpf, cpfCliente) == 0 && cliente->status == True) {
+            printf("\n\t\t\t <--- Cliente Encontrado ---> \n\n");
+            printf("\t\t\tNome: %s\n", cliente->nome);
+            printf("\t\t\tCPF: %s\n", cliente->cpf);
+            printf("\t\t\tEmail: %s\n", cliente->email);
+            printf("\t\t\tData: %s\n", cliente->data);
+            printf("\t\t\tCelular: %s\n", cliente->celular);
+            fclose(arquivo);
+            return;
+        }
+    }
 }
 
 void atualizarCliente(char cpfCliente[], int opcao) {
@@ -304,34 +351,43 @@ void deletarCliente(char cpfCliente[]) {
     fclose(arquivo);
 }
 
-void exibirCliente(char cpfCliente[]) {
+void excluirBancoCliente(void) {
     Cliente * cliente;
-    cliente = (Cliente*) malloc(sizeof(Cliente));
-
+    cliente = (Cliente *) malloc(sizeof(Cliente));
+    
     FILE * arquivo = fopen("./dados/clientes.bin", "rb");
-
-    if (arquivo == NULL) {
-        printf("Erro na abertura do arquivo clientes");
-        printf("\n>>> Tecle <ENTER> para continuar...\n");
+    
+    FILE * arquivoTemp = fopen("./dados/clientes_temp.bin", "wb");
+    if (arquivoTemp == NULL) {
+        printf("Erro na criação de arquivo de cliente temporario. O programa será finalizado.");
+        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
         getchar();
-        return;
+        exit(1);
     }
 
-    while (fread(cliente, sizeof(Cliente), 1, arquivo)) {
-        if(strcmp(cliente->cpf, cpfCliente) == 0 && cliente->status == True) {
-            printf("\n\t\t\t <--- Cliente Encontrado ---> \n\n");
-            printf("\t\t\tNome: %s\n", cliente->nome);
-            printf("\t\t\tCPF: %s\n", cliente->cpf);
-            printf("\t\t\tEmail: %s\n", cliente->email);
-            printf("\t\t\tData: %s\n", cliente->data);
-            printf("\t\t\tCelular: %s\n", cliente->celular);
-            fclose(arquivo);
-            return;
+    int clientesMantidos = 0;
+    int clientesRemovidos = 0;
+    while (fread(cliente, sizeof(Cliente), 1, arquivo) == 1) {
+        if (cliente->status == True) {
+            fwrite(cliente, sizeof(Cliente), 1, arquivoTemp);
+            clientesMantidos++;
+        } else {
+            clientesRemovidos++;
         }
     }
+    
+    free(cliente);
+    fclose(arquivo);
+    fclose(arquivoTemp);
+    
+    trocarArquivosCliente("./dados/clientes.bin", "./dados/clientes_temp.bin");
+    
+    printf("Limpeza do banco concluída com sucesso!\n");
+    printf("Clientes mantidos: %d\n", clientesMantidos);
+    printf("Clientes removidos: %d\n", clientesRemovidos);
 }
 
-void trocarArquivos(char antigo[], char novo[]) {
+void trocarArquivosCliente(char antigo[], char novo[]) {
     int retorno = remove(antigo);
     if (retorno != 0) {
         printf("Houve um erro na exclusão. O programa será finalizado.");

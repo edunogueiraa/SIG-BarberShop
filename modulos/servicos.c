@@ -37,6 +37,7 @@ void telaServico(void) {
     printf("|                                   3 Listar                                                      |\n");
     printf("|                                   4 Atualizar                                                   |\n");
     printf("|                                   5 Deletar                                                     |\n");
+    printf("|                                   6 Limpar Banco                                                |\n");
     printf("|                                   0 Sair                                                        |\n");
     printf("|_________________________________________________________________________________________________|\n\n");
 }
@@ -178,6 +179,52 @@ void deletaServico(void) {
     
 }
 
+void limparBancoServico(void) {
+    system("clear||cls");
+    printf("\n");
+    printf("___________________________________________________________________________________________________\n");
+    printf("|                                                                                                 |\n");
+    printf("|                                         LIMPAR BANCO SERVIÇO                                    |\n");
+    printf("|_________________________________________________________________________________________________|\n");
+
+    Servico *servico;
+    servico = (Servico*) malloc(sizeof(Servico));
+    
+    FILE * arquivo = fopen("./dados/servicos.bin", "rb");
+    
+    FILE * arquivoTemp = fopen("./dados/servicos_temp.bin", "wb");
+    if (arquivoTemp == NULL) {
+        printf("Erro na criação de arquivo de servico temporario. O programa será finalizado.");
+        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
+        getchar();
+        exit(1);
+    }
+
+    int servicosMantidos = 0;
+    int servicosRemovidos = 0;
+    while (fread(servico, sizeof(Servico), 1, arquivo) == 1) {
+        if (servico->status == True) {
+            fwrite(servico, sizeof(Servico), 1, arquivoTemp);
+            servicosMantidos++;
+        } else {
+            servicosRemovidos++;
+        }
+    }
+    
+    free(servico);
+    fclose(arquivo);
+    fclose(arquivoTemp);
+    
+    trocarArquivosServico("./dados/servicos.bin", "./dados/servicos_temp.bin");
+    
+    printf("Limpeza do banco concluída com sucesso!\n");
+    printf("Serviços mantidos: %d\n", servicosMantidos);
+    printf("Serviços removidos: %d\n", servicosRemovidos);
+    printf("\n>>> Tecle <ENTER> para continuar.\n");
+    getchar();
+
+}
+
 void opcaoServicos(void) {
     char opcao = '9';
 
@@ -208,6 +255,10 @@ void opcaoServicos(void) {
 
             case '5':
                 deletaServico();
+                break;
+            
+            case '6':
+                limparBancoServico();
                 break;
         }
 
@@ -352,6 +403,5 @@ void criarDiretorioServico(void) {
         exit(1);
     }
 }
-
 
 
