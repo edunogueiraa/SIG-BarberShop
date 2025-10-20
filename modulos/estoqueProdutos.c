@@ -6,11 +6,13 @@
 #include "include/estoqueProdutos.h"
 
 // Assinatura de funções
-void criarDiretorio(void);
 void cadastrarProduto(Estoque * estoque);
 void exibirProduto(char idProduto[]);
 void atualizarProduto(char idProduto[], int opcao);
 void deletarProduto(char idProduto[]);
+void excluirBancoEstoque(void);
+void trocarArquivosEstoque(char antigo[], char novo[]);
+void criarDiretorio(void);
 
 void telaEstoque(void) {
     system("clear||cls");
@@ -308,6 +310,61 @@ void deletarProduto(char idProduto[]) {
         }
     }
     free(estoque);
+}
+
+void excluirBancoEstoque(void) {
+    Estoque * estoque;
+    estoque = (Estoque *) malloc(sizeof(Estoque));
+
+    FILE * arquivo = fopen("./dados/estoque.bin", "rb");
+    
+    FILE * arquivoTemp = fopen("./dados/estoque_temp.bin", "wb");
+    if (arquivoTemp == NULL) {
+        printf("Erro na criação de arquivo de estoque temporario. O programa será finalizado.");
+        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
+        getchar();
+        exit(1);
+    }
+    
+    int estoquesMantidos = 0;
+    int estoquesRemovidos = 0;
+    while (fread(estoque, sizeof(Estoque), 1, arquivo) == 1) {
+        if (estoque->status == True) {
+            fwrite(estoque, sizeof(Estoque), 1, arquivoTemp);
+            estoquesMantidos++;
+        } else {
+            estoquesRemovidos++;
+        }
+    }
+
+    free(estoque);
+    fclose(arquivo);
+    fclose(arquivoTemp);
+
+    trocarArquivosEstoque("./dados/estoque.bin", "./dados/estoque_temp.bin");
+
+    printf("Limpeza do banco concluída com sucesso!\n");
+    printf("Estoques mantidos: %d\n", estoquesMantidos);
+    printf("Estoques removidos: %d\n", estoquesRemovidos);
+}
+
+void trocarArquivosEstoque(char antigo[], char novo[]) {
+    int retorno = remove(antigo);
+    if (retorno != 0) {
+        printf("Houve um erro na exclusão. O programa será finalizado.");
+        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
+        getchar();
+        exit(1);
+    }
+
+    int renomeacao = rename(novo, antigo);
+    if (renomeacao != 0) {
+        printf("Houve um erro na renomeação do arquivo. O programa será finalizado.");
+        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
+        getchar();
+        exit(1);
+    }
+    return;
 }
 
 void criaDiretorio(void) {
