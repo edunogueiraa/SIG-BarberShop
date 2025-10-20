@@ -11,7 +11,7 @@ void exibirCliente(char cpfCliente[]);
 void atualizarCliente(char cpfCliente[], int opcao);
 void deletarCliente(char cpfCliente[]);
 void excluirBancoCliente(void);
-void trocarArquivos(char antigo[], char novo[]);
+void trocarArquivosCliente(char antigo[], char novo[]);
 void criarDiretorio(void);
 
 void telaCliente(void) {
@@ -380,14 +380,14 @@ void excluirBancoCliente(void) {
     fclose(arquivo);
     fclose(arquivoTemp);
     
-    trocarArquivos("./dados/clientes.bin", "./dados/clientes_temp.bin");
+    trocarArquivosCliente("./dados/clientes.bin", "./dados/clientes_temp.bin");
     
     printf("Limpeza do banco concluída com sucesso!\n");
     printf("Serviços mantidos: %d\n", clientesMantidos);
     printf("Serviços removidos: %d\n", clientesRemovidos);
 }
 
-void trocarArquivos(char antigo[], char novo[]) {
+void trocarArquivosCliente(char antigo[], char novo[]) {
     int retorno = remove(antigo);
     if (retorno != 0) {
         printf("Houve um erro na exclusão. O programa será finalizado.");
