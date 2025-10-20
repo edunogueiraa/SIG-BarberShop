@@ -36,6 +36,7 @@ void telaEstoque(void) {
     printf("|                                   3 Listar Produtos                                             |\n");
     printf("|                                   4 Atualizar Produto                                           |\n");
     printf("|                                   5 Deletar Produto                                             |\n");
+    printf("|                                   6 Limpar Estoque                                              |\n");
     printf("|                                   0 Sair                                                        |\n");
     printf("|_________________________________________________________________________________________________|\n\n");
     
@@ -176,6 +177,20 @@ void deletaProduto(void) {
     }
 }
 
+void limparBancoEstoque(void) {
+    system("clear||cls");
+    printf("\n");
+    printf("___________________________________________________________________________________________________\n");
+    printf("|                                                                                                 |\n");
+    printf("|                                         LIMPAR BANCO CLIENTE                                    |\n");
+    printf("|_________________________________________________________________________________________________|\n");
+
+    excluirBancoEstoque();
+
+    printf("\n>>> Tecle <ENTER> para continuar.\n");
+    getchar();
+}
+
 void opcaoEstoque(void) {
     char opcao = '9';
 
@@ -207,7 +222,10 @@ void opcaoEstoque(void) {
                 deletaProduto();
                 break;
 
-        }
+            case '6':
+                limparBancoEstoque();
+                break;
+            }
     } while (opcao != '0');
 }
 
