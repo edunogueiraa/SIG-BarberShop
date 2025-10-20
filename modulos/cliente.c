@@ -6,13 +6,13 @@
 #include "include/cliente.h"
 
 // Assinatura de funções
-void exibirCliente(char cpfCliente[]);
-void trocarArquivos(char antigo[], char novo[]);
-void criarDiretorio(void);
 void cadastrarCliente(Cliente * cliente);
+void exibirCliente(char cpfCliente[]);
 void atualizarCliente(char cpfCliente[], int opcao);
 void deletarCliente(char cpfCliente[]);
 void excluirBancoCliente(void);
+void trocarArquivos(char antigo[], char novo[]);
+void criarDiretorio(void);
 
 void telaCliente(void) {
     system("clear||cls");
@@ -260,6 +260,33 @@ void cadastrarCliente(Cliente * cliente) {
     fclose(arquivo);
 }
 
+void exibirCliente(char cpfCliente[]) {
+    Cliente * cliente;
+    cliente = (Cliente*) malloc(sizeof(Cliente));
+
+    FILE * arquivo = fopen("./dados/clientes.bin", "rb");
+
+    if (arquivo == NULL) {
+        printf("Erro na abertura do arquivo clientes");
+        printf("\n>>> Tecle <ENTER> para continuar...\n");
+        getchar();
+        return;
+    }
+
+    while (fread(cliente, sizeof(Cliente), 1, arquivo)) {
+        if(strcmp(cliente->cpf, cpfCliente) == 0 && cliente->status == True) {
+            printf("\n\t\t\t <--- Cliente Encontrado ---> \n\n");
+            printf("\t\t\tNome: %s\n", cliente->nome);
+            printf("\t\t\tCPF: %s\n", cliente->cpf);
+            printf("\t\t\tEmail: %s\n", cliente->email);
+            printf("\t\t\tData: %s\n", cliente->data);
+            printf("\t\t\tCelular: %s\n", cliente->celular);
+            fclose(arquivo);
+            return;
+        }
+    }
+}
+
 void atualizarCliente(char cpfCliente[], int opcao) {
     char dado[50];
     if (opcao == 1) {
@@ -322,33 +349,6 @@ void deletarCliente(char cpfCliente[]) {
     }
     free(cliente);
     fclose(arquivo);
-}
-
-void exibirCliente(char cpfCliente[]) {
-    Cliente * cliente;
-    cliente = (Cliente*) malloc(sizeof(Cliente));
-
-    FILE * arquivo = fopen("./dados/clientes.bin", "rb");
-
-    if (arquivo == NULL) {
-        printf("Erro na abertura do arquivo clientes");
-        printf("\n>>> Tecle <ENTER> para continuar...\n");
-        getchar();
-        return;
-    }
-
-    while (fread(cliente, sizeof(Cliente), 1, arquivo)) {
-        if(strcmp(cliente->cpf, cpfCliente) == 0 && cliente->status == True) {
-            printf("\n\t\t\t <--- Cliente Encontrado ---> \n\n");
-            printf("\t\t\tNome: %s\n", cliente->nome);
-            printf("\t\t\tCPF: %s\n", cliente->cpf);
-            printf("\t\t\tEmail: %s\n", cliente->email);
-            printf("\t\t\tData: %s\n", cliente->data);
-            printf("\t\t\tCelular: %s\n", cliente->celular);
-            fclose(arquivo);
-            return;
-        }
-    }
 }
 
 void excluirBancoCliente(void) {
