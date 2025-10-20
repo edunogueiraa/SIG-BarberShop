@@ -15,7 +15,6 @@ void atualizarAgendamento(char idAgendamento[], int opcao);
 void deletarAgendamento(char idAgendamento[]);
 
 
-//Funcoes principais
 void telaAgendamento(void) {
     system("clear||cls");
     printf("_________________________________________________________________________________________________\n");
@@ -38,6 +37,7 @@ void telaAgendamento(void) {
     printf("|                                   3 Listar                                                      |\n");
     printf("|                                   4 Atualizar                                                   |\n");
     printf("|                                   5 Deletar                                                     |\n");
+    printf("|                                   6 Limpar Banco                                                |\n");
     printf("|                                   0 Sair                                                        |\n");
     printf("|_________________________________________________________________________________________________|\n\n");
 }
@@ -192,6 +192,51 @@ void deletaAgendamento(void) {
     
 }
 
+void limparBancoAgendamento(void) {
+    system("clear||cls");
+    printf("\n");
+    printf("___________________________________________________________________________________________________\n");
+    printf("|                                                                                                 |\n");
+    printf("|                                         LIMPAR BANCO AGENDAMENTO                                |\n");
+    printf("|_________________________________________________________________________________________________|\n");
+
+    Agendamento * agendamento;
+    agendamento = (Agendamento*) malloc(sizeof(Agendamento));
+    
+    FILE * arquivo = fopen("./dados/agendamentos.bin", "rb");
+    
+    FILE * arquivoTemp = fopen("./dados/agendamentos_temp.bin", "wb");
+    if (arquivoTemp == NULL) {
+        printf("Erro na criação de arquivo de agendamento temporario. O programa será finalizado.");
+        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
+        getchar();
+        exit(1);
+    }
+
+    int servicosMantidos = 0;
+    int servicosRemovidos = 0;
+    while (fread(agendamento, sizeof(Agendamento), 1, arquivo) == 1) {
+        if (agendamento->status == True) {
+            fwrite(agendamento, sizeof(Agendamento), 1, arquivoTemp);
+            servicosMantidos++;
+        } else {
+            servicosRemovidos++;
+        }
+    }
+    
+    free(agendamento);
+    fclose(arquivo);
+    fclose(arquivoTemp);
+    
+    trocarArquivosAgendamento("./dados/agendamentos.bin", "./dados/agendamentos_temp.bin");
+    
+    printf("Limpeza do banco concluída com sucesso!\n");
+    printf("Agendamentos mantidos: %d\n", servicosMantidos);
+    printf("Agendamentos removidos: %d\n", servicosRemovidos);
+    printf("\n>>> Tecle <ENTER> para continuar.\n");
+    getchar();
+}
+
 void opcaoAgendamento() {
 
     char opcao = '9';
@@ -224,13 +269,16 @@ void opcaoAgendamento() {
             case '5':
                 deletaAgendamento();
                 break;
+
+            case '6':
+                limparBancoAgendamento();
+                break;
         }
 
     } while (opcao != '0');
 
 }
 
-//Funcoes adicionais
 
 void cadastrarAgendamento(Agendamento * agendamento) {
     criarDiretorioAgendamento();

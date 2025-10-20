@@ -179,7 +179,7 @@ void deletaServico(void) {
     
 }
 
-void LimparBanco(void) {
+void limparBancoServico(void) {
     system("clear||cls");
     printf("\n");
     printf("___________________________________________________________________________________________________\n");
@@ -258,7 +258,7 @@ void opcaoServicos(void) {
                 break;
             
             case '6':
-                LimparBanco();
+                limparBancoServico();
                 break;
         }
 

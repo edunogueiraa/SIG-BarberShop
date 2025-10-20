@@ -19,5 +19,6 @@ void listaAgendamento(void);
 void exibeAgendamento(void);
 void atualizaAgendamento(void);
 void deletaAgendamento(void);
+void limparBancoAgendamento(void);
 void opcaoAgendamento(void);
 
