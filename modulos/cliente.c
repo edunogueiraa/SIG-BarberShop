@@ -36,6 +36,7 @@ void telaCliente(void) {
     printf("|                                   3 Listar                                                      |\n");
     printf("|                                   4 Atualizar                                                   |\n");
     printf("|                                   5 Deletar                                                     |\n");
+    printf("|                                   6 Limpar Banco                                                |\n");
     printf("|                                   0 Sair                                                        |\n");
     printf("|_________________________________________________________________________________________________|\n\n");
 
@@ -190,6 +191,20 @@ void deletaCliente(void) {
     }
 }
 
+void limparBancoCliente(void) {
+    system("clear||cls");
+    printf("\n");
+    printf("___________________________________________________________________________________________________\n");
+    printf("|                                                                                                 |\n");
+    printf("|                                         LIMPAR BANCO CLIENTE                                    |\n");
+    printf("|_________________________________________________________________________________________________|\n");
+
+    excluirBancoCliente();
+
+    printf("\n>>> Tecle <ENTER> para continuar.\n");
+    getchar();
+}
+
 void opcaoCliente(void) {
     char opcao = '9';
 
@@ -218,6 +233,10 @@ void opcaoCliente(void) {
 
             case '5':
                 deletaCliente();
+                break;
+
+            case '6':
+                limparBancoCliente();
                 break;
         }
     } while (opcao != '0');
