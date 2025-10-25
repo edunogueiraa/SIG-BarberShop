@@ -4,15 +4,7 @@
 #include <sys/stat.h>
 #include <errno.h>
 #include "include/servicos.h"
-
-//Inscricoes de funcoes
-
-void exibirServico(char idServico[]);
-void trocarArquivosServico(char antigo[], char novo[]);
-void criarDiretorioServico(void);
-void cadastrarServico(Servico * servico);
-void atualizarServico(char idServico[], int opcao);
-void deletarServico(char idServico[]);
+#include "include/utils.h"
 
 
 void telaServico(void) {
@@ -53,18 +45,10 @@ void cadastroServico(void) {
     Servico *servico;
     servico = (Servico*) malloc(sizeof(Servico));
 
-    printf("\nNome do serviço: ");
-    scanf("%[^\n]", servico->nome);
-
-    printf("ID do serviço: ");
-    scanf("%s", servico->id);
-
-    printf("Valor: ");
-    scanf("%s", servico->valor);
-
-    printf("Duração: ");
-    scanf("%s", servico->duracao);
-    getchar();
+    recebeNome(servico->nome,"servico");
+    recebeId(servico->id,"servico");
+    recebeValor(servico->valor);
+    recebeDuracaoTempo(servico->duracao);
 
     cadastrarServico(servico);
 }
@@ -74,13 +58,7 @@ void listaServico(void){
     servico = (Servico*) malloc(sizeof(Servico));
 
     FILE * arquivo = fopen("./dados/servicos.bin", "rb");
-
-    if (arquivo == NULL) {
-        printf("Erro na abertura do arquivo Servico");
-        printf("\n>>> Tecle <ENTER> para continuar...\n");
-        getchar();
-        return;
-    }
+    verificaArquivo(arquivo);
 
     while (fread(servico,sizeof(Servico),1,arquivo)){
         if (servico->status == True) {
@@ -107,10 +85,7 @@ void exibeServico(void) {
     printf("|_________________________________________________________________________________________________|\n");
 
     char idServico[50];
-    printf("\nDigite o ID do serviço: \n");
-    scanf("%s", idServico);
-    getchar();
-
+    recebeId(idServico,"servico");
     exibirServico(idServico);
     
 }
@@ -124,9 +99,7 @@ void atualizaServico(void) {
     printf("|_________________________________________________________________________________________________|\n");
 
     char idServico[50];
-    printf("\nInforme o id (apenas numeros): ");
-    scanf("%[^\n]", idServico);
-    getchar();
+    recebeId(idServico,"servico");
 
     int opcao;
     do {
@@ -155,9 +128,7 @@ void deletaServico(void) {
     printf("|_________________________________________________________________________________________________|\n");
 
     char idServico[50];
-    printf("\nInforme o id (apenas numeros): ");
-    scanf("%[^\n]", idServico);
-    getchar();
+    recebeId(idServico,"servico");
     
     exibirServico(idServico);
 
@@ -191,14 +162,10 @@ void limparBancoServico(void) {
     servico = (Servico*) malloc(sizeof(Servico));
     
     FILE * arquivo = fopen("./dados/servicos.bin", "rb");
+    verificaArquivo(arquivo);
     
     FILE * arquivoTemp = fopen("./dados/servicos_temp.bin", "wb");
-    if (arquivoTemp == NULL) {
-        printf("Erro na criação de arquivo de servico temporario. O programa será finalizado.");
-        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
-        getchar();
-        exit(1);
-    }
+    verificaArquivoTemporario(arquivoTemp);
 
     int servicosMantidos = 0;
     int servicosRemovidos = 0;
@@ -215,7 +182,7 @@ void limparBancoServico(void) {
     fclose(arquivo);
     fclose(arquivoTemp);
     
-    trocarArquivosServico("./dados/servicos.bin", "./dados/servicos_temp.bin");
+    trocaArquivos("./dados/servicos.bin", "./dados/servicos_temp.bin");
     
     printf("Limpeza do banco concluída com sucesso!\n");
     printf("Serviços mantidos: %d\n", servicosMantidos);
@@ -231,9 +198,7 @@ void opcaoServicos(void) {
     do {
 
         telaServico();
-        printf("Digite a opção desejada: ");
-        scanf("%c", &opcao);
-        getchar();
+        recebeOpcao(&opcao);
 
         switch (opcao) {
 
@@ -266,17 +231,10 @@ void opcaoServicos(void) {
 
 }
 
-
 void cadastrarServico(Servico * servico) {
-    criarDiretorioServico();
+    criarDiretorio();
     FILE * arquivo = fopen("./dados/servicos.bin", "ab");
-
-    if (arquivo == NULL) {
-        printf("Erro na criação de arquivo de servico. O programa será finalizado.");
-        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
-        getchar();
-        exit(1);
-    }
+    verificaArquivo(arquivo);
     
     servico->status = True;
     fwrite(servico, sizeof(Servico), 1, arquivo);
@@ -302,6 +260,8 @@ void atualizarServico(char idServico[], int opcao) {
     servico = (Servico*) malloc(sizeof(Servico));
 
     FILE * arquivo = fopen("./dados/servicos.bin", "r+b");
+    verificaArquivo(arquivo);
+
     int encontrado = False;
 
     while (fread(servico, sizeof(Servico), 1, arquivo) && encontrado == False) {
@@ -328,6 +288,7 @@ void deletarServico(char idServico[]) {
     servico = (Servico*) malloc(sizeof(Servico));
 
     FILE * arquivo = fopen("./dados/servicos.bin", "r+b");
+    verificaArquivo(arquivo);
 
     int encontrado = False;
     while (fread(servico, sizeof(Servico), 1, arquivo) && encontrado == False) {
@@ -347,12 +308,7 @@ void exibirServico(char idServico[]) {
     servico = (Servico*) malloc(sizeof(Servico));
     FILE * arquivo = fopen("./dados/servicos.bin", "rb");
 
-    if (arquivo == NULL) {
-        printf("Erro na abertura do arquivo de serviço");
-        printf("\n>>> Tecle <ENTER> para continuar...\n");
-        getchar();
-        return;
-    }
+    verificaArquivo(arquivo);
 
         while (fread(servico,sizeof(Servico),1,arquivo)){
             if(strcmp(idServico,servico->id) == 0 && servico->status == True){
@@ -371,37 +327,6 @@ void exibirServico(char idServico[]) {
     free(servico);
 }
 
-void trocarArquivosServico(char antigo[], char novo[]) {
-    int retorno = remove(antigo);
-    if (retorno != 0) {
-        printf("Houve um erro na exclusão. O programa será finalizado.");
-        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
-        getchar();
-        exit(1);
-    }
 
-    int renomeacao = rename(novo, antigo);
-    if (renomeacao != 0) {
-        printf("Houve um erro na renomeação do arquivo. O programa será finalizado.");
-        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
-        getchar();
-        exit(1);
-    }
-    return;
-}
-
-void criarDiretorioServico(void) {
-    // Função adaptada de:
-    // https://linux.die.net/man/2/mkdir e https://stackoverflow.com/questions/7430248/creating-a-new-directory-in-c
-    // Criando diretório para armazenamento de dados
-    int status = mkdir("dados", 0700);
-    if (status < 0 && errno != EEXIST)
-    {
-        printf("Houve um erro na criação do diretório de armazenamento de dados. O programa será finalizado.");
-        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
-        getchar();
-        exit(1);
-    }
-}
 
 

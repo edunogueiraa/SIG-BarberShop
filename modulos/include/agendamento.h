@@ -3,11 +3,11 @@
 
 struct agendamento {
     char id[50];
-    char cpfCliente[50];
+    char cpfCliente[15];
     char nomeCliente[50];
-    char idServico[50];
-    char data[50];
-    char hora[50];
+    char idServico[10];
+    char data[15];
+    char hora[10];
     int status;
 };
 

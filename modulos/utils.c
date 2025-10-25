@@ -6,9 +6,9 @@
 
 #include "include/utils.h"
 
-void recebeNome(char ponteiroNome[]) {
+void recebeNome(char ponteiroNome[], char tipo[]) {
     char nome[50];
-    printf("Nome completo: ");
+    printf("Digite o nome do %s: ",tipo);
     
     // precisa fazer o método de validar strings aqui, pra ver se o que digitou passa
     // faz um if pra ver se passou coisa certa ou não
@@ -18,6 +18,46 @@ void recebeNome(char ponteiroNome[]) {
     getchar();
     
     strcpy(ponteiroNome, nome);
+}
+
+void recebeValor(char ponteiroValor[]) {
+    char valor[10];
+    int validado = False;
+
+    do {
+        printf("Valor: ");
+        scanf("%[^\n]", valor);
+        getchar();
+
+        // precisa fazer o método de validar strings aqui, pra ver se o que digitou passa
+        // faz um if pra ver se passou coisa certa ou não
+
+        // tem que ter @ e terminar em .com
+        // validado = validaCpf(cpf);
+        validado = True;
+    } while (validado == False);
+
+    strcpy(ponteiroValor, valor);
+}
+
+void recebeDuracaoTempo(char ponteiroDuracao[]) {
+    char duracao[10];
+    int validado = False;
+
+    do {
+        printf("Duracao: ");
+        scanf("%[^\n]", duracao);
+        getchar();
+
+        // precisa fazer o método de validar strings aqui, pra ver se o que digitou passa
+        // faz um if pra ver se passou coisa certa ou não
+
+        // tem que ter @ e terminar em .com
+        // validado = validaCpf(cpf);
+        validado = True;
+    } while (validado == False);
+
+    strcpy(ponteiroDuracao, duracao);
 }
 
 void recebeCpf(char ponteiroCpf[]) {
@@ -79,8 +119,6 @@ void recebeData(char ponteiroData[], char tipo[]) {
 
     strcpy(ponteiroData, data);
 }
-
-
 
 void recebeCelular(char ponteiroCelular[]) {
     char celular[12];

@@ -1,7 +1,9 @@
 #define True 1
 #define False 0
 
-void recebeNome(char ponteiroNome[]);
+void recebeNome(char ponteiroNome[], char tipo[]);
+void recebeValor(char ponteiroValor[]);
+void recebeDuracaoTempo(char ponteiroDuracao[]); 
 void recebeCpf(char ponteiroCpf[]);
 void recebeEmail(char ponteiroEmail[]);
 void recebeData(char ponteiroData[], char tipo[]);

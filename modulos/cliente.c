@@ -53,7 +53,7 @@ void cadastroCliente(void) {
     Cliente * cliente;
     cliente = (Cliente*) malloc(sizeof(Cliente));
 
-    recebeNome(cliente->nome);
+    recebeNome(cliente->nome,"cliente");
     recebeCpf(cliente->cpf);
     recebeEmail(cliente->email);
     recebeData(cliente->data,"Nascimento");

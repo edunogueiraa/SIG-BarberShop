@@ -3,7 +3,6 @@
 #include <string.h>
 #include <stdlib.h>
 #include <errno.h>
-
 #include "include/agendamento.h"
 #include "include/utils.h"
 
@@ -45,11 +44,11 @@ void cadastroAgendamento(void) {
     Agendamento *agendamento;
     agendamento = (Agendamento*) malloc(sizeof(Agendamento));
 
-    recebeId(agendamento->id,"Agendamento");
+    recebeId(agendamento->id,"agendamento");
     recebeCpf(agendamento->cpfCliente);
-    recebeNome(agendamento->nomeCliente);
-    recebeId(agendamento->id,"Servico");
-    recebeData(agendamento->data, "Agendamento");
+    recebeNome(agendamento->nomeCliente,"agendamento");
+    recebeId(agendamento->id,"servico");
+    recebeData(agendamento->data,"agendamento");
     recebeHora(agendamento->hora);
 
     cadastrarAgendamento(agendamento);
@@ -91,7 +90,7 @@ void exibeAgendamento(void) {
     printf("|_________________________________________________________________________________________________|\n");
 
     char idAgendamento[50];
-    recebeId(idAgendamento,"Agendamento");
+    recebeId(idAgendamento,"agendamento");
     exibirAgendamento(idAgendamento);
 
 }
@@ -105,7 +104,7 @@ void atualizaAgendamento(void) {
     printf("|_________________________________________________________________________________________________|\n");
 
     char idAgendamento[50];
-    recebeId(idAgendamento,"Agendamento");
+    recebeId(idAgendamento,"agendamento");
 
     int opcao;
     do {
@@ -137,7 +136,7 @@ void deletaAgendamento(void) {
     printf("|_________________________________________________________________________________________________|\n");
 
     char idAgendamento[50];
-    recebeId(idAgendamento,"Agendamento");
+    recebeId(idAgendamento,"agendamento");
     
     exibirAgendamento(idAgendamento);
 
@@ -159,7 +158,7 @@ void deletaAgendamento(void) {
     
 }
 
-void limparBancoAgendamento(void) {
+void limparBancoAgendamento(void) {              
     system("clear||cls");
     printf("\n");
     printf("___________________________________________________________________________________________________\n");
