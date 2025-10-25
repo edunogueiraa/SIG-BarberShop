@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
+#include <sys/stat.h>
+
 #include "include/utils.h"
 
 void recebeNome(char ponteiroNome[]) {
@@ -57,12 +60,12 @@ void recebeEmail(char ponteiroEmail[]) {
     strcpy(ponteiroEmail, email);
 }
 
-void recebeDataNascimento(char ponteiroData[]) {
+void recebeData(char ponteiroData[], char tipo[]) {
     char data[11];
     int validado = False;
 
     do {
-        printf("Data de nascimento: ");
+        printf("Digite a data do %s: ",tipo);
         scanf("%[^\n]", data);
         getchar();
 
@@ -76,6 +79,8 @@ void recebeDataNascimento(char ponteiroData[]) {
 
     strcpy(ponteiroData, data);
 }
+
+
 
 void recebeCelular(char ponteiroCelular[]) {
     char celular[12];
@@ -97,7 +102,59 @@ void recebeCelular(char ponteiroCelular[]) {
     strcpy(ponteiroCelular, celular);
 }
 
-void verificaArquivo(FILE * arquivo) {}
+void recebeId(char ponteiroId[], char tipo[]) {
+    char id[50];
+    printf("Digite o ID de %s: ",tipo);
+    
+    scanf("%[^\n]", id);
+    getchar();
+    
+    strcpy(ponteiroId, id);
+}
+
+void recebeOpcao(char ponteiroOpcao[]) {
+    char opcao[2];
+    printf("Digite a opção desejada: ");
+    scanf("%c", opcao);
+    getchar();
+
+    strcpy(ponteiroOpcao, opcao);
+}
+
+void recebeHora(char ponteiroHora[]) {
+    char hora[5];
+    int validado = False;
+
+    do {
+        printf("Horário: ");
+        scanf("%s", hora);
+        getchar();
+
+        validado = True;
+    } while (validado == False);
+
+    strcpy(ponteiroHora, hora);
+}
+
+void verificaArquivo(FILE * arquivo) {
+
+    if (arquivo == NULL) {
+        printf("Erro na abertura do arquivo");
+        printf("\n>>> Tecle <ENTER> para continuar...\n");
+        getchar();
+        exit(1);
+    }
+}
+
+void verificaArquivoTemporario(FILE * arquivoTemp) {
+
+    if (arquivoTemp == NULL) {
+        printf("Erro na criação de arquivo de agendamento temporario. O programa será finalizado.");
+        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
+        getchar();
+        exit(1);
+    }
+}
 
 void trocaArquivos(char antigo[], char novo[]) {
     int retorno = remove(antigo);
@@ -116,4 +173,18 @@ void trocaArquivos(char antigo[], char novo[]) {
         exit(1);
     }
     return;
+}
+
+void criarDiretorio(void) {
+    // Função adaptada de:
+    // https://linux.die.net/man/2/mkdir e https://stackoverflow.com/questions/7430248/creating-a-new-directory-in-c
+    // Criando diretório para armazenamento de dados
+    int status = mkdir("dados", 0700);
+    if (status < 0 && errno != EEXIST)
+    {
+        printf("Houve um erro na criação do diretório de armazenamento de dados. O programa será finalizado.");
+        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
+        getchar();
+        exit(1);
+    }
 }
