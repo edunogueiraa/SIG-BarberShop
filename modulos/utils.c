@@ -130,15 +130,6 @@ void recebeValor(char ponteiroValor[]) {
     strcpy(ponteiroValor, valor);
 }
 
-void recebeOpcao(char ponteiroOpcao[]) {
-    char opcao[2];
-    printf("Digite a opção desejada: ");
-    scanf("%c", opcao);
-    getchar();
-
-    strcpy(ponteiroOpcao, opcao);
-}
-
 void recebeDuracaoTempo(char ponteiroDuracao[]) {
     char duracao[10];
     int validado = False;
@@ -172,6 +163,15 @@ void recebeHora(char ponteiroHora[]) {
     } while (validado == False);
 
     strcpy(ponteiroHora, hora);
+}
+
+void recebeOpcao(char ponteiroOpcao[]) {
+    char opcao[2];
+    printf("Digite a opção desejada: ");
+    scanf("%c", opcao);
+    getchar();
+
+    strcpy(ponteiroOpcao, opcao);
 }
 
 void verificaArquivo(FILE * arquivo) {
