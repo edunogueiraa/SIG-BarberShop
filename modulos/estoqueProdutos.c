@@ -123,7 +123,7 @@ void atualizaProduto(void) {
     printf("|_________________________________________________________________________________________________|\n");
 
     char idProduto[50];
-    printf("\nInforme o CPF (apenas numeros): ");
+    printf("\nInforme o ID do produto: ");
     scanf("%[^\n]", idProduto);
     getchar();
 
@@ -154,7 +154,7 @@ void deletaProduto(void) {
     printf("|_________________________________________________________________________________________________|\n");
 
     char idProduto[50];
-    printf("\nInforme o ID: \n");
+    printf("\nInforme o ID do produto: \n");
     scanf("%s", idProduto);
     getchar();
 
