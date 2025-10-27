@@ -7,7 +7,34 @@
 
 #include "include/utils.h"
 
+int validaEmail(char *email) {
+    //strchr verifica esse caractere no email
+    char *arroba = strchr(email, '@');
+
+    if (email == NULL) {
+        return False;
+    } 
+
+    if (arroba == NULL || arroba == email){
+        return False;
+    }
+
+    for (int i = 0; email[i] != '\0'; i++) {
+        char caractere = email[i];
+
+        if (!((caractere >= 'a' && caractere <= 'z') || (caractere >= '0' && caractere <= '9') || caractere == '.' || caractere == '@')) {
+            return False;
+        }
+    }
+    return True;
+}
+
 int validaNome(char *nome) {
+
+    if (nome == NULL) {
+        return False;
+    } 
+
     for (int i = 0; nome[i] != '\0'; ++i) {
         char caractere = nome[i];
 
@@ -24,7 +51,6 @@ void recebeNome(char ponteiroNome[], char tipo[]) {
     int validado = False;
 
     do {
-
         printf("Digite o nome do %s: ",tipo);
         scanf("%[^\n]", nome);
         getchar();
@@ -36,8 +62,6 @@ void recebeNome(char ponteiroNome[], char tipo[]) {
         }
 
     } while (validado == False);
-    
-    
     strcpy(ponteiroNome, nome);
 }
 
@@ -80,14 +104,12 @@ void recebeEmail(char ponteiroEmail[]) {
         scanf("%[^\n]", email);
         getchar();
 
-        // precisa fazer o método de validar strings aqui, pra ver se o que digitou passa
-        // faz um if pra ver se passou coisa certa ou não
-
-        // tem que ter @ e terminar em .com
-        // validado = validaEmail(email);
-        validado = True;
-    } while (validado == False);
-
+        if (validaEmail(email)) {
+            validado = True;
+        } else {
+            printf("E-mail inválido! Digite novamente.\n");
+        }
+    } while (validado == 0);
     strcpy(ponteiroEmail, email);
 }
 
