@@ -243,7 +243,7 @@ void exibirCliente(char cpfCliente[]) {
     verificaArquivo(arquivo);
 
     int encontrado = False;
-    while (fread(cliente, sizeof(Cliente), 1, arquivo)) {
+    while (fread(cliente, sizeof(Cliente), 1, arquivo) && encontrado == False) {
         if(strcmp(cliente->cpf, cpfCliente) == 0 && cliente->status == True) {
             printf("\n\t\t\t <--- Cliente Encontrado ---> \n\n");
             printf("\t\t\tNome: %s\n", cliente->nome);
