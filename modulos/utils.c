@@ -130,6 +130,33 @@ int validaCelular(char *celular) {
     return True;
 }
 
+int validaData(char *data) {
+    int tamanho = strlen(data);
+
+    if (data == NULL) {
+        return False;
+    }
+    
+    if (tamanho > 11) {
+        return False;
+    }
+
+    for (int i = 0; data[i] != '\0'; i++) {
+        char caractere = data[i];
+
+        if (i != 2 && i != 5) {
+            if (!isdigit(caractere)){
+                return False;
+            }
+        } else {
+            if (caractere != '/') {
+                return False;
+            }
+        }
+    }
+    return True;
+}
+
 void recebeNome(char ponteiroNome[], char tipo[]) {
     char nome[50];
     int validado = False;
@@ -205,7 +232,11 @@ void recebeData(char ponteiroData[], char tipo[]) {
         scanf("%[^\n]", data);
         getchar();
 
-        validado = True;
+        if (validaData(data)) {
+            validado = True;
+        } else {
+            printf("Data inválida, por favor digite novamente!\n");
+        }
     } while (validado == False);
 
     strcpy(ponteiroData, data);
