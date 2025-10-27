@@ -7,6 +7,7 @@ void recebeId(char ponteiroId[], char tipo[]);
 void recebeEmail(char ponteiroEmail[]);
 void recebeData(char ponteiroData[], char tipo[]);
 void recebeCelular(char ponteiroCelular[]);
+void recebeTipo(char ponteiroTipo[]);
 void recebeValor(char ponteiroValor[]);
 void recebeDuracaoTempo(char ponteiroDuracao[]); 
 void recebeHora(char ponteiroHora[]);

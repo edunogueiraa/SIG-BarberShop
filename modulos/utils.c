@@ -110,6 +110,26 @@ void recebeCelular(char ponteiroCelular[]) {
     strcpy(ponteiroCelular, celular);
 }
 
+void recebeTipo(char ponteiroTipo[]) {
+    char tipo[20];
+    int validado = False;
+
+    do {
+        printf("Tipo do produto: ");
+        scanf("%[^\n]", tipo);
+        getchar();
+
+        // precisa fazer o método de validar strings aqui, pra ver se o que digitou passa
+        // faz um if pra ver se passou coisa certa ou não
+
+        // tem que ter @ e terminar em .com
+        // validado = validaCelular(celular);
+        validado = True;
+    } while (validado == False);
+
+    strcpy(ponteiroTipo, tipo);
+}
+
 void recebeValor(char ponteiroValor[]) {
     char valor[10];
     int validado = False;
