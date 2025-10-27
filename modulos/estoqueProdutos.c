@@ -99,11 +99,11 @@ void listaEstoque(void) {
             printf("\t\t\tValor (R$): %s\n", estoque->valor);
         }
     }
-    printf("\n>>> Tecle <ENTER> para continuar...\n");
-    getchar();
-
     fclose(arquivo);
     free(estoque);
+
+    printf("\n>>> Tecle <ENTER> para continuar...\n");
+    getchar();
 }
 
 void atualizaProduto(void) {
@@ -245,10 +245,12 @@ void exibirProduto(char idProduto[]) {
             printf("\t\t\tID do produto: %s\n", estoque->id);
             printf("\t\t\tTipo do produto: %s\n", estoque->tipo);
             printf("\t\t\tValor (R$): %s\n", estoque->valor);
-            fclose(arquivo);
-            return;
+            
+            encontrado = True;
         }
     }
+    fclose(arquivo);
+    free(estoque);
 }
 
 void atualizarProduto(char idProduto[], int opcao) {
@@ -280,12 +282,12 @@ void atualizarProduto(char idProduto[], int opcao) {
                 strcpy(estoque->valor, dado);
             }
             
-            encontrado = True;
             fseek(arquivo, (-1) * sizeof(Estoque), SEEK_CUR);
             fwrite(estoque, sizeof(Estoque), 1, arquivo);
-            fclose(arquivo);
+            encontrado = True;
         }
     }
+    fclose(arquivo);
     free(estoque);
 }
 
@@ -304,9 +306,9 @@ void deletarProduto(char idProduto[]) {
             encontrado = True;
             fseek(arquivo, (-1) * sizeof(Estoque), SEEK_CUR);
             fwrite(estoque, sizeof(Estoque), 1, arquivo);
-            fclose(arquivo);
         }
     }
+    fclose(arquivo);
     free(estoque);
 }
 
@@ -332,6 +334,7 @@ void excluirBancoEstoque(void) {
     
     fclose(arquivo);
     fclose(arquivoTemp);
+    free(estoque);
 
     trocaArquivos("./dados/estoque.bin", "./dados/estoque_temp.bin");
 
