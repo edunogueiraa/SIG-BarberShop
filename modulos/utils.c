@@ -7,6 +7,63 @@
 
 #include "include/utils.h"
 
+int validaCpf(char *cpf) {
+    if (cpf == NULL) {
+        return False;
+    }
+
+    int tamanho = strlen(cpf);
+    if (tamanho > 11) {
+        return False;
+    }
+    
+    // A partir daqui, adaptada de https://pog-carlos.blogspot.com/2011/11/validacao-de-cpf-em-c-usando-vetor.html
+    int numeros[12];
+    int soma = 0, digito1, digito2, resultado1, resultado2, valor;
+    int i;
+    
+    // Transforma characteres em números
+    for (i = 0; i < 11; i++) {
+        numeros[i] = cpf[i] - 48;
+    }
+
+    // Guarda as somas para o primeiro dígito
+    for (i = 0; i < 9; i++) {
+        soma += numeros[i] * (10 - i);
+    }
+
+    // Se for divisível por 11/resto for 1, o dígito é 0, senão, dígito é a continha
+    resultado1 = soma % 11;
+    if ((resultado1 == 0) || (resultado1 == 1)) {
+        digito1 = 0;
+    } else {
+        digito1 = 11 - resultado1;
+    }
+
+    soma = 0;
+    // Somas para o segundo dígito
+    for (i = 0; i < 10; i++)
+    {
+        soma += numeros[i] * (11 - i);
+    }
+
+    // Conta diferente, mas mesma ideia
+    valor = (soma / 11) * 11;
+    resultado2 = soma - valor;
+    if ((resultado2 == 0) || (resultado2 == 1)) {
+        digito2 = 0;
+    } else {
+        digito2 = 11 - resultado2;
+    }
+
+    // Compara com os dígitos que tão no CPF
+    if ((digito1 == numeros[9]) && (digito2 == numeros[10])) {
+        return True;
+    } else {
+        return False;
+    }
+}
+
 int validaEmail(char *email) {
     //strchr verifica esse caractere no email
     char *arroba = strchr(email, '@');
@@ -99,13 +156,12 @@ void recebeCpf(char ponteiroCpf[]) {
         printf("CPF: ");
         scanf("%[^\n]", cpf);
         getchar();
-
-        // precisa fazer o método de validar strings aqui, pra ver se o que digitou passa
-        // faz um if pra ver se passou coisa certa ou não
-
-        // tem que ter @ e terminar em .com
-        // validado = validaCpf(cpf);
-        validado = True;
+        
+        if (validaCpf(cpf)) {
+            validado = True;
+        } else {
+            printf("CPF inválido, por favor digite novamente!\n");
+        }
     } while (validado == False);
 
     strcpy(ponteiroCpf, cpf);
