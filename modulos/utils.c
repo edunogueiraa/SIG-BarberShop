@@ -3,19 +3,40 @@
 #include <string.h>
 #include <errno.h>
 #include <sys/stat.h>
+#include <ctype.h>
 
 #include "include/utils.h"
 
+int validaNome(char *nome) {
+    for (int i = 0; nome[i] != '\0'; ++i) {
+        char caractere = nome[i];
+
+        //isalpha verifica se é uma letra
+        if (!((isalpha(caractere) || caractere == ' '))) {
+            return False;
+        }
+    }
+    return True;
+}
+
 void recebeNome(char ponteiroNome[], char tipo[]) {
     char nome[50];
-    printf("Digite o nome do %s: ",tipo);
-    
-    // precisa fazer o método de validar strings aqui, pra ver se o que digitou passa
-    // faz um if pra ver se passou coisa certa ou não
+    int validado = False;
 
-    // Só de A a Z
-    scanf("%[^\n]", nome);
-    getchar();
+    do {
+
+        printf("Digite o nome do %s: ",tipo);
+        scanf("%[^\n]", nome);
+        getchar();
+
+        if (validaNome(nome)) {
+            validado = True;
+        } else {
+            printf("Nome errado, digite somente letras e espaço!\n");
+        }
+
+    } while (validado == False);
+    
     
     strcpy(ponteiroNome, nome);
 }
