@@ -7,6 +7,7 @@
 
 #include "include/utils.h"
 
+// Funções de validação
 int validaNome(char *nome) {
 
     if (nome == NULL) {
@@ -23,7 +24,6 @@ int validaNome(char *nome) {
     }
     return True;
 }
-
 int validaCpf(char *cpf) {
     if (cpf == NULL) {
         return False;
@@ -81,7 +81,6 @@ int validaCpf(char *cpf) {
         return False;
     }
 }
-
 int validaEmail(char *email) {
     //strchr verifica esse caractere no email
     char *arroba = strchr(email, '@');
@@ -108,7 +107,6 @@ int validaEmail(char *email) {
     }
     return True;
 }
-
 int validaData(char *data) {
     int tamanho = strlen(data);
 
@@ -135,7 +133,6 @@ int validaData(char *data) {
     }
     return True;
 }
-
 int validaCelular(char *celular) {
     int tamanho = strlen(celular);
 
@@ -157,6 +154,7 @@ int validaCelular(char *celular) {
     return True;
 }
 
+// Funções de entrada de dados
 void recebeNome(char ponteiroNome[], char tipo[]) {
     char nome[50];
     int validado = False;
@@ -175,7 +173,6 @@ void recebeNome(char ponteiroNome[], char tipo[]) {
     } while (validado == False);
     strcpy(ponteiroNome, nome);
 }
-
 void recebeCpf(char ponteiroCpf[]) {
     char cpf[15];
     int validado = False;
@@ -194,7 +191,6 @@ void recebeCpf(char ponteiroCpf[]) {
 
     strcpy(ponteiroCpf, cpf);
 }
-
 void recebeId(char ponteiroId[], char tipo[]) {
     char id[50];
     printf("Digite o ID de %s: ",tipo);
@@ -204,7 +200,6 @@ void recebeId(char ponteiroId[], char tipo[]) {
     
     strcpy(ponteiroId, id);
 }
-
 void recebeEmail(char ponteiroEmail[]) {
     char email[50];
     int validado = False;
@@ -222,7 +217,6 @@ void recebeEmail(char ponteiroEmail[]) {
     } while (validado == 0);
     strcpy(ponteiroEmail, email);
 }
-
 void recebeData(char ponteiroData[], char tipo[]) {
     char data[11];
     int validado = False;
@@ -241,7 +235,6 @@ void recebeData(char ponteiroData[], char tipo[]) {
 
     strcpy(ponteiroData, data);
 }
-
 void recebeCelular(char ponteiroCelular[]) {
     char celular[12];
     int validado = False;
@@ -260,7 +253,6 @@ void recebeCelular(char ponteiroCelular[]) {
 
     strcpy(ponteiroCelular, celular);
 }
-
 void recebeTipo(char ponteiroTipo[]) {
     char tipo[20];
     int validado = False;
@@ -280,7 +272,6 @@ void recebeTipo(char ponteiroTipo[]) {
 
     strcpy(ponteiroTipo, tipo);
 }
-
 void recebeValor(char ponteiroValor[]) {
     char valor[10];
     int validado = False;
@@ -300,7 +291,6 @@ void recebeValor(char ponteiroValor[]) {
 
     strcpy(ponteiroValor, valor);
 }
-
 void recebeDuracaoTempo(char ponteiroDuracao[]) {
     char duracao[10];
     int validado = False;
@@ -320,7 +310,6 @@ void recebeDuracaoTempo(char ponteiroDuracao[]) {
 
     strcpy(ponteiroDuracao, duracao);
 }
-
 void recebeHora(char ponteiroHora[]) {
     char hora[5];
     int validado = False;
@@ -335,7 +324,6 @@ void recebeHora(char ponteiroHora[]) {
 
     strcpy(ponteiroHora, hora);
 }
-
 void recebeOpcao(char ponteiroOpcao[]) {
     char opcao[2];
     printf("Digite a opção desejada: ");
@@ -344,7 +332,6 @@ void recebeOpcao(char ponteiroOpcao[]) {
 
     strcpy(ponteiroOpcao, opcao);
 }
-
 void verificaArquivo(FILE * arquivo) {
 
     if (arquivo == NULL) {
@@ -354,7 +341,6 @@ void verificaArquivo(FILE * arquivo) {
         exit(1);
     }
 }
-
 void verificaArquivoTemporario(FILE * arquivoTemp) {
 
     if (arquivoTemp == NULL) {
@@ -364,7 +350,6 @@ void verificaArquivoTemporario(FILE * arquivoTemp) {
         exit(1);
     }
 }
-
 void trocaArquivos(char antigo[], char novo[]) {
     int retorno = remove(antigo);
     if (retorno != 0) {
@@ -383,7 +368,6 @@ void trocaArquivos(char antigo[], char novo[]) {
     }
     return;
 }
-
 void criarDiretorio(void) {
     // Função adaptada de:
     // https://linux.die.net/man/2/mkdir e https://stackoverflow.com/questions/7430248/creating-a-new-directory-in-c
