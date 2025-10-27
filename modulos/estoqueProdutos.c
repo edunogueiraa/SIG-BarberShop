@@ -344,8 +344,7 @@ void excluirBancoEstoque(void) {
         exit(1);
     }
     
-    int estoquesMantidos = 0;
-    int estoquesRemovidos = 0;
+    FILE * arquivo = fopen("./dados/estoque.bin", "rb");
     while (fread(estoque, sizeof(Estoque), 1, arquivo) == 1) {
         if (estoque->status == True) {
             fwrite(estoque, sizeof(Estoque), 1, arquivoTemp);
@@ -354,8 +353,7 @@ void excluirBancoEstoque(void) {
             estoquesRemovidos++;
         }
     }
-
-    free(estoque);
+    
     fclose(arquivo);
     fclose(arquivoTemp);
 
