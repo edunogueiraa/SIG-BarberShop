@@ -3,9 +3,9 @@
 
 struct servico {
     char nome[50];
-    char id[50];
-    char valor[50];
-    char duracao[50];
+    char id[10];
+    char valor[20];
+    char duracao[10];
     int status;
 };
 
@@ -18,3 +18,8 @@ void atualizaServico(void);
 void deletaServico(void);
 void limparBancoServico(void); 
 void opcaoServicos(void);
+
+void exibirServico(char idServico[]);
+void cadastrarServico(Servico * servico);
+void atualizarServico(char idServico[], int opcao);
+void deletarServico(char idServico[]);

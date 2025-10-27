@@ -5,8 +5,8 @@ struct estoque {
     int status;
     char nome[50];
     char id[50];
-    char tipo[50];
-    char valor[50];
+    char tipo[20];
+    char valor[20];
 };
 
 typedef struct estoque Estoque;

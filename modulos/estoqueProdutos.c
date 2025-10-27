@@ -4,6 +4,7 @@
 #include <sys/stat.h>
 #include <errno.h>
 #include "include/estoqueProdutos.h"
+#include "include/utils.h"
 
 // Assinatura de funções
 void cadastrarProduto(Estoque * estoque);
@@ -11,8 +12,6 @@ void exibirProduto(char idProduto[]);
 void atualizarProduto(char idProduto[], int opcao);
 void deletarProduto(char idProduto[]);
 void excluirBancoEstoque(void);
-void trocarArquivosEstoque(char antigo[], char novo[]);
-void criarDiretorio(void);
 
 void telaEstoque(void) {
     system("clear||cls");
@@ -53,19 +52,12 @@ void cadastroEstoque(void) {
     Estoque * estoque;
     estoque = (Estoque *) malloc(sizeof(Estoque));
     
-    printf("\nNome do produto: ");
-    scanf("%[^\n]", estoque->nome);
-    printf("ID do produto (apenas números): ");
-    scanf("%s", estoque->id);
-    printf("Tipo do produto: ");
-    scanf("%s", estoque->tipo);
-    printf("Valor (R$): ");
-    scanf("%s", estoque->valor);
-    getchar();
+    recebeNome(estoque->nome, "produto");
+    recebeId(estoque->id, "produto");
+    recebeTipo(estoque->tipo);
+    recebeValor(estoque->valor);
     
-    criarDiretorio();
     cadastrarProduto(estoque);
-    
     free(estoque);
 }
 
@@ -78,7 +70,7 @@ void exibeProduto(void) {
     printf("|_________________________________________________________________________________________________|\n");
     
     char idProduto[50];
-    printf("\nInforme o ID: \n");
+    printf("\nInforme o ID do produto: \n");
     scanf("%s", idProduto);
     getchar();
 
@@ -107,11 +99,11 @@ void listaEstoque(void) {
             printf("\t\t\tValor (R$): %s\n", estoque->valor);
         }
     }
-    printf("\n>>> Tecle <ENTER> para continuar...\n");
-    getchar();
-
     fclose(arquivo);
     free(estoque);
+
+    printf("\n>>> Tecle <ENTER> para continuar...\n");
+    getchar();
 }
 
 void atualizaProduto(void) {
@@ -123,7 +115,7 @@ void atualizaProduto(void) {
     printf("|_________________________________________________________________________________________________|\n");
 
     char idProduto[50];
-    printf("\nInforme o CPF (apenas numeros): ");
+    printf("\nInforme o ID do produto: ");
     scanf("%[^\n]", idProduto);
     getchar();
 
@@ -154,7 +146,7 @@ void deletaProduto(void) {
     printf("|_________________________________________________________________________________________________|\n");
 
     char idProduto[50];
-    printf("\nInforme o ID: \n");
+    printf("\nInforme o ID do produto: \n");
     scanf("%s", idProduto);
     getchar();
 
@@ -196,9 +188,7 @@ void opcaoEstoque(void) {
 
     do {
         telaEstoque();
-        printf("Digite a opção desejada: ");
-        scanf("%c", &opcao);
-        getchar();
+        recebeOpcao(&opcao);
 
         switch (opcao) {
 
@@ -230,15 +220,9 @@ void opcaoEstoque(void) {
 }
 
 void cadastrarProduto(Estoque * estoque) {
+    criarDiretorio();
     FILE * arquivo = fopen("./dados/estoque.bin", "ab");
-
-    if (arquivo == NULL)
-    {
-        printf("Erro na criação de arquivo de Estoque. O programa será finalizado.");
-        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
-        getchar();
-        exit(1);
-    }
+    verificaArquivo(arquivo);
 
     estoque->status = True;
     fwrite(estoque, sizeof(Estoque), 1, arquivo);
@@ -251,25 +235,22 @@ void exibirProduto(char idProduto[]) {
     estoque = (Estoque *) malloc(sizeof(Estoque));
 
     FILE * arquivo = fopen("./dados/estoque.bin", "rt");
-
-    if (arquivo == NULL) {
-        printf("Erro na abertura do arquivo de estoque");
-        printf("\n>>> Tecle <ENTER> para continuar...\n");
-        getchar();
-        return;
-    }
-
-    while (fread(estoque, sizeof(Estoque), 1, arquivo)) {
+    verificaArquivo(arquivo);
+    
+    int encontrado = False;
+    while (fread(estoque, sizeof(Estoque), 1, arquivo) && encontrado == False) {
         if (strcmp(idProduto, estoque->id) == 0 && estoque->status == True) {
             printf("\n\t\t\t <--- Produto Encontrado ---> \n\n");
             printf("\t\t\tNome do produto: %s\n", estoque->nome);
             printf("\t\t\tID do produto: %s\n", estoque->id);
             printf("\t\t\tTipo do produto: %s\n", estoque->tipo);
             printf("\t\t\tValor (R$): %s\n", estoque->valor);
-            fclose(arquivo);
-            return;
+            
+            encontrado = True;
         }
     }
+    fclose(arquivo);
+    free(estoque);
 }
 
 void atualizarProduto(char idProduto[], int opcao) {
@@ -289,8 +270,8 @@ void atualizarProduto(char idProduto[], int opcao) {
     estoque = (Estoque *) malloc(sizeof(Estoque));
 
     FILE * arquivo = fopen("./dados/estoque.bin", "r+b");
+    
     int encontrado = False;
-
     while (fread(estoque, sizeof(Estoque), 1, arquivo) && encontrado == False) {
         if (strcmp(idProduto, estoque->id) == 0) {
             if (opcao == 1) {
@@ -301,51 +282,47 @@ void atualizarProduto(char idProduto[], int opcao) {
                 strcpy(estoque->valor, dado);
             }
             
-            encontrado = True;
             fseek(arquivo, (-1) * sizeof(Estoque), SEEK_CUR);
             fwrite(estoque, sizeof(Estoque), 1, arquivo);
-            fclose(arquivo);
+            encontrado = True;
         }
     }
+    fclose(arquivo);
     free(estoque);
 }
 
 void deletarProduto(char idProduto[]) {
     Estoque * estoque;
     estoque = (Estoque *) malloc(sizeof(Estoque));
-
+    
     FILE * arquivo = fopen("./dados/estoque.bin", "r+b");
-
+    
     int encontrado = False;
     
     while (fread(estoque, sizeof(Estoque), 1, arquivo) && encontrado == False) {
         if (strcmp(idProduto, estoque->id) == 0) {
             estoque->status = False;
+
             encontrado = True;
             fseek(arquivo, (-1) * sizeof(Estoque), SEEK_CUR);
             fwrite(estoque, sizeof(Estoque), 1, arquivo);
-            fclose(arquivo);
         }
     }
+    fclose(arquivo);
     free(estoque);
 }
 
 void excluirBancoEstoque(void) {
     Estoque * estoque;
     estoque = (Estoque *) malloc(sizeof(Estoque));
-
-    FILE * arquivo = fopen("./dados/estoque.bin", "rb");
-    
-    FILE * arquivoTemp = fopen("./dados/estoque_temp.bin", "wb");
-    if (arquivoTemp == NULL) {
-        printf("Erro na criação de arquivo de estoque temporario. O programa será finalizado.");
-        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
-        getchar();
-        exit(1);
-    }
     
     int estoquesMantidos = 0;
     int estoquesRemovidos = 0;
+    
+    FILE * arquivoTemp = fopen("./dados/estoque_temp.bin", "wb");
+    verificaArquivoTemporario(arquivoTemp);
+    
+    FILE * arquivo = fopen("./dados/estoque.bin", "rb");
     while (fread(estoque, sizeof(Estoque), 1, arquivo) == 1) {
         if (estoque->status == True) {
             fwrite(estoque, sizeof(Estoque), 1, arquivoTemp);
@@ -354,46 +331,14 @@ void excluirBancoEstoque(void) {
             estoquesRemovidos++;
         }
     }
-
-    free(estoque);
+    
     fclose(arquivo);
     fclose(arquivoTemp);
+    free(estoque);
 
-    trocarArquivosEstoque("./dados/estoque.bin", "./dados/estoque_temp.bin");
+    trocaArquivos("./dados/estoque.bin", "./dados/estoque_temp.bin");
 
     printf("Limpeza do banco concluída com sucesso!\n");
     printf("Estoques mantidos: %d\n", estoquesMantidos);
     printf("Estoques removidos: %d\n", estoquesRemovidos);
-}
-
-void trocarArquivosEstoque(char antigo[], char novo[]) {
-    int retorno = remove(antigo);
-    if (retorno != 0) {
-        printf("Houve um erro na exclusão. O programa será finalizado.");
-        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
-        getchar();
-        exit(1);
-    }
-
-    int renomeacao = rename(novo, antigo);
-    if (renomeacao != 0) {
-        printf("Houve um erro na renomeação do arquivo. O programa será finalizado.");
-        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
-        getchar();
-        exit(1);
-    }
-    return;
-}
-
-void criaDiretorio(void) {
-    // Função adaptada de:
-    // https://linux.die.net/man/2/mkdir e https://stackoverflow.com/questions/7430248/creating-a-new-directory-in-c
-    // Criando diretório para armazenamento de dados
-    int status = mkdir("dados", 0700);
-    if (status < 0 && errno != EEXIST)
-    {
-        printf("Houve um erro na criação do diretório de armazenamento de dados. O programa será finalizado.");
-        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
-        getchar();
-    }
 }

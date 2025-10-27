@@ -55,10 +55,11 @@ int main() {
                 do{
                     opcaoSair = telaSair();
                     if (opcaoSair == '0') {
-                        opcaoPrincipal = '0';
                         printf("\nEncerrando sistema!\n\n");
                         sleep(1);
                         printf("\nAté logo!\n\n");
+                        opcaoPrincipal = '0';
+                        opcaoSair = '0';
                     } else if (opcaoSair == '1') {
                         opcaoPrincipal = '1';
                     } else {

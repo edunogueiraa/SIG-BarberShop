@@ -4,6 +4,7 @@
 #include <sys/stat.h>
 #include <errno.h>
 #include "include/cliente.h"
+#include "include/utils.h"
 
 // Assinatura de funções
 void cadastrarCliente(Cliente * cliente);
@@ -11,8 +12,6 @@ void exibirCliente(char cpfCliente[]);
 void atualizarCliente(char cpfCliente[], int opcao);
 void deletarCliente(char cpfCliente[]);
 void excluirBancoCliente(void);
-void trocarArquivosCliente(char antigo[], char novo[]);
-void criarDiretorio(void);
 
 void telaCliente(void) {
     system("clear||cls");
@@ -52,24 +51,15 @@ void cadastroCliente(void) {
     
     Cliente * cliente;
     cliente = (Cliente*) malloc(sizeof(Cliente));
-        
-    printf("\nNome completo: ");
-    scanf("%[^\n]", cliente->nome);
 
-    printf("CPF: ");
-    scanf("%s", cliente->cpf);
-
-    printf("E-mail: ");
-    scanf("%s", cliente->email);
-
-    printf("Data de Nascimento (dd/mm/aaaa): ");
-    scanf("%s", cliente->data);
-
-    printf("Celular  (apenas números): ");
-    scanf("%s", cliente->celular);
-    getchar();
+    recebeNome(cliente->nome,"cliente");
+    recebeCpf(cliente->cpf);
+    recebeEmail(cliente->email);
+    recebeData(cliente->data,"Nascimento");
+    recebeCelular(cliente->celular);
 
     cadastrarCliente(cliente);
+    free(cliente);
 }
 
 void exibeCliente(void) {
@@ -82,9 +72,7 @@ void exibeCliente(void) {
 
 
     char cpfCliente[15];
-    printf("\nDigite o cpf do cliente: ");
-    scanf("%s", cpfCliente);
-    getchar();
+    recebeCpf(cpfCliente);
 
     exibirCliente(cpfCliente);
     printf("\n>>> Tecle <ENTER> para continuar...\n");
@@ -102,20 +90,16 @@ void listaClientes(void) {
     cliente = (Cliente *)malloc(sizeof(Cliente));
     
     FILE * arquivo = fopen("./dados/clientes.bin", "rb");
-
-    if (arquivo == NULL) {
-        printf("Erro na abertura do arquivo clientes");
-        printf("\n>>> Tecle <ENTER> para continuar...\n");
-        getchar();
-        return;
-    }
+    verificaArquivo(arquivo);
 
     while (fread(cliente, sizeof(Cliente), 1, arquivo)) {
-        printf("\n\t\t\tNome: %s\n", cliente->nome);
-        printf("\t\t\tCPF: %s\n", cliente->cpf);
-        printf("\t\t\tEmail: %s\n", cliente->email);
-        printf("\t\t\tData: %s\n", cliente->data);
-        printf("\t\t\tCelular: %s\n", cliente->celular);
+        if (cliente->status == True) {
+            printf("\n\t\t\tNome: %s\n", cliente->nome);
+            printf("\t\t\tCPF: %s\n", cliente->cpf);
+            printf("\t\t\tEmail: %s\n", cliente->email);
+            printf("\t\t\tData: %s\n", cliente->data);
+            printf("\t\t\tCelular: %s\n", cliente->celular);
+        }
     }
     fclose(arquivo);
     free(cliente);
@@ -133,9 +117,7 @@ void atualizaCliente(void) {
     printf("|_________________________________________________________________________________________________|\n");
 
     char cpfCliente[15];
-    printf("\nInforme o CPF (apenas numeros): ");
-    scanf("%[^\n]", cpfCliente);
-    getchar();
+    recebeCpf(cpfCliente);
 
     int opcao;
     do {
@@ -166,9 +148,7 @@ void deletaCliente(void) {
     printf("|_________________________________________________________________________________________________|\n");
 
     char cpfCliente[15];
-    printf("\nInforme o CPF (apenas numeros): ");
-    scanf("%[^\n]", cpfCliente);
-    getchar();
+    recebeCpf(cpfCliente);
     
     exibirCliente(cpfCliente);
     printf("\n>>> Tecle <ENTER> para continuar...\n");
@@ -210,9 +190,7 @@ void opcaoCliente(void) {
 
     do {
         telaCliente();
-        printf("Digite a opção desejada: ");
-        scanf("%c", &opcao);
-        getchar();
+        recebeOpcao(&opcao);
         
         switch (opcao) {
             case '1':
@@ -245,18 +223,11 @@ void opcaoCliente(void) {
 void cadastrarCliente(Cliente * cliente) {
     criarDiretorio();
     FILE * arquivo = fopen("./dados/clientes.bin", "ab");
-
-    if (arquivo == NULL) {
-        printf("Erro na criação de arquivo de Clientes. O programa será finalizado.");
-        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
-        getchar();
-        exit(1);
-    }
+    verificaArquivo(arquivo);
     
     cliente->status = True;
     fwrite(cliente, sizeof(Cliente), 1, arquivo);
 
-    free(cliente);
     fclose(arquivo);
 }
 
@@ -265,15 +236,10 @@ void exibirCliente(char cpfCliente[]) {
     cliente = (Cliente*) malloc(sizeof(Cliente));
 
     FILE * arquivo = fopen("./dados/clientes.bin", "rb");
+    verificaArquivo(arquivo);
 
-    if (arquivo == NULL) {
-        printf("Erro na abertura do arquivo clientes");
-        printf("\n>>> Tecle <ENTER> para continuar...\n");
-        getchar();
-        return;
-    }
-
-    while (fread(cliente, sizeof(Cliente), 1, arquivo)) {
+    int encontrado = False;
+    while (fread(cliente, sizeof(Cliente), 1, arquivo) && encontrado == False) {
         if(strcmp(cliente->cpf, cpfCliente) == 0 && cliente->status == True) {
             printf("\n\t\t\t <--- Cliente Encontrado ---> \n\n");
             printf("\t\t\tNome: %s\n", cliente->nome);
@@ -281,10 +247,11 @@ void exibirCliente(char cpfCliente[]) {
             printf("\t\t\tEmail: %s\n", cliente->email);
             printf("\t\t\tData: %s\n", cliente->data);
             printf("\t\t\tCelular: %s\n", cliente->celular);
-            fclose(arquivo);
-            return;
+            encontrado = True;
         }
     }
+    fclose(arquivo);
+    free(cliente);
 }
 
 void atualizarCliente(char cpfCliente[], int opcao) {
@@ -307,8 +274,8 @@ void atualizarCliente(char cpfCliente[], int opcao) {
     cliente = (Cliente*) malloc(sizeof(Cliente));
 
     FILE * arquivo = fopen("./dados/clientes.bin", "r+b");
-    int encontrado = False;
 
+    int encontrado = False;
     while (fread(cliente, sizeof(Cliente), 1, arquivo) && encontrado == False) {
         if (strcmp(cpfCliente, cliente->cpf) == 0) {
             if (opcao == 1) {
@@ -324,7 +291,6 @@ void atualizarCliente(char cpfCliente[], int opcao) {
             encontrado = True;
             fseek(arquivo, (-1) * sizeof(Cliente), SEEK_CUR);
             fwrite(cliente, sizeof(Cliente), 1, arquivo);
-            fclose(arquivo);
         }
     }
     fclose(arquivo);
@@ -358,12 +324,7 @@ void excluirBancoCliente(void) {
     FILE * arquivo = fopen("./dados/clientes.bin", "rb");
     
     FILE * arquivoTemp = fopen("./dados/clientes_temp.bin", "wb");
-    if (arquivoTemp == NULL) {
-        printf("Erro na criação de arquivo de cliente temporario. O programa será finalizado.");
-        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
-        getchar();
-        exit(1);
-    }
+    verificaArquivoTemporario(arquivoTemp);
 
     int clientesMantidos = 0;
     int clientesRemovidos = 0;
@@ -376,46 +337,13 @@ void excluirBancoCliente(void) {
         }
     }
     
-    free(cliente);
     fclose(arquivo);
     fclose(arquivoTemp);
+    free(cliente);
     
-    trocarArquivosCliente("./dados/clientes.bin", "./dados/clientes_temp.bin");
+    trocaArquivos("./dados/clientes.bin", "./dados/clientes_temp.bin");
     
     printf("Limpeza do banco concluída com sucesso!\n");
     printf("Clientes mantidos: %d\n", clientesMantidos);
     printf("Clientes removidos: %d\n", clientesRemovidos);
-}
-
-void trocarArquivosCliente(char antigo[], char novo[]) {
-    int retorno = remove(antigo);
-    if (retorno != 0) {
-        printf("Houve um erro na exclusão. O programa será finalizado.");
-        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
-        getchar();
-        exit(1);
-    }
-
-    int renomeacao = rename(novo, antigo);
-    if (renomeacao != 0) {
-        printf("Houve um erro na renomeação do arquivo. O programa será finalizado.");
-        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
-        getchar();
-        exit(1);
-    }
-    return;
-}
-
-void criarDiretorio(void) {
-    // Função adaptada de:
-    // https://linux.die.net/man/2/mkdir e https://stackoverflow.com/questions/7430248/creating-a-new-directory-in-c
-    // Criando diretório para armazenamento de dados
-    int status = mkdir("dados", 0700);
-    if (status < 0 && errno != EEXIST)
-    {
-        printf("Houve um erro na criação do diretório de armazenamento de dados. O programa será finalizado.");
-        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
-        getchar();
-        exit(1);
-    }
 }
