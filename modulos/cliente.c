@@ -12,7 +12,6 @@ void exibirCliente(char cpfCliente[]);
 void atualizarCliente(char cpfCliente[], int opcao);
 void deletarCliente(char cpfCliente[]);
 void excluirBancoCliente(void);
-void criarDiretorio(void);
 
 void telaCliente(void) {
     system("clear||cls");
