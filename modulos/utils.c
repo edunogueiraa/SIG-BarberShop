@@ -7,6 +7,23 @@
 
 #include "include/utils.h"
 
+int validaNome(char *nome) {
+
+    if (nome == NULL) {
+        return False;
+    } 
+
+    for (int i = 0; nome[i] != '\0'; ++i) {
+        char caractere = nome[i];
+
+        //isalpha verifica se é uma letra
+        if (!((isalpha(caractere) || caractere == ' '))) {
+            return False;
+        }
+    }
+    return True;
+}
+
 int validaCpf(char *cpf) {
     if (cpf == NULL) {
         return False;
@@ -92,44 +109,6 @@ int validaEmail(char *email) {
     return True;
 }
 
-int validaNome(char *nome) {
-
-    if (nome == NULL) {
-        return False;
-    } 
-
-    for (int i = 0; nome[i] != '\0'; ++i) {
-        char caractere = nome[i];
-
-        //isalpha verifica se é uma letra
-        if (!((isalpha(caractere) || caractere == ' '))) {
-            return False;
-        }
-    }
-    return True;
-}
-
-int validaCelular(char *celular) {
-    int tamanho = strlen(celular);
-
-    if (celular == NULL) {
-        return False;
-    }
-    
-    if (tamanho > 12) {
-        return False;
-    }
-
-    for (int i = 0; celular[i] != '\0'; i++) {
-        char digito = celular[i];
-
-        if (!isdigit(digito)){
-            return False;
-        }
-    }
-    return True;
-}
-
 int validaData(char *data) {
     int tamanho = strlen(data);
 
@@ -152,6 +131,27 @@ int validaData(char *data) {
             if (caractere != '/') {
                 return False;
             }
+        }
+    }
+    return True;
+}
+
+int validaCelular(char *celular) {
+    int tamanho = strlen(celular);
+
+    if (celular == NULL) {
+        return False;
+    }
+    
+    if (tamanho > 12) {
+        return False;
+    }
+
+    for (int i = 0; celular[i] != '\0'; i++) {
+        char digito = celular[i];
+
+        if (!isdigit(digito)){
+            return False;
         }
     }
     return True;
