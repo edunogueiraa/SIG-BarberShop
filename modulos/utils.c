@@ -332,6 +332,8 @@ void recebeOpcao(char ponteiroOpcao[]) {
 
     strcpy(ponteiroOpcao, opcao);
 }
+
+// Funções de verificação de arquivos
 void verificaArquivo(FILE * arquivo) {
 
     if (arquivo == NULL) {
