@@ -25,6 +25,7 @@ int validaCpf(char *cpf) {
     // Transforma characteres em números
     for (i = 0; i < 11; i++) {
         numeros[i] = cpf[i] - 48;
+        // Esse - 48 é por causa da tabela ASCII, bate certinho com o número e a conversão funciona
     }
 
     // Guarda as somas para o primeiro dígito
