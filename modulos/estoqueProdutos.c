@@ -52,19 +52,12 @@ void cadastroEstoque(void) {
     Estoque * estoque;
     estoque = (Estoque *) malloc(sizeof(Estoque));
     
-    printf("\nNome do produto: ");
-    scanf("%[^\n]", estoque->nome);
-    printf("ID do produto (apenas números): ");
-    scanf("%s", estoque->id);
-    printf("Tipo do produto: ");
-    scanf("%s", estoque->tipo);
-    printf("Valor (R$): ");
-    scanf("%s", estoque->valor);
-    getchar();
+    recebeNome(estoque->nome, "produto");
+    recebeId(estoque->id, "produto");
+    recebeTipo(estoque->tipo);
+    recebeValor(estoque->valor);
     
-    criarDiretorio();
     cadastrarProduto(estoque);
-    
     free(estoque);
 }
 
@@ -195,9 +188,7 @@ void opcaoEstoque(void) {
 
     do {
         telaEstoque();
-        printf("Digite a opção desejada: ");
-        scanf("%c", &opcao);
-        getchar();
+        recebeOpcao(&opcao);
 
         switch (opcao) {
 
@@ -229,15 +220,9 @@ void opcaoEstoque(void) {
 }
 
 void cadastrarProduto(Estoque * estoque) {
+    criarDiretorio();
     FILE * arquivo = fopen("./dados/estoque.bin", "ab");
-
-    if (arquivo == NULL)
-    {
-        printf("Erro na criação de arquivo de Estoque. O programa será finalizado.");
-        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
-        getchar();
-        exit(1);
-    }
+    verificaArquivo(arquivo);
 
     estoque->status = True;
     fwrite(estoque, sizeof(Estoque), 1, arquivo);
@@ -250,15 +235,10 @@ void exibirProduto(char idProduto[]) {
     estoque = (Estoque *) malloc(sizeof(Estoque));
 
     FILE * arquivo = fopen("./dados/estoque.bin", "rt");
-
-    if (arquivo == NULL) {
-        printf("Erro na abertura do arquivo de estoque");
-        printf("\n>>> Tecle <ENTER> para continuar...\n");
-        getchar();
-        return;
-    }
-
-    while (fread(estoque, sizeof(Estoque), 1, arquivo)) {
+    verificaArquivo(arquivo);
+    
+    int encontrado = False;
+    while (fread(estoque, sizeof(Estoque), 1, arquivo) && encontrado == False) {
         if (strcmp(idProduto, estoque->id) == 0 && estoque->status == True) {
             printf("\n\t\t\t <--- Produto Encontrado ---> \n\n");
             printf("\t\t\tNome do produto: %s\n", estoque->nome);
@@ -288,8 +268,8 @@ void atualizarProduto(char idProduto[], int opcao) {
     estoque = (Estoque *) malloc(sizeof(Estoque));
 
     FILE * arquivo = fopen("./dados/estoque.bin", "r+b");
+    
     int encontrado = False;
-
     while (fread(estoque, sizeof(Estoque), 1, arquivo) && encontrado == False) {
         if (strcmp(idProduto, estoque->id) == 0) {
             if (opcao == 1) {
@@ -312,14 +292,15 @@ void atualizarProduto(char idProduto[], int opcao) {
 void deletarProduto(char idProduto[]) {
     Estoque * estoque;
     estoque = (Estoque *) malloc(sizeof(Estoque));
-
+    
     FILE * arquivo = fopen("./dados/estoque.bin", "r+b");
-
+    
     int encontrado = False;
     
     while (fread(estoque, sizeof(Estoque), 1, arquivo) && encontrado == False) {
         if (strcmp(idProduto, estoque->id) == 0) {
             estoque->status = False;
+
             encontrado = True;
             fseek(arquivo, (-1) * sizeof(Estoque), SEEK_CUR);
             fwrite(estoque, sizeof(Estoque), 1, arquivo);
@@ -332,17 +313,12 @@ void deletarProduto(char idProduto[]) {
 void excluirBancoEstoque(void) {
     Estoque * estoque;
     estoque = (Estoque *) malloc(sizeof(Estoque));
-
+    
     int estoquesMantidos = 0;
     int estoquesRemovidos = 0;
     
     FILE * arquivoTemp = fopen("./dados/estoque_temp.bin", "wb");
-    if (arquivoTemp == NULL) {
-        printf("Erro na criação de arquivo de estoque temporario. O programa será finalizado.");
-        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
-        getchar();
-        exit(1);
-    }
+    verificaArquivoTemporario(arquivoTemp);
     
     FILE * arquivo = fopen("./dados/estoque.bin", "rb");
     while (fread(estoque, sizeof(Estoque), 1, arquivo) == 1) {
