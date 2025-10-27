@@ -20,46 +20,6 @@ void recebeNome(char ponteiroNome[], char tipo[]) {
     strcpy(ponteiroNome, nome);
 }
 
-void recebeValor(char ponteiroValor[]) {
-    char valor[10];
-    int validado = False;
-
-    do {
-        printf("Valor: ");
-        scanf("%[^\n]", valor);
-        getchar();
-
-        // precisa fazer o método de validar strings aqui, pra ver se o que digitou passa
-        // faz um if pra ver se passou coisa certa ou não
-
-        // tem que ter @ e terminar em .com
-        // validado = validaCpf(cpf);
-        validado = True;
-    } while (validado == False);
-
-    strcpy(ponteiroValor, valor);
-}
-
-void recebeDuracaoTempo(char ponteiroDuracao[]) {
-    char duracao[10];
-    int validado = False;
-
-    do {
-        printf("Duracao: ");
-        scanf("%[^\n]", duracao);
-        getchar();
-
-        // precisa fazer o método de validar strings aqui, pra ver se o que digitou passa
-        // faz um if pra ver se passou coisa certa ou não
-
-        // tem que ter @ e terminar em .com
-        // validado = validaCpf(cpf);
-        validado = True;
-    } while (validado == False);
-
-    strcpy(ponteiroDuracao, duracao);
-}
-
 void recebeCpf(char ponteiroCpf[]) {
     char cpf[15];
     int validado = False;
@@ -78,6 +38,16 @@ void recebeCpf(char ponteiroCpf[]) {
     } while (validado == False);
 
     strcpy(ponteiroCpf, cpf);
+}
+
+void recebeId(char ponteiroId[], char tipo[]) {
+    char id[50];
+    printf("Digite o ID de %s: ",tipo);
+    
+    scanf("%[^\n]", id);
+    getchar();
+    
+    strcpy(ponteiroId, id);
 }
 
 void recebeEmail(char ponteiroEmail[]) {
@@ -140,14 +110,24 @@ void recebeCelular(char ponteiroCelular[]) {
     strcpy(ponteiroCelular, celular);
 }
 
-void recebeId(char ponteiroId[], char tipo[]) {
-    char id[50];
-    printf("Digite o ID de %s: ",tipo);
-    
-    scanf("%[^\n]", id);
-    getchar();
-    
-    strcpy(ponteiroId, id);
+void recebeValor(char ponteiroValor[]) {
+    char valor[10];
+    int validado = False;
+
+    do {
+        printf("Valor: ");
+        scanf("%[^\n]", valor);
+        getchar();
+
+        // precisa fazer o método de validar strings aqui, pra ver se o que digitou passa
+        // faz um if pra ver se passou coisa certa ou não
+
+        // tem que ter @ e terminar em .com
+        // validado = validaCpf(cpf);
+        validado = True;
+    } while (validado == False);
+
+    strcpy(ponteiroValor, valor);
 }
 
 void recebeOpcao(char ponteiroOpcao[]) {
@@ -157,6 +137,26 @@ void recebeOpcao(char ponteiroOpcao[]) {
     getchar();
 
     strcpy(ponteiroOpcao, opcao);
+}
+
+void recebeDuracaoTempo(char ponteiroDuracao[]) {
+    char duracao[10];
+    int validado = False;
+
+    do {
+        printf("Duracao: ");
+        scanf("%[^\n]", duracao);
+        getchar();
+
+        // precisa fazer o método de validar strings aqui, pra ver se o que digitou passa
+        // faz um if pra ver se passou coisa certa ou não
+
+        // tem que ter @ e terminar em .com
+        // validado = validaCpf(cpf);
+        validado = True;
+    } while (validado == False);
+
+    strcpy(ponteiroDuracao, duracao);
 }
 
 void recebeHora(char ponteiroHora[]) {
