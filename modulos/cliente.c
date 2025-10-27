@@ -60,6 +60,7 @@ void cadastroCliente(void) {
     recebeCelular(cliente->celular);
 
     cadastrarCliente(cliente);
+    free(cliente);
 }
 
 void exibeCliente(void) {
@@ -194,9 +195,7 @@ void opcaoCliente(void) {
 
     do {
         telaCliente();
-        printf("Digite a opção desejada: ");
-        scanf("%c", &opcao);
-        getchar();
+        recebeOpcao(&opcao);
         
         switch (opcao) {
             case '1':
@@ -229,18 +228,11 @@ void opcaoCliente(void) {
 void cadastrarCliente(Cliente * cliente) {
     criarDiretorio();
     FILE * arquivo = fopen("./dados/clientes.bin", "ab");
-
-    if (arquivo == NULL) {
-        printf("Erro na criação de arquivo de Clientes. O programa será finalizado.");
-        printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
-        getchar();
-        exit(1);
-    }
+    verificaArquivo(arquivo);
     
     cliente->status = True;
     fwrite(cliente, sizeof(Cliente), 1, arquivo);
 
-    free(cliente);
     fclose(arquivo);
 }
 
@@ -249,14 +241,9 @@ void exibirCliente(char cpfCliente[]) {
     cliente = (Cliente*) malloc(sizeof(Cliente));
 
     FILE * arquivo = fopen("./dados/clientes.bin", "rb");
+    verificaArquivo(arquivo);
 
-    if (arquivo == NULL) {
-        printf("Erro na abertura do arquivo clientes");
-        printf("\n>>> Tecle <ENTER> para continuar...\n");
-        getchar();
-        return;
-    }
-
+    int encontrado = False;
     while (fread(cliente, sizeof(Cliente), 1, arquivo)) {
         if(strcmp(cliente->cpf, cpfCliente) == 0 && cliente->status == True) {
             printf("\n\t\t\t <--- Cliente Encontrado ---> \n\n");
@@ -265,10 +252,11 @@ void exibirCliente(char cpfCliente[]) {
             printf("\t\t\tEmail: %s\n", cliente->email);
             printf("\t\t\tData: %s\n", cliente->data);
             printf("\t\t\tCelular: %s\n", cliente->celular);
-            fclose(arquivo);
-            return;
+            encontrado = True;
         }
     }
+    fclose(arquivo);
+    free(cliente);
 }
 
 void atualizarCliente(char cpfCliente[], int opcao) {
@@ -291,8 +279,8 @@ void atualizarCliente(char cpfCliente[], int opcao) {
     cliente = (Cliente*) malloc(sizeof(Cliente));
 
     FILE * arquivo = fopen("./dados/clientes.bin", "r+b");
-    int encontrado = False;
 
+    int encontrado = False;
     while (fread(cliente, sizeof(Cliente), 1, arquivo) && encontrado == False) {
         if (strcmp(cpfCliente, cliente->cpf) == 0) {
             if (opcao == 1) {
@@ -308,7 +296,6 @@ void atualizarCliente(char cpfCliente[], int opcao) {
             encontrado = True;
             fseek(arquivo, (-1) * sizeof(Cliente), SEEK_CUR);
             fwrite(cliente, sizeof(Cliente), 1, arquivo);
-            fclose(arquivo);
         }
     }
     fclose(arquivo);
@@ -355,9 +342,9 @@ void excluirBancoCliente(void) {
         }
     }
     
-    free(cliente);
     fclose(arquivo);
     fclose(arquivoTemp);
+    free(cliente);
     
     trocaArquivos("./dados/clientes.bin", "./dados/clientes_temp.bin");
     
@@ -365,4 +352,3 @@ void excluirBancoCliente(void) {
     printf("Clientes mantidos: %d\n", clientesMantidos);
     printf("Clientes removidos: %d\n", clientesRemovidos);
 }
-
