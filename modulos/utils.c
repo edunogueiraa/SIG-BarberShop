@@ -62,7 +62,7 @@ int validaCelular(char *celular) {
         return False;
     }
 
-    for (int i = 0; i < tamanho; i++) {
+    for (int i = 0; celular[i] != '\0'; i++) {
         char digito = celular[i];
 
         if (!isdigit(digito)){
