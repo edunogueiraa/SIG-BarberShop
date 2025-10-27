@@ -10,12 +10,17 @@
 int validaEmail(char *email) {
     //strchr verifica esse caractere no email
     char *arroba = strchr(email, '@');
+    int tamanho = strlen(email);
 
     if (email == NULL) {
         return False;
     } 
 
-    if (arroba == NULL || arroba == email){
+    if (tamanho < 3) {
+        return False;
+    }
+
+    if (arroba == NULL){
         return False;
     }
 
@@ -40,6 +45,27 @@ int validaNome(char *nome) {
 
         //isalpha verifica se é uma letra
         if (!((isalpha(caractere) || caractere == ' '))) {
+            return False;
+        }
+    }
+    return True;
+}
+
+int validaCelular(char *celular) {
+    int tamanho = strlen(celular);
+
+    if (celular == NULL) {
+        return False;
+    }
+    
+    if (tamanho > 12) {
+        return False;
+    }
+
+    for (int i = 0; i < tamanho; i++) {
+        char digito = celular[i];
+
+        if (!isdigit(digito)){
             return False;
         }
     }
@@ -122,11 +148,6 @@ void recebeData(char ponteiroData[], char tipo[]) {
         scanf("%[^\n]", data);
         getchar();
 
-        // precisa fazer o método de validar strings aqui, pra ver se o que digitou passa
-        // faz um if pra ver se passou coisa certa ou não
-
-        // tem que ter @ e terminar em .com
-        // validado = validaData(data);
         validado = True;
     } while (validado == False);
 
@@ -142,12 +163,11 @@ void recebeCelular(char ponteiroCelular[]) {
         scanf("%[^\n]", celular);
         getchar();
 
-        // precisa fazer o método de validar strings aqui, pra ver se o que digitou passa
-        // faz um if pra ver se passou coisa certa ou não
-
-        // tem que ter @ e terminar em .com
-        // validado = validaCelular(celular);
-        validado = True;
+        if (validaCelular(celular)) {
+            validado = True;
+        } else {
+            printf("Celular errado, digite apenas numeros!\n");
+        }
     } while (validado == False);
 
     strcpy(ponteiroCelular, celular);
