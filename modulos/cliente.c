@@ -90,20 +90,16 @@ void listaClientes(void) {
     cliente = (Cliente *)malloc(sizeof(Cliente));
     
     FILE * arquivo = fopen("./dados/clientes.bin", "rb");
-
-    if (arquivo == NULL) {
-        printf("Erro na abertura do arquivo clientes");
-        printf("\n>>> Tecle <ENTER> para continuar...\n");
-        getchar();
-        return;
-    }
+    verificaArquivo(arquivo);
 
     while (fread(cliente, sizeof(Cliente), 1, arquivo)) {
-        printf("\n\t\t\tNome: %s\n", cliente->nome);
-        printf("\t\t\tCPF: %s\n", cliente->cpf);
-        printf("\t\t\tEmail: %s\n", cliente->email);
-        printf("\t\t\tData: %s\n", cliente->data);
-        printf("\t\t\tCelular: %s\n", cliente->celular);
+        if (cliente->status == True) {
+            printf("\n\t\t\tNome: %s\n", cliente->nome);
+            printf("\t\t\tCPF: %s\n", cliente->cpf);
+            printf("\t\t\tEmail: %s\n", cliente->email);
+            printf("\t\t\tData: %s\n", cliente->data);
+            printf("\t\t\tCelular: %s\n", cliente->celular);
+        }
     }
     fclose(arquivo);
     free(cliente);
