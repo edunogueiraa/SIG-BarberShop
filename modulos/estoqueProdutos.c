@@ -334,7 +334,8 @@ void excluirBancoEstoque(void) {
     Estoque * estoque;
     estoque = (Estoque *) malloc(sizeof(Estoque));
 
-    FILE * arquivo = fopen("./dados/estoque.bin", "rb");
+    int estoquesMantidos = 0;
+    int estoquesRemovidos = 0;
     
     FILE * arquivoTemp = fopen("./dados/estoque_temp.bin", "wb");
     if (arquivoTemp == NULL) {
