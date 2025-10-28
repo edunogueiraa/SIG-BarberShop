@@ -1,8 +1,6 @@
 #define True 1
 #define False 0
 
-int validaEmail(char *email);
-int validaNome(char *nome);
 int validaCelular(char *celular);
 void recebeNome(char ponteiroNome[], char tipo[]);
 void recebeCpf(char ponteiroCpf[]);
