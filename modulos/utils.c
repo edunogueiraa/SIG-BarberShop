@@ -153,6 +153,21 @@ int validaCelular(char *celular) {
     }
     return True;
 }
+int validaValor(char *valor) {
+
+    if (valor == NULL) {
+        return False;
+    }
+
+    for (int i = 0; valor[i] != '\0'; i++) {
+        char digito = valor[i];
+
+        if (!isdigit(digito) && digito != '.'){
+            return False;
+        }
+    }
+    return True;
+}
 
 // Funções de entrada de dados
 void recebeNome(char ponteiroNome[], char tipo[]) {
@@ -280,7 +295,13 @@ void recebeValor(char ponteiroValor[]) {
         printf("Valor: ");
         scanf("%[^\n]", valor);
         getchar();
-        validado = True;
+
+        if (validaValor(valor)) {
+            validado = True;
+        } else {
+            printf("valor errado! Digite dessa forma EX:13.00\n");
+        }
+
     } while (validado == False);
 
     strcpy(ponteiroValor, valor);
