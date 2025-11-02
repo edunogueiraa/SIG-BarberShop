@@ -280,12 +280,6 @@ void recebeValor(char ponteiroValor[]) {
         printf("Valor: ");
         scanf("%[^\n]", valor);
         getchar();
-
-        // precisa fazer o método de validar strings aqui, pra ver se o que digitou passa
-        // faz um if pra ver se passou coisa certa ou não
-
-        // tem que ter @ e terminar em .com
-        // validado = validaCpf(cpf);
         validado = True;
     } while (validado == False);
 
@@ -300,11 +294,6 @@ void recebeDuracaoTempo(char ponteiroDuracao[]) {
         scanf("%[^\n]", duracao);
         getchar();
 
-        // precisa fazer o método de validar strings aqui, pra ver se o que digitou passa
-        // faz um if pra ver se passou coisa certa ou não
-
-        // tem que ter @ e terminar em .com
-        // validado = validaCpf(cpf);
         validado = True;
     } while (validado == False);
 
@@ -331,6 +320,12 @@ void recebeOpcao(char ponteiroOpcao[]) {
     getchar();
 
     strcpy(ponteiroOpcao, opcao);
+}
+
+// Funções de exibicao
+void exibeValor(char *valor) {
+    float valorFormatado = atof(valor);
+    printf("\t\t\tValor: R$ %.2f\n", valorFormatado);
 }
 
 // Funções de verificação de arquivos
