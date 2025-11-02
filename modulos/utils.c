@@ -276,7 +276,11 @@ void recebeTipo(char ponteiroTipo[]) {
         printf("Tipo do produto: ");
         scanf("%[^\n]", tipo);
         getchar();
-        validado = True;
+        if (validaNome(tipo)) {
+            validado = True;
+        } else {
+            printf("Tipo errado, digite somente letras e espaço!\n");
+        }
     } while (validado == False);
 
     strcpy(ponteiroTipo, tipo);
