@@ -451,6 +451,7 @@ int verificaItensArquivo(FILE *arquivo, int tamanho) {
     fseek(arquivo, 0, SEEK_END);
     long int bytes = ftell(arquivo);
     int quantidade = bytes / tamanho;
+    return quantidade;
 }
 void criarDiretorio(void) {
     // Função adaptada de:
