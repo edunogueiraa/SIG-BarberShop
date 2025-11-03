@@ -446,6 +446,12 @@ void trocaArquivos(char antigo[], char novo[]) {
     }
     return;
 }
+int verificaItensArquivo(FILE *arquivo, int tamanho) {
+    // Adaptado da geração automática da IA do Google
+    fseek(arquivo, 0, SEEK_END);
+    long int bytes = ftell(arquivo);
+    int quantidade = bytes / tamanho;
+}
 void criarDiretorio(void) {
     // Função adaptada de:
     // https://linux.die.net/man/2/mkdir e https://stackoverflow.com/questions/7430248/creating-a-new-directory-in-c
