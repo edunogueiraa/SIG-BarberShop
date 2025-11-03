@@ -168,6 +168,30 @@ int validaValor(char *valor) {
     }
     return True;
 }
+int validaHora(char *hora) {
+    int tamanho = strlen(hora);
+
+    if (hora == NULL) {
+        return False;
+    }
+
+    if (tamanho != 5 && tamanho != 8) {
+        return False;
+    }
+    
+    for (int i = 0; hora[i] != '\0'; i++) {
+        char digito = hora[i];
+
+        if ((i == 2 || i == 5)) {
+            if (digito != ':') {
+                return False;
+            }
+        } else if (!isdigit(digito)){
+            return False;
+        }
+    }
+    return True;
+}
 
 // Funções de entrada de dados
 void recebeNome(char ponteiroNome[], char tipo[]) {
@@ -319,7 +343,7 @@ void recebeDuracaoTempo(char ponteiroDuracao[]) {
     strcpy(ponteiroDuracao, duracao);
 }
 void recebeHora(char ponteiroHora[]) {
-    char hora[5];
+    char hora[9];
     int validado = False;
 
     do {
@@ -327,7 +351,11 @@ void recebeHora(char ponteiroHora[]) {
         scanf("%s", hora);
         getchar();
 
-        validado = True;
+        if (validaHora(hora)) {
+            validado = True;
+        } else {
+            printf("Hora inválida. Por favor use o formato HH:MM:SS ou apenas HH:MM.\n");
+        }
     } while (validado == False);
 
     strcpy(ponteiroHora, hora);
