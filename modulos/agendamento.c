@@ -47,7 +47,7 @@ void cadastroAgendamento(void) {
     recebeId(agendamento->id,"agendamento");
     recebeCpf(agendamento->cpfCliente);
     recebeNome(agendamento->nomeCliente,"agendamento");
-    recebeId(agendamento->id,"servico");
+    recebeId(agendamento->idServico,"servico");
     recebeData(agendamento->data,"agendamento");
     recebeHora(agendamento->hora);
 
