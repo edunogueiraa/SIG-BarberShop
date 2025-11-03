@@ -64,10 +64,9 @@ void listaAgendamento(void) {
 
     while (fread(agendamento,sizeof(Agendamento),1,arquivo)){
         if (agendamento->status == True) {
-            formataCpf(agendamento->cpfCliente);
             printf("\n\n");
             printf("\t\t\tID: %s\n",agendamento->id);
-            printf("\t\t\tCPF: %s\n",agendamento->cpfCliente);
+            exibeCpf(agendamento->cpfCliente);
             printf("\t\t\tNome: %s\n",agendamento->nomeCliente);
             printf("\t\t\tID Servico: %s\n",agendamento->idServico);
             printf("\t\t\tData: %s\n",agendamento->data);
@@ -332,10 +331,9 @@ void exibirAgendamento(char idAgendamento[]) {
 
         while (fread(agendamento,sizeof(Agendamento),1,arquivo)){
             if(strcmp(idAgendamento,agendamento->id) == 0 && agendamento->status == True){
-                formataCpf(agendamento->cpfCliente);
                 printf("\n\t\t\t <--- Agendamento Encontrado ---> \n\n");
                 printf("\t\t\tID: %s\n",agendamento->id);
-                printf("\t\t\tCPF: %s\n",agendamento->cpfCliente);
+                exibeCpf(agendamento->cpfCliente);
                 printf("\t\t\tNome: %s\n",agendamento->nomeCliente);
                 printf("\t\t\tID Servico: %s\n",agendamento->idServico);
                 printf("\t\t\tData: %s\n",agendamento->data);

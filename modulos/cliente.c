@@ -94,9 +94,8 @@ void listaClientes(void) {
 
     while (fread(cliente, sizeof(Cliente), 1, arquivo)) {
         if (cliente->status == True) {
-            formataCpf(cliente->cpf);
             printf("\n\t\t\tNome: %s\n", cliente->nome);
-            printf("\t\t\tCPF: %s\n", cliente->cpf);
+            exibeCpf(cliente->cpf);
             printf("\t\t\tEmail: %s\n", cliente->email);
             printf("\t\t\tData: %s\n", cliente->data);
             printf("\t\t\tCelular: %s\n", cliente->celular);
@@ -242,10 +241,9 @@ void exibirCliente(char cpfCliente[]) {
     int encontrado = False;
     while (fread(cliente, sizeof(Cliente), 1, arquivo) && encontrado == False) {
         if(strcmp(cliente->cpf, cpfCliente) == 0 && cliente->status == True) {
-            formataCpf(cliente->cpf);
             printf("\n\t\t\t <--- Cliente Encontrado ---> \n\n");
             printf("\t\t\tNome: %s\n", cliente->nome);
-            printf("\t\t\tCPF: %s\n", cliente->cpf);
+            exibeCpf(cliente->cpf);
             printf("\t\t\tEmail: %s\n", cliente->email);
             printf("\t\t\tData: %s\n", cliente->data);
             printf("\t\t\tCelular: %s\n", cliente->celular);
