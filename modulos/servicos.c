@@ -65,7 +65,7 @@ void listaServico(void){
             printf("\n\n");
             printf("\t\t\tNome do serviço: %s\n", servico->nome);
             printf("\t\t\tID do serviço: %s\n", servico->id);
-            printf("\t\t\tValor (R$): %s\n", servico->valor);
+            exibeValor(servico->valor);
             printf("\t\t\tDuração do serviço: %s\n", servico->duracao);
         }
     }
@@ -315,7 +315,7 @@ void exibirServico(char idServico[]) {
                 printf("\n\t\t\t <--- Servico Encontrado ---> \n\n");
                 printf("\t\t\tNome do serviço: %s\n", servico->nome);
                 printf("\t\t\tID do serviço: %s\n", servico->id);
-                printf("\t\t\tValor (R$): %s\n", servico->valor);
+                exibeValor(servico->valor);
                 printf("\t\t\tDuração do serviço: %s\n", servico->duracao);
                 printf("\n>>> Tecle <ENTER> para continuar...\n");
                 getchar();

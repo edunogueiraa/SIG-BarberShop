@@ -153,6 +153,45 @@ int validaCelular(char *celular) {
     }
     return True;
 }
+int validaValor(char *valor) {
+
+    if (valor == NULL) {
+        return False;
+    }
+
+    for (int i = 0; valor[i] != '\0'; i++) {
+        char digito = valor[i];
+
+        if (!isdigit(digito) && digito != '.'){
+            return False;
+        }
+    }
+    return True;
+}
+int validaHora(char *hora) {
+    int tamanho = strlen(hora);
+
+    if (hora == NULL) {
+        return False;
+    }
+
+    if (tamanho != 5 && tamanho != 8) {
+        return False;
+    }
+    
+    for (int i = 0; hora[i] != '\0'; i++) {
+        char digito = hora[i];
+
+        if ((i == 2 || i == 5)) {
+            if (digito != ':') {
+                return False;
+            }
+        } else if (!isdigit(digito)){
+            return False;
+        }
+    }
+    return True;
+}
 
 // Funções de entrada de dados
 void recebeNome(char ponteiroNome[], char tipo[]) {
@@ -261,13 +300,11 @@ void recebeTipo(char ponteiroTipo[]) {
         printf("Tipo do produto: ");
         scanf("%[^\n]", tipo);
         getchar();
-
-        // precisa fazer o método de validar strings aqui, pra ver se o que digitou passa
-        // faz um if pra ver se passou coisa certa ou não
-
-        // tem que ter @ e terminar em .com
-        // validado = validaCelular(celular);
-        validado = True;
+        if (validaNome(tipo)) {
+            validado = True;
+        } else {
+            printf("Tipo errado, digite somente letras e espaço!\n");
+        }
     } while (validado == False);
 
     strcpy(ponteiroTipo, tipo);
@@ -281,12 +318,12 @@ void recebeValor(char ponteiroValor[]) {
         scanf("%[^\n]", valor);
         getchar();
 
-        // precisa fazer o método de validar strings aqui, pra ver se o que digitou passa
-        // faz um if pra ver se passou coisa certa ou não
+        if (validaValor(valor)) {
+            validado = True;
+        } else {
+            printf("valor errado! Digite dessa forma EX:13.00\n");
+        }
 
-        // tem que ter @ e terminar em .com
-        // validado = validaCpf(cpf);
-        validado = True;
     } while (validado == False);
 
     strcpy(ponteiroValor, valor);
@@ -300,18 +337,13 @@ void recebeDuracaoTempo(char ponteiroDuracao[]) {
         scanf("%[^\n]", duracao);
         getchar();
 
-        // precisa fazer o método de validar strings aqui, pra ver se o que digitou passa
-        // faz um if pra ver se passou coisa certa ou não
-
-        // tem que ter @ e terminar em .com
-        // validado = validaCpf(cpf);
         validado = True;
     } while (validado == False);
 
     strcpy(ponteiroDuracao, duracao);
 }
 void recebeHora(char ponteiroHora[]) {
-    char hora[5];
+    char hora[9];
     int validado = False;
 
     do {
@@ -319,7 +351,11 @@ void recebeHora(char ponteiroHora[]) {
         scanf("%s", hora);
         getchar();
 
-        validado = True;
+        if (validaHora(hora)) {
+            validado = True;
+        } else {
+            printf("Hora inválida. Por favor use o formato HH:MM:SS ou apenas HH:MM.\n");
+        }
     } while (validado == False);
 
     strcpy(ponteiroHora, hora);
@@ -331,6 +367,28 @@ void recebeOpcao(char ponteiroOpcao[]) {
     getchar();
 
     strcpy(ponteiroOpcao, opcao);
+}
+
+// Funções de exibicao
+void exibeValor(char *valor) {
+    float valorFormatado = atof(valor);
+    printf("\t\t\tValor: R$ %.2f\n", valorFormatado);
+}
+void formataCpf(char *cpf) {
+    char formatado[15];
+    
+    int posicao = 0;
+    for (int i = 0; cpf[i] != '\0'; ++i) {
+        if (i == 3 || i == 6) {
+            formatado[posicao++] = '.';
+        } else if (i == 9) {
+            formatado[posicao++] = '-';
+        }
+        formatado[posicao++] = cpf[i];
+    }
+
+    formatado[posicao] = '\0';
+    strcpy(cpf, formatado);
 }
 
 // Funções de verificação de arquivos
