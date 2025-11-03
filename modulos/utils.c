@@ -390,6 +390,24 @@ void exibeCpf(char *cpf) {
     formatado[posicao] = '\0';
     printf("\t\t\tCPF: %s\n", formatado);
 }
+void exibeCelular(char *celular) {
+    char formatado[15];
+    
+    int posicao = 0;
+    for (int i = 0; celular[i] != '\0'; ++i) {
+        if (i == 0) {
+            formatado[posicao++] = '(';
+        } else if (i == 2) {
+            formatado[posicao++] = ')';
+        } else if (i == 7) {
+            formatado[posicao++] = '-';
+        }
+        formatado[posicao++] = celular[i];
+    }
+
+    formatado[posicao] = '\0';
+    printf("\t\t\tCelular: %s\n", formatado);
+}
 
 // Funções de verificação de arquivos
 void verificaArquivo(FILE * arquivo) {
