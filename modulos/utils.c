@@ -224,7 +224,7 @@ void recebeCpf(char ponteiroCpf[]) {
         if (validaCpf(cpf)) {
             validado = True;
         } else {
-            printf("CPF inválido, por favor digite novamente!\n");
+            printf("CPF inválido, por favor digite novamente, usando apenas números!\n");
         }
     } while (validado == False);
 
@@ -286,7 +286,7 @@ void recebeCelular(char ponteiroCelular[]) {
         if (validaCelular(celular)) {
             validado = True;
         } else {
-            printf("Celular errado, digite apenas numeros!\n");
+            printf("Celular errado, digite apenas numeros, incluindo DDD!\n");
         }
     } while (validado == False);
 
@@ -321,7 +321,7 @@ void recebeValor(char ponteiroValor[]) {
         if (validaValor(valor)) {
             validado = True;
         } else {
-            printf("valor errado! Digite dessa forma EX:13.00\n");
+            printf("Valor errado! Digite apenas um valor numérico. Ex: 13.50\n");
         }
 
     } while (validado == False);
