@@ -374,7 +374,7 @@ void exibeValor(char *valor) {
     float valorFormatado = atof(valor);
     printf("\t\t\tValor: R$ %.2f\n", valorFormatado);
 }
-void formataCpf(char *cpf) {
+void exibeCpf(char *cpf) {
     char formatado[15];
     
     int posicao = 0;
@@ -388,7 +388,7 @@ void formataCpf(char *cpf) {
     }
 
     formatado[posicao] = '\0';
-    strcpy(cpf, formatado);
+    printf("\t\t\tCPF: %s\n", formatado);
 }
 
 // Funções de verificação de arquivos
