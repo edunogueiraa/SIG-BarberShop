@@ -98,7 +98,7 @@ void listaClientes(void) {
             exibeCpf(cliente->cpf);
             printf("\t\t\tEmail: %s\n", cliente->email);
             printf("\t\t\tData: %s\n", cliente->data);
-            printf("\t\t\tCelular: %s\n", cliente->celular);
+            exibeCelular(cliente->celular);
         }
     }
     fclose(arquivo);
@@ -246,7 +246,7 @@ void exibirCliente(char cpfCliente[]) {
             exibeCpf(cliente->cpf);
             printf("\t\t\tEmail: %s\n", cliente->email);
             printf("\t\t\tData: %s\n", cliente->data);
-            printf("\t\t\tCelular: %s\n", cliente->celular);
+            exibeCelular(cliente->celular);
             encontrado = True;
         }
     }
