@@ -45,8 +45,10 @@ void cadastroServico(void) {
     Servico *servico;
     servico = (Servico*) malloc(sizeof(Servico));
 
+    int idInteiro = atribuirId("./dados/servicos.bin", sizeof(Servico));
+    sprintf(servico->id, "%d", idInteiro); // Converte int para string
+
     recebeNome(servico->nome,"servico");
-    recebeId(servico->id,"servico");
     recebeValor(servico->valor);
     recebeDuracaoTempo(servico->duracao);
 
