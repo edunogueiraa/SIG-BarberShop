@@ -53,6 +53,7 @@ void cadastroServico(void) {
     recebeDuracaoTempo(servico->duracao);
 
     cadastrarServico(servico);
+    free(servico);
 }
 
 void listaServico(void){

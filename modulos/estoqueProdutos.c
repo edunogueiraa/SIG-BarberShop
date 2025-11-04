@@ -52,8 +52,10 @@ void cadastroEstoque(void) {
     Estoque * estoque;
     estoque = (Estoque *) malloc(sizeof(Estoque));
     
+    int idInteiro = atribuirId("./dados/estoque.bin", sizeof(Estoque));
+    sprintf(estoque->id, "%d", idInteiro); // Converte int para string
+
     recebeNome(estoque->nome, "produto");
-    recebeId(estoque->id, "produto");
     recebeTipo(estoque->tipo);
     recebeValor(estoque->valor);
     
