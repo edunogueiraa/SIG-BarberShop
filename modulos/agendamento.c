@@ -44,7 +44,10 @@ void cadastroAgendamento(void) {
     Agendamento *agendamento;
     agendamento = (Agendamento*) malloc(sizeof(Agendamento));
 
-    recebeId(agendamento->id,"agendamento");
+    
+    int idInteiro = atribuirId("./dados/agendamentos.bin", sizeof(Agendamento));
+    sprintf(agendamento->id, "%d", idInteiro); // Converte int para string
+
     recebeCpf(agendamento->cpfCliente);
     recebeNome(agendamento->nomeCliente,"agendamento");
     recebeId(agendamento->idServico,"servico");
@@ -52,6 +55,7 @@ void cadastroAgendamento(void) {
     recebeHora(agendamento->hora);
 
     cadastrarAgendamento(agendamento);
+    free(agendamento);
 }
 
 void listaAgendamento(void) {

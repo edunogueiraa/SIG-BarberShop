@@ -451,6 +451,7 @@ int verificaItensArquivo(FILE *arquivo, int tamanho) {
     fseek(arquivo, 0, SEEK_END);
     long int bytes = ftell(arquivo);
     int quantidade = bytes / tamanho;
+    return quantidade;
 }
 void criarDiretorio(void) {
     // Função adaptada de:
@@ -464,4 +465,17 @@ void criarDiretorio(void) {
         getchar();
         exit(1);
     }
+}
+
+int atribuirId(const char *nomeArquivo, int tamanhoRegistro) {
+    FILE *arquivo = fopen(nomeArquivo, "rb");
+    if (arquivo == NULL) {
+        return 1;
+    }
+    
+    int quantidadeExistente = verificaItensArquivo(arquivo, tamanhoRegistro);
+    fclose(arquivo);
+    int novoId = quantidadeExistente + 1;
+    
+    return novoId;
 }

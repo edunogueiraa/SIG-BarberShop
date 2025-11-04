@@ -2,8 +2,8 @@
 #define False 0
 
 struct servico {
-    char nome[50];
     char id[10];
+    char nome[50];
     char valor[20];
     char duracao[10];
     int status;
