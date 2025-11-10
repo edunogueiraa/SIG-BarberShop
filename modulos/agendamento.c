@@ -257,20 +257,16 @@ void cadastrarAgendamento(Agendamento * agendamento) {
 void atualizarAgendamento(char idAgendamento[], int opcao) {
     char dado[50];
     if (opcao == 1) {
-        printf("\nCPF: ");
-        scanf("%[^\n]", dado);
+        recebeCpf(dado);
     } else if (opcao == 2) {
-        printf("\nNome: ");
-        scanf("%[^\n]", dado);
+        recebeNome(dado, "cliente");
     } else if (opcao == 3) {
         printf("\nID Servico: ");
         scanf("%[^\n]", dado);
     } else if (opcao == 4) {
-        printf("\nData: ");
-        scanf("%[^\n]", dado);
+        recebeData(dado, "agendamento");
     } else if (opcao == 5) {
-        printf("\nHora: ");
-        scanf("%[^\n]", dado);
+        recebeHora(dado);
     }
 
     Agendamento *agendamento;

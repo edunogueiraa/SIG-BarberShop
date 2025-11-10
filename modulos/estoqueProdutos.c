@@ -98,7 +98,7 @@ void listaEstoque(void) {
             printf("\n\t\t\tNome do produto: %s\n", estoque->nome);
             printf("\t\t\tID do produto: %s\n", estoque->id);
             printf("\t\t\tTipo do produto: %s\n", estoque->tipo);
-            printf("\t\t\tValor (R$): %s\n", estoque->valor);
+            exibeValor(estoque->valor);
         }
     }
     fclose(arquivo);
@@ -246,7 +246,7 @@ void exibirProduto(char idProduto[]) {
             printf("\t\t\tNome do produto: %s\n", estoque->nome);
             printf("\t\t\tID do produto: %s\n", estoque->id);
             printf("\t\t\tTipo do produto: %s\n", estoque->tipo);
-            printf("\t\t\tValor (R$): %s\n", estoque->valor);
+            exibeValor(estoque->valor);
             
             encontrado = True;
         }
@@ -258,14 +258,11 @@ void exibirProduto(char idProduto[]) {
 void atualizarProduto(char idProduto[], int opcao) {
     char dado[50];
     if (opcao == 1) {
-        printf("\nNome do produto: ");
-        scanf("%[^\n]", dado);
+        recebeNome(dado, "produto")
     } else if (opcao == 2) {
-        printf("\nTipo do produto: ");
-        scanf("%[^\n]", dado);
+        recebeTipo(dado);
     } else if (opcao == 3) {
-        printf("\nValor do produto: ");
-        scanf("%[^\n]", dado);
+        recebeValor(dado);
     }
 
     Estoque * estoque;

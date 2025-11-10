@@ -257,17 +257,13 @@ void exibirCliente(char cpfCliente[]) {
 void atualizarCliente(char cpfCliente[], int opcao) {
     char dado[50];
     if (opcao == 1) {
-        printf("\nNome completo: ");
-        scanf("%[^\n]", dado);
+        recebeNome(dado, "cliente");
     } else if (opcao == 2) {
-        printf("\nEmail: ");
-        scanf("%[^\n]", dado);
+        recebeEmail(dado);
     } else if (opcao == 3) {
-        printf("\nData: ");
-        scanf("%[^\n]", dado);
+        recebeData(dado, "nascimento");
     } else if (opcao == 4) {
-        printf("\nCelular: ");
-        scanf("%[^\n]", dado);
+        recebeCelular(dado);
     }
 
     Cliente * cliente;

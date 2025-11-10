@@ -248,14 +248,11 @@ void cadastrarServico(Servico * servico) {
 void atualizarServico(char idServico[], int opcao) {
     char dado[50];
     if (opcao == 1) {
-        printf("\nNome Servico: ");
-        scanf("%[^\n]", dado);
+        recebeNome(dado, "serviço");
     } else if (opcao == 2) {
-        printf("\nValor: ");
-        scanf("%[^\n]", dado);
+        recebeValor(dado);
     } else if (opcao == 3) {
-        printf("\nDuracao Servico: ");
-        scanf("%[^\n]", dado);
+        recebeDuracaoTempo(dado);
     }
 
     Servico *servico;
