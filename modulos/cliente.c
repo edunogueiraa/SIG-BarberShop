@@ -227,9 +227,11 @@ void cadastrarCliente(Cliente * cliente) {
     verificaArquivo(arquivo);
     
     cliente->status = True;
+    cliente->proximo = NULL;
     fwrite(cliente, sizeof(Cliente), 1, arquivo);
-
+    
     fclose(arquivo);
+    atualizarLista(cliente);
 }
 
 void exibirCliente(char cpfCliente[]) {
