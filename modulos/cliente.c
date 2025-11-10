@@ -12,6 +12,7 @@ void exibirCliente(char cpfCliente[]);
 void atualizarCliente(char cpfCliente[], int opcao);
 void deletarCliente(char cpfCliente[]);
 void excluirBancoCliente(void);
+void atualizarLista(Cliente* novo);
 
 void telaCliente(void) {
     system("clear||cls");
@@ -295,6 +296,17 @@ void atualizarCliente(char cpfCliente[], int opcao) {
     }
     fclose(arquivo);
     free(cliente);
+}
+
+void atualizarLista(Cliente* novo) {
+    Cliente* cliente = (Cliente*) malloc(sizeof(Cliente));
+
+    FILE *arquivo = fopen("./dados/clientes.bin", "r+b");
+    fseek(arquivo, 0, SEEK_END);
+    fread(cliente, sizeof(Cliente), 1, arquivo);
+    cliente->proximo = novo;
+
+    fwrite(cliente, sizeof(Cliente), 1, arquivo);
 }
 
 void deletarCliente(char cpfCliente[]) {
