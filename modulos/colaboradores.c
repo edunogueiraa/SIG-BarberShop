@@ -34,7 +34,6 @@ void colaboradores(void) {
     printf("|                                                                                                 |\n");
     printf("|                                 Renan Medeiros                                                  |\n");
     printf("|                                 E-mail: renan.medeiros.150@ufrn.edu.br                          |\n");
-    printf("|                                 Redes sociais: h.mariano_                                       |\n");
     printf("|                                 Git: https://github.com/Renan988                                |\n");
     printf("|_________________________________________________________________________________________________|\n\n");
 
