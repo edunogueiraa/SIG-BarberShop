@@ -12,7 +12,9 @@ void exibirCliente(char cpfCliente[]);
 void atualizarCliente(char cpfCliente[], int opcao);
 void deletarCliente(char cpfCliente[]);
 void excluirBancoCliente(void);
-void atualizarLista(Cliente* novo);
+Cliente* iniciarLista(void);
+Cliente* retornaUltimo(void);
+void atualizarLista(Cliente* ultimo, Cliente* novo, FILE* arquivo);
 
 void telaCliente(void) {
     system("clear||cls");
@@ -87,13 +89,13 @@ void listaClientes(void) {
     printf("|                                                                                                 |\n");
     printf("|                                        LISTA DE CLIENTES                                        |\n");
     printf("|_________________________________________________________________________________________________|\n");
-    Cliente * cliente;
-    cliente = (Cliente *)malloc(sizeof(Cliente));
+    Cliente * cliente = iniciarLista();
     
     FILE * arquivo = fopen("./dados/clientes.bin", "rb");
     verificaArquivo(arquivo);
 
     while (fread(cliente, sizeof(Cliente), 1, arquivo)) {
+    // while (cliente->proximo != NULL) {
         if (cliente->status == True) {
             printf("\n\t\t\tNome: %s\n", cliente->nome);
             exibeCpf(cliente->cpf);
@@ -101,6 +103,7 @@ void listaClientes(void) {
             printf("\t\t\tData: %s\n", cliente->data);
             exibeCelular(cliente->celular);
         }
+        cliente = cliente->proximo;
     }
     fclose(arquivo);
     free(cliente);
@@ -226,12 +229,14 @@ void cadastrarCliente(Cliente * cliente) {
     FILE * arquivo = fopen("./dados/clientes.bin", "ab");
     verificaArquivo(arquivo);
     
+    Cliente* ultimo = retornaUltimo();
     cliente->status = True;
     cliente->proximo = NULL;
     fwrite(cliente, sizeof(Cliente), 1, arquivo);
+    atualizarLista(ultimo, cliente, arquivo);
     
     fclose(arquivo);
-    atualizarLista(cliente);
+    free(ultimo);
 }
 
 void exibirCliente(char cpfCliente[]) {
@@ -300,15 +305,29 @@ void atualizarCliente(char cpfCliente[], int opcao) {
     free(cliente);
 }
 
-void atualizarLista(Cliente* novo) {
+Cliente* iniciarLista(void) {
+    Cliente* cliente = (Cliente*) malloc(sizeof(Cliente));
+
+    FILE *arquivo = fopen("./dados/clientes.bin", "rb");
+    fread(cliente, sizeof(Cliente), 1, arquivo);
+
+    return cliente;
+}
+
+Cliente* retornaUltimo(void) {
     Cliente* cliente = (Cliente*) malloc(sizeof(Cliente));
 
     FILE *arquivo = fopen("./dados/clientes.bin", "r+b");
-    fseek(arquivo, 0, SEEK_END);
+    fseek(arquivo, -sizeof(Cliente), SEEK_END);
     fread(cliente, sizeof(Cliente), 1, arquivo);
-    cliente->proximo = novo;
 
-    fwrite(cliente, sizeof(Cliente), 1, arquivo);
+    return cliente;
+}
+
+void atualizarLista(Cliente* ultimo, Cliente* novo, FILE* arquivo) {
+    ultimo->proximo = novo;
+
+    fwrite(ultimo, sizeof(Cliente), 1, arquivo);
 }
 
 void deletarCliente(char cpfCliente[]) {
