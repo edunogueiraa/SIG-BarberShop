@@ -27,6 +27,15 @@ void colaboradores(void) {
     printf("|                                 E-mail: dantashelena502@gmail.com                               |\n");
     printf("|                                 Redes sociais: h.mariano_                                       |\n");
     printf("|                                 Git: https://github.com/helenaMariano2025                       |\n");
+    printf("|                                                                                                 |\n");
+    printf("|                                 Juan Vyctor                                                     |\n");
+    printf("|                                 E-mail: juanvyctor.sgo@gmail.com                                |\n");
+    printf("|                                 Git: https://github.com/Juan-Vyctor                             |\n");
+    printf("|                                                                                                 |\n");
+    printf("|                                 Renan Medeiros                                                  |\n");
+    printf("|                                 E-mail: renan.medeiros.150@ufrn.edu.br                          |\n");
+    printf("|                                 Redes sociais: h.mariano_                                       |\n");
+    printf("|                                 Git: https://github.com/Renan988                                |\n");
     printf("|_________________________________________________________________________________________________|\n\n");
 
     printf("\n>>> Tecle <ENTER> para continuar...\n");
