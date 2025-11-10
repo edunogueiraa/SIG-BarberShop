@@ -258,7 +258,7 @@ void exibirProduto(char idProduto[]) {
 void atualizarProduto(char idProduto[], int opcao) {
     char dado[50];
     if (opcao == 1) {
-        recebeNome(dado, "produto")
+        recebeNome(dado, "produto");
     } else if (opcao == 2) {
         recebeTipo(dado);
     } else if (opcao == 3) {
