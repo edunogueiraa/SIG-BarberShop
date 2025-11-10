@@ -466,7 +466,6 @@ void criarDiretorio(void) {
         exit(1);
     }
 }
-
 int atribuirId(const char *nomeArquivo, int tamanhoRegistro) {
     FILE *arquivo = fopen(nomeArquivo, "rb");
     if (arquivo == NULL) {
