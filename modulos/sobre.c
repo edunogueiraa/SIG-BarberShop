@@ -31,6 +31,6 @@ void telaSobre(void) {
 
     printf("\n>>> Tecle <ENTER> para continuar...\n");
     getchar();
-    getchar();
+
 
 } 
