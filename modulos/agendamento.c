@@ -59,6 +59,8 @@ void cadastroAgendamento(void) {
 }
 
 void listaAgendamento(void) {
+    printf("\n%-10s | %-20s | %-25s | %-10s | %-12s | %-8s\n", "ID", "CPF", "Nome", "ID Serviço", "Data", "Hora");
+    printf("--------------------------------------------------------------------------------------------------\n");
     Agendamento *agendamento;
     agendamento = (Agendamento*) malloc(sizeof(Agendamento));
 
@@ -68,14 +70,13 @@ void listaAgendamento(void) {
 
     while (fread(agendamento,sizeof(Agendamento),1,arquivo)){
         if (agendamento->status == True) {
-            printf("\n\n");
-            printf("\t\t\tID: %s\n",agendamento->id);
-            exibeCpf(agendamento->cpfCliente);
-            printf("\t\t\tNome: %s\n",agendamento->nomeCliente);
-            printf("\t\t\tID Servico: %s\n",agendamento->idServico);
-            printf("\t\t\tData: %s\n",agendamento->data);
-            printf("\t\t\tHora: %s\n",agendamento->hora);
-            
+            printf("%-10s | %-20s | %-25s | %-10s | %-12s | %-8s\n",
+                agendamento->id,
+                exibeCpf,
+                agendamento->nomeCliente,
+                agendamento->idServico, 
+                agendamento->data,
+                agendamento->hora);
         }
     }
     fclose(arquivo);
