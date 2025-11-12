@@ -242,7 +242,6 @@ void cadastrarServico(Servico * servico) {
     servico->status = True;
     fwrite(servico, sizeof(Servico), 1, arquivo);
 
-    free(servico);
     fclose(arquivo);
 }
 

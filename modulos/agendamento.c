@@ -55,7 +55,7 @@ void cadastroAgendamento(void) {
     recebeHora(agendamento->hora);
 
     cadastrarAgendamento(agendamento);
-    free(agendamento);
+
 }
 
 void listaAgendamento(void) {
