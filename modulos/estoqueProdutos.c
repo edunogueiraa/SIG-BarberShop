@@ -88,6 +88,9 @@ void listaEstoque(void) {
     printf("|                                                                                                 |\n");
     printf("|                                         ESTOQUE COMPLETO                                        |\n");
     printf("|_________________________________________________________________________________________________|\n");
+    printf("\n%-20s | %-10s | %-15s | %s\n", "Nome do produto", "ID", "Tipo", "Valor (R$)");
+    printf("----------------------------------------------------------------------------\n");
+    
     Estoque * estoque;
     estoque = (Estoque *) malloc(sizeof(Estoque));
 
@@ -95,10 +98,12 @@ void listaEstoque(void) {
 
     while (fread(estoque, sizeof(Estoque), 1, arquivo)) {
         if (estoque->status == True) {
-            printf("\n\t\t\tNome do produto: %s\n", estoque->nome);
-            printf("\t\t\tID do produto: %s\n", estoque->id);
-            printf("\t\t\tTipo do produto: %s\n", estoque->tipo);
-            recebeValor(estoque->valor);
+            float valorNumerico = atof(estoque->valor);
+            printf("%-20s | %-10s | %-15s | R$ %.2f\n",
+                estoque->nome,
+                estoque->id,
+                estoque->tipo,
+                valorNumerico);
         }
     }
     fclose(arquivo);
