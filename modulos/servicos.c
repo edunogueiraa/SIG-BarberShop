@@ -57,6 +57,8 @@ void cadastroServico(void) {
 }
 
 void listaServico(void){
+    printf("\n%-20s | %-10s | %-15s | %s\n", "Nome do serviço", "ID", "Duração", "Valor (R$)");
+    printf("----------------------------------------------------------------------------\n");
     Servico *servico;
     servico = (Servico*) malloc(sizeof(Servico));
 
@@ -65,11 +67,12 @@ void listaServico(void){
 
     while (fread(servico,sizeof(Servico),1,arquivo)){
         if (servico->status == True) {
-            printf("\n\n");
-            printf("\t\t\tNome do serviço: %s\n", servico->nome);
-            printf("\t\t\tID do serviço: %s\n", servico->id);
-            exibeValor(servico->valor);
-            printf("\t\t\tDuração do serviço: %s\n", servico->duracao);
+            float valorNumerico = atof(servico->valor);
+            printf("%-20s | %-10s | %-15s | R$ %.2f\n",
+            servico->nome,
+            servico->id,
+            servico->duracao,
+            valorNumerico);
         }
     }
     fclose(arquivo);
