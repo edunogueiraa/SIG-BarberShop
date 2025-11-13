@@ -11,6 +11,7 @@ void cadastrarCliente(Cliente * cliente);
 void exibirDadosCliente(Cliente* cliente);
 void exibirCliente(char cpfCliente[]);
 void listarClientes(void);
+void listarClientesNome(char* filtro);
 void atualizarCliente(char cpfCliente[], int opcao);
 void deletarCliente(char cpfCliente[]);
 void excluirBancoCliente(void);
@@ -98,13 +99,21 @@ void listaClientes(void) {
         printf("|                                   2 Filtrar nome                                                |\n");
         printf("|                                   0 Sair                                                        |\n");
         printf("|_________________________________________________________________________________________________|\n\n");
+        
+        char* filtro = "";
         recebeOpcao(&opcao);
-
         switch (opcao) {
             case '1':
                 listarClientes();
                 break;
-            
+
+            case '2':
+                printf("Digite o nome pelo qual buscar: ");
+                scanf("%[^\n]", filtro);
+                getchar();
+                listarClientesNome(filtro);
+                break;
+
             default:
                 printf("\n>>> Opção inválida.");
                 printf(">>> Tecle <ENTER> para continuar...\n");
@@ -280,6 +289,24 @@ void listarClientes(void) {
             exibirDadosCliente(cliente);
         }
         // cliente = cliente->proximo;
+    }
+    fclose(arquivo);
+    free(cliente);
+
+    printf("\n>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+}
+
+void listarClientesNome(char* filtro) {
+    Cliente* cliente = malloc(sizeof(Cliente));
+    FILE * arquivo = fopen("./dados/clientes.bin", "rb");
+    verificaArquivo(arquivo);
+
+    while (fread(cliente, sizeof(Cliente), 1, arquivo)) {
+        filtro = strstr(cliente->nome, filtro);
+        if (cliente->status == True && filtro != NULL) {
+            exibirDadosCliente(cliente);
+        }
     }
     fclose(arquivo);
     free(cliente);
