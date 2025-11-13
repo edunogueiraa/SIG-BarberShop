@@ -99,7 +99,7 @@ void listaClientes(void) {
     // while (cliente->proximo != NULL) {
         if (cliente->status == True) {
             printf("\n\t\t\tNome: %s\n", cliente->nome);
-            exibeCpf(cliente->cpf);
+            printf("\n\t\t\tCPF: %s\n", exibeCpf(cliente->cpf));
             printf("\t\t\tEmail: %s\n", cliente->email);
             printf("\t\t\tData: %s\n", cliente->data);
             exibeCelular(cliente->celular);
@@ -252,7 +252,7 @@ void exibirCliente(char cpfCliente[]) {
         if(strcmp(cliente->cpf, cpfCliente) == 0 && cliente->status == True) {
             printf("\n\t\t\t <--- Cliente Encontrado ---> \n\n");
             printf("\t\t\tNome: %s\n", cliente->nome);
-            exibeCpf(cliente->cpf);
+            printf("\n\t\t\tCPF: %s\n", exibeCpf(cliente->cpf));
             printf("\t\t\tEmail: %s\n", cliente->email);
             printf("\t\t\tData: %s\n", cliente->data);
             exibeCelular(cliente->celular);
