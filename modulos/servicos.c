@@ -57,14 +57,14 @@ void cadastroServico(void) {
 }
 
 void listaServico(void){
-    printf("\n%-20s | %-10s | %-15s | %s\n", "Nome do serviço", "ID", "Duração", "Valor (R$)");
-    printf("----------------------------------------------------------------------------\n");
     Servico *servico;
     servico = (Servico*) malloc(sizeof(Servico));
-
+    
     FILE * arquivo = fopen("./dados/servicos.bin", "rb");
     verificaArquivo(arquivo);
-
+    
+    printf("\n%-20s | %-10s | %-15s | %s\n", "Nome do serviço", "ID", "Duração", "Valor (R$)");
+    printf("----------------------------------------------------------------------------\n");
     while (fread(servico,sizeof(Servico),1,arquivo)){
         if (servico->status == True) {
             float valorNumerico = atof(servico->valor);

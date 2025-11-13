@@ -88,14 +88,14 @@ void listaEstoque(void) {
     printf("|                                                                                                 |\n");
     printf("|                                         ESTOQUE COMPLETO                                        |\n");
     printf("|_________________________________________________________________________________________________|\n");
-    printf("\n%-20s | %-10s | %-15s | %s\n", "Nome do produto", "ID", "Tipo", "Valor (R$)");
-    printf("----------------------------------------------------------------------------\n");
     
     Estoque * estoque;
     estoque = (Estoque *) malloc(sizeof(Estoque));
-
+    
     FILE * arquivo = fopen("./dados/estoque.bin", "rb");
-
+    
+    printf("\n%-20s | %-10s | %-15s | %s\n", "Nome do produto", "ID", "Tipo", "Valor (R$)");
+    printf("----------------------------------------------------------------------------\n");
     while (fread(estoque, sizeof(Estoque), 1, arquivo)) {
         if (estoque->status == True) {
             float valorNumerico = atof(estoque->valor);

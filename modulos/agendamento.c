@@ -59,15 +59,14 @@ void cadastroAgendamento(void) {
 }
 
 void listaAgendamento(void) {
-    printf("\n%-10s | %-20s | %-25s | %-10s | %-12s | %-8s\n", "ID", "CPF", "Nome", "ID Serviço", "Data", "Hora");
-    printf("--------------------------------------------------------------------------------------------------\n");
     Agendamento *agendamento;
     agendamento = (Agendamento*) malloc(sizeof(Agendamento));
-
+    
     FILE * arquivo = fopen("./dados/agendamentos.bin", "rb");
-
     verificaArquivo(arquivo);
-
+    
+    printf("\n%-10s | %-20s | %-25s | %-10s | %-12s | %-8s\n", "ID", "CPF", "Nome", "ID Serviço", "Data", "Hora");
+    printf("--------------------------------------------------------------------------------------------------\n");
     while (fread(agendamento,sizeof(Agendamento),1,arquivo)){
         if (agendamento->status == True) {
             printf("%-10s | %-20s | %-25s | %-10s | %-12s | %-8s\n",
