@@ -89,8 +89,9 @@ void listaClientes(void) {
     printf("|                                                                                                 |\n");
     printf("|                                        LISTA DE CLIENTES                                        |\n");
     printf("|_________________________________________________________________________________________________|\n");
-    Cliente * cliente = iniciarLista();
+    // Cliente * cliente = iniciarLista();
     
+    Cliente* cliente = malloc(sizeof(Cliente));
     FILE * arquivo = fopen("./dados/clientes.bin", "rb");
     verificaArquivo(arquivo);
 
@@ -103,7 +104,7 @@ void listaClientes(void) {
             printf("\t\t\tData: %s\n", cliente->data);
             exibeCelular(cliente->celular);
         }
-        cliente = cliente->proximo;
+        // cliente = cliente->proximo;
     }
     fclose(arquivo);
     free(cliente);
