@@ -12,7 +12,6 @@ void recebeValor(char ponteiroValor[]);
 void recebeDuracaoTempo(char ponteiroDuracao[]); 
 void recebeHora(char ponteiroHora[]);
 void recebeOpcao(char ponteiroOpcao[]);
-void exibeValor(char *valor);
 char* exibeCpf(char *cpf);
 void exibeCelular(char *celular);
 void verificaArquivo(FILE * arquivo);

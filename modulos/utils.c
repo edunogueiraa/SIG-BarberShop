@@ -370,10 +370,6 @@ void recebeOpcao(char ponteiroOpcao[]) {
 }
 
 // Funções de exibicao
-void exibeValor(char *valor) {
-    float valorFormatado = atof(valor);
-    printf("\t\t\tValor: R$ %.2f\n", valorFormatado);
-}
 void formataCpf(char* destino) {
     char formatado[15];
     
