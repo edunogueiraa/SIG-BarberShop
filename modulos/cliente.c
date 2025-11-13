@@ -58,7 +58,7 @@ void cadastroCliente(void) {
     recebeNome(cliente->nome,"cliente");
     recebeCpf(cliente->cpf);
     recebeEmail(cliente->email);
-    recebeData(cliente->data,"Nascimento");
+    recebeData(cliente->data,"nascimento");
     recebeCelular(cliente->celular);
 
     cadastrarCliente(cliente);
