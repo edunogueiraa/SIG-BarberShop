@@ -116,7 +116,7 @@ void listaClientes(void) {
 
             default:
                 printf("\n>>> Opção inválida.");
-                printf(">>> Tecle <ENTER> para continuar...\n");
+                printf("\n>>> Tecle <ENTER> para continuar...\n");
                 getchar();
         }
     } while (opcao != '0');
@@ -250,11 +250,12 @@ void cadastrarCliente(Cliente * cliente) {
 }
 
 void exibirDadosCliente(Cliente* cliente) {
-    printf("\n\t\t\tNome: %s\n", cliente->nome);
-    printf("\t\t\tCPF: %s\n", exibeCpf(cliente->cpf));
-    printf("\t\t\tEmail: %s\n", cliente->email);
-    printf("\t\t\tData: %s\n", cliente->data);
-    exibeCelular(cliente->celular);
+    printf("%-35s | %-20s | %-35s | %-10s | %-12s\n",
+        cliente->nome,
+        exibeCpf(cliente->cpf),
+        cliente->email,
+        cliente->data,
+        exibeCelular(cliente->celular));
 }
 
 void exibirCliente(char cpfCliente[]) {
@@ -267,8 +268,12 @@ void exibirCliente(char cpfCliente[]) {
     int encontrado = False;
     while (fread(cliente, sizeof(Cliente), 1, arquivo) && encontrado == False) {
         if(strcmp(cliente->cpf, cpfCliente) == 0 && cliente->status == True) {
-            printf("\n\t\t\t <--- Cliente Encontrado ---> \n");
-            exibirDadosCliente(cliente);
+            printf("\n\t\t\t <--- Cliente Encontrado ---> \n\n");
+            printf("\t\t\tNome: %s\n", cliente->nome);
+            printf("\t\t\tCPF: %s\n", exibeCpf(cliente->cpf));
+            printf("\t\t\tEmail: %s\n", cliente->email);
+            printf("\t\t\tData: %s\n", cliente->data);
+            exibeCelular(cliente->celular);
             encontrado = True;
         }
     }
@@ -283,6 +288,8 @@ void listarClientes(void) {
     FILE * arquivo = fopen("./dados/clientes.bin", "rb");
     verificaArquivo(arquivo);
 
+    printf("\n%-35s | %-20s | %-35s | %-10s | %-12s\n", "Nome", "CPF", "Email", "Data de nascimento", "Celular");
+    printf("----------------------------------------------------------------------------------------------------------------------\n");
     while (fread(cliente, sizeof(Cliente), 1, arquivo)) {
     // while (cliente->proximo != NULL) {
         if (cliente->status == True) {
@@ -302,6 +309,8 @@ void listarClientesNome(char* filtro) {
     FILE * arquivo = fopen("./dados/clientes.bin", "rb");
     verificaArquivo(arquivo);
 
+    printf("\n%-35s | %-20s | %-35s | %-10s | %-12s\n", "Nome", "CPF", "Email", "Data de nascimento", "Celular");
+    printf("----------------------------------------------------------------------------------------------------------------------\n");
     while (fread(cliente, sizeof(Cliente), 1, arquivo)) {
         filtro = strstr(cliente->nome, filtro);
         if (cliente->status == True && filtro != NULL) {
