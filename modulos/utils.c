@@ -374,21 +374,25 @@ void exibeValor(char *valor) {
     float valorFormatado = atof(valor);
     printf("\t\t\tValor: R$ %.2f\n", valorFormatado);
 }
-void exibeCpf(char *cpf) {
+void formataCpf(char* destino) {
     char formatado[15];
     
     int posicao = 0;
-    for (int i = 0; cpf[i] != '\0'; ++i) {
+    for (int i = 0; destino[i] != '\0'; ++i) {
         if (i == 3 || i == 6) {
             formatado[posicao++] = '.';
         } else if (i == 9) {
             formatado[posicao++] = '-';
         }
-        formatado[posicao++] = cpf[i];
+        formatado[posicao++] = destino[i];
     }
 
     formatado[posicao] = '\0';
-    printf("\t\t\tCPF: %s\n", formatado);
+    strcpy(destino, formatado);
+}
+char* exibeCpf(char *cpf) {
+    formataCpf(cpf);
+    return cpf;
 }
 void exibeCelular(char *celular) {
     char formatado[15];

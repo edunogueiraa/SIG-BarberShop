@@ -13,7 +13,7 @@ void recebeDuracaoTempo(char ponteiroDuracao[]);
 void recebeHora(char ponteiroHora[]);
 void recebeOpcao(char ponteiroOpcao[]);
 void exibeValor(char *valor);
-void exibeCpf(char *cpf);
+char* exibeCpf(char *cpf);
 void exibeCelular(char *celular);
 void verificaArquivo(FILE * arquivo);
 void verificaArquivoTemporario(FILE * arquivoTemp);
