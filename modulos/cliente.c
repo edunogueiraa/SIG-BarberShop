@@ -84,34 +84,30 @@ void exibeCliente(void) {
 }
 
 void listaClientes(void) {
-    system("clear||cls");
-    printf("\n");
-    printf("___________________________________________________________________________________________________\n");
-    printf("|                                                                                                 |\n");
-    printf("|                                        LISTA DE CLIENTES                                        |\n");
-    printf("|_________________________________________________________________________________________________|\n");
-    // Cliente * cliente = iniciarLista();
-    
-    Cliente* cliente = malloc(sizeof(Cliente));
-    FILE * arquivo = fopen("./dados/clientes.bin", "rb");
-    verificaArquivo(arquivo);
+    char opcao = '0';
+    do {
+        system("clear||cls");
+        printf("\n");
+        printf("|_________________________________________________________________________________________________|\n");
+        printf("|                                                                                                 |\n");
+        printf("|                                     ESCOLHA O TIPO DE LISTAGEM                                  |\n");
+        printf("|_________________________________________________________________________________________________|\n");
+        printf("|                                                                                                 |\n");
+        printf("|                                   1 Todos os clientes                                           |\n");
+        printf("|                                   2 Filtrar nome                                                |\n");
+        printf("|                                   0 Sair                                                        |\n");
+        printf("|_________________________________________________________________________________________________|\n\n");
+        recebeOpcao(&opcao);
 
-    while (fread(cliente, sizeof(Cliente), 1, arquivo)) {
-    // while (cliente->proximo != NULL) {
-        if (cliente->status == True) {
-            printf("\n\t\t\tNome: %s\n", cliente->nome);
-            printf("\n\t\t\tCPF: %s\n", exibeCpf(cliente->cpf));
-            printf("\t\t\tEmail: %s\n", cliente->email);
-            printf("\t\t\tData: %s\n", cliente->data);
-            exibeCelular(cliente->celular);
+        switch (opcao) {
+            case '1':
+                listarClientes();
+                break;
+            
+            default:
+                printf("Opção inválida");
         }
-        // cliente = cliente->proximo;
-    }
-    fclose(arquivo);
-    free(cliente);
-
-    printf("\n>>> Tecle <ENTER> para continuar...\n");
-    getchar();
+    } while (opcao != '0');
 }
 
 void atualizaCliente(void) {
