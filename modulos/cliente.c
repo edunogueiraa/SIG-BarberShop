@@ -106,7 +106,9 @@ void listaClientes(void) {
                 break;
             
             default:
-                printf("Opção inválida");
+                printf("\n>>> Opção inválida.");
+                printf(">>> Tecle <ENTER> para continuar...\n");
+                getchar();
         }
     } while (opcao != '0');
 }
