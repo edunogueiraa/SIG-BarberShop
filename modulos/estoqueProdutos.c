@@ -251,7 +251,7 @@ void exibirProduto(char idProduto[]) {
             printf("\t\t\tNome do produto: %s\n", estoque->nome);
             printf("\t\t\tID do produto: %s\n", estoque->id);
             printf("\t\t\tTipo do produto: %s\n", estoque->tipo);
-            exibeValor(estoque->valor);
+            printf("\t\t\tValor: R$ %.f2\n", atof(estoque->valor));
             
             encontrado = True;
         }
