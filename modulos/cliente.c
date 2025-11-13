@@ -8,6 +8,7 @@
 
 // Assinatura de funções
 void cadastrarCliente(Cliente * cliente);
+void exibirDadosCliente(Cliente* cliente);
 void exibirCliente(char cpfCliente[]);
 void listarClientes(void);
 void atualizarCliente(char cpfCliente[], int opcao);
@@ -237,6 +238,14 @@ void cadastrarCliente(Cliente * cliente) {
     free(ultimo);
 }
 
+void exibirDadosCliente(Cliente* cliente) {
+    printf("\n\t\t\tNome: %s\n", cliente->nome);
+    printf("\t\t\tCPF: %s\n", exibeCpf(cliente->cpf));
+    printf("\t\t\tEmail: %s\n", cliente->email);
+    printf("\t\t\tData: %s\n", cliente->data);
+    exibeCelular(cliente->celular);
+}
+
 void exibirCliente(char cpfCliente[]) {
     Cliente * cliente;
     cliente = (Cliente*) malloc(sizeof(Cliente));
@@ -247,12 +256,8 @@ void exibirCliente(char cpfCliente[]) {
     int encontrado = False;
     while (fread(cliente, sizeof(Cliente), 1, arquivo) && encontrado == False) {
         if(strcmp(cliente->cpf, cpfCliente) == 0 && cliente->status == True) {
-            printf("\n\t\t\t <--- Cliente Encontrado ---> \n\n");
-            printf("\t\t\tNome: %s\n", cliente->nome);
-            printf("\t\t\tCPF: %s\n", exibeCpf(cliente->cpf));
-            printf("\t\t\tEmail: %s\n", cliente->email);
-            printf("\t\t\tData: %s\n", cliente->data);
-            exibeCelular(cliente->celular);
+            printf("\n\t\t\t <--- Cliente Encontrado ---> \n");
+            exibirDadosCliente(cliente);
             encontrado = True;
         }
     }
@@ -270,11 +275,7 @@ void listarClientes(void) {
     while (fread(cliente, sizeof(Cliente), 1, arquivo)) {
     // while (cliente->proximo != NULL) {
         if (cliente->status == True) {
-            printf("\n\t\t\tNome: %s\n", cliente->nome);
-            printf("\t\t\tCPF: %s\n", exibeCpf(cliente->cpf));
-            printf("\t\t\tEmail: %s\n", cliente->email);
-            printf("\t\t\tData: %s\n", cliente->data);
-            exibeCelular(cliente->celular);
+            exibirDadosCliente(cliente);
         }
         // cliente = cliente->proximo;
     }
