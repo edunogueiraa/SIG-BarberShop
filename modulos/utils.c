@@ -390,11 +390,11 @@ char* exibeCpf(char *cpf) {
     formataCpf(cpf);
     return cpf;
 }
-void exibeCelular(char *celular) {
+void formataCelular(char* destino) {
     char formatado[15];
     
     int posicao = 0;
-    for (int i = 0; celular[i] != '\0'; ++i) {
+    for (int i = 0; destino[i] != '\0'; ++i) {
         if (i == 0) {
             formatado[posicao++] = '(';
         } else if (i == 2) {
@@ -402,11 +402,15 @@ void exibeCelular(char *celular) {
         } else if (i == 7) {
             formatado[posicao++] = '-';
         }
-        formatado[posicao++] = celular[i];
+        formatado[posicao++] = destino[i];
     }
 
     formatado[posicao] = '\0';
-    printf("\t\t\tCelular: %s\n", formatado);
+    strcpy(destino, formatado);
+}
+char* exibeCelular(char *celular) {
+    formataCelular(celular);
+    return celular;
 }
 
 // Funções de verificação de arquivos
