@@ -114,6 +114,9 @@ void listaClientes(void) {
                 listarClientesNome(filtro);
                 break;
 
+            case '0':
+                break;
+
             default:
                 printf("\n>>> Opção inválida.");
                 printf("\n>>> Tecle <ENTER> para continuar...\n");
