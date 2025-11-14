@@ -260,6 +260,60 @@ void exibirProduto(char idProduto[]) {
     free(estoque);
 }
 
+void exibirDadosProduto(Estoque* estoque) {
+    float valorNumerico = atof(estoque->valor);
+    printf("%-20s | %-10s | %-15s | R$ %.2f\n",
+        estoque->nome,
+        estoque->id,
+        estoque->tipo,
+        valorNumerico);
+}
+
+void listarProdutos(void) {
+    Estoque * estoque;
+    estoque = (Estoque *) malloc(sizeof(Estoque));
+    
+    FILE * arquivo = fopen("./dados/estoque.bin", "rb");
+    
+    printf("\n%-20s | %-10s | %-15s | %s\n", "Nome do produto", "ID", "Tipo", "Valor (R$)");
+    printf("----------------------------------------------------------------------------\n");
+    while (fread(estoque, sizeof(Estoque), 1, arquivo)) {
+        if (estoque->status == True) {
+            exibirDadosProduto(estoque);
+        }
+    }
+    fclose(arquivo);
+    free(estoque);
+
+    printf("\n>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+}
+
+void listarProdutosPreco(float minimo, float maximo) {
+    Estoque * estoque;
+    estoque = (Estoque *) malloc(sizeof(Estoque));
+    
+    FILE * arquivo = fopen("./dados/estoque.bin", "rb");
+    
+    printf("\n%-20s | %-10s | %-15s | %s\n", "Nome do produto", "ID", "Tipo", "Valor (R$)");
+    printf("----------------------------------------------------------------------------\n");
+    while (fread(estoque, sizeof(Estoque), 1, arquivo)) {
+        float valor = atof(estoque->valor);
+        if (minimo <= valor) {
+            if (valor <= maximo)
+            {
+                exibirDadosProduto(estoque);
+            }
+            
+        }
+    }
+    fclose(arquivo);
+    free(estoque);
+
+    printf("\n>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+}
+
 void atualizarProduto(char idProduto[], int opcao) {
     char dado[50];
     if (opcao == 1) {
