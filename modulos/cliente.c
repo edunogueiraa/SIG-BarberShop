@@ -239,14 +239,14 @@ void cadastrarCliente(Cliente * cliente) {
     FILE * arquivo = fopen("./dados/clientes.bin", "ab");
     verificaArquivo(arquivo);
     
-    Cliente* ultimo = retornaUltimo();
+    // Cliente* ultimo = retornaUltimo();
     cliente->status = True;
-    cliente->proximo = NULL;
+    // cliente->proximo = NULL;
     fwrite(cliente, sizeof(Cliente), 1, arquivo);
-    atualizarLista(ultimo, cliente, arquivo);
+    // atualizarLista(ultimo, cliente, arquivo);
     
     fclose(arquivo);
-    free(ultimo);
+    // free(ultimo);
 }
 
 void exibirDadosCliente(Cliente* cliente) {
