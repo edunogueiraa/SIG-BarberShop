@@ -15,8 +15,8 @@ void listarClientesNome(char* filtro);
 void atualizarCliente(char cpfCliente[], int opcao);
 void deletarCliente(char cpfCliente[]);
 void excluirBancoCliente(void);
-Cliente* iniciarLista(void);
-Cliente* retornaUltimo(void);
+// Cliente* iniciarLista(void);
+// Cliente* retornaUltimo(void);
 void atualizarLista(Cliente* ultimo, Cliente* novo, FILE* arquivo);
 
 void telaCliente(void) {
@@ -363,24 +363,24 @@ void atualizarCliente(char cpfCliente[], int opcao) {
     free(cliente);
 }
 
-Cliente* iniciarLista(void) {
-    Cliente* cliente = (Cliente*) malloc(sizeof(Cliente));
+// Cliente* iniciarLista(void) {
+//     Cliente* cliente = (Cliente*) malloc(sizeof(Cliente));
 
-    FILE *arquivo = fopen("./dados/clientes.bin", "rb");
-    fread(cliente, sizeof(Cliente), 1, arquivo);
+//     FILE *arquivo = fopen("./dados/clientes.bin", "rb");
+//     fread(cliente, sizeof(Cliente), 1, arquivo);
 
-    return cliente;
-}
+//     return cliente;
+// }
 
-Cliente* retornaUltimo(void) {
-    Cliente* cliente = (Cliente*) malloc(sizeof(Cliente));
+// Cliente* retornaUltimo(void) {
+//     Cliente* cliente = (Cliente*) malloc(sizeof(Cliente));
 
-    FILE *arquivo = fopen("./dados/clientes.bin", "r+b");
-    fseek(arquivo, -sizeof(Cliente), SEEK_END);
-    fread(cliente, sizeof(Cliente), 1, arquivo);
+//     FILE *arquivo = fopen("./dados/clientes.bin", "r+b");
+//     fseek(arquivo, -sizeof(Cliente), SEEK_END);
+//     fread(cliente, sizeof(Cliente), 1, arquivo);
 
-    return cliente;
-}
+//     return cliente;
+// }
 
 void atualizarLista(Cliente* ultimo, Cliente* novo, FILE* arquivo) {
     ultimo->proximo = novo;
