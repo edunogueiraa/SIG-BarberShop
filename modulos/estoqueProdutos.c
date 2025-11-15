@@ -109,7 +109,7 @@ void listaEstoque(void) {
                 printf("Digite o preço mínimo pelo qual buscar: ");
                 scanf("%f", &filtro[0]);
                 getchar();
-                printf("Digite o nome pelo qual buscar: ");
+                printf("Digite o preço máximo pelo qual buscar: ");
                 scanf("%f", &filtro[1]);
                 getchar();
                 listarProdutosPreco(filtro[0], filtro[1]);
