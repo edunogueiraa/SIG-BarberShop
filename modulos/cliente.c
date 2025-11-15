@@ -100,7 +100,7 @@ void listaClientes(void) {
         printf("|                                   0 Sair                                                        |\n");
         printf("|_________________________________________________________________________________________________|\n\n");
         
-        char* filtro = "";
+        char filtro[50];
         recebeOpcao(&opcao);
         switch (opcao) {
             case '1':
@@ -315,8 +315,8 @@ void listarClientesNome(char* filtro) {
     printf("\n%-35s | %-20s | %-35s | %-10s | %-12s\n", "Nome", "CPF", "Email", "Data de nascimento", "Celular");
     printf("----------------------------------------------------------------------------------------------------------------------\n");
     while (fread(cliente, sizeof(Cliente), 1, arquivo)) {
-        filtro = strstr(cliente->nome, filtro);
-        if (cliente->status == True && filtro != NULL) {
+        char* filtrado = strstr(cliente->nome, filtro);
+        if (cliente->status == True && filtrado != NULL) {
             exibirDadosCliente(cliente);
         }
     }
