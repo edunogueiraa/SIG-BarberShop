@@ -94,8 +94,8 @@ void listarServicosNome(char* filtro){
     printf("\n%-20s | %-10s | %-15s | %s\n", "Nome do serviço", "ID", "Duração", "Valor (R$)");
     printf("----------------------------------------------------------------------------------------------------------------------\n");
     while (fread(servico, sizeof(Servico), 1, arquivo)) {
-        filtro = strstr(servico->nome, filtro);
-        if (servico->status == True && filtro != NULL) {
+        char* filtrado = strstr(servico->nome, filtro);
+        if (servico->status == True && filtrado != NULL) {
             exibirDadosServicos(servico);
         }
     }
@@ -368,7 +368,7 @@ void listagemServico(void) {
         printf("|                                   0 Sair                                                        |\n");
         printf("|_________________________________________________________________________________________________|\n\n");
         
-        char* filtro = "";
+        char filtro[50];
         recebeOpcao(&opcao);
         switch (opcao) {
             case '1':
