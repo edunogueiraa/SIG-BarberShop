@@ -69,13 +69,7 @@ void listaAgendamento(void) {
     printf("--------------------------------------------------------------------------------------------------\n");
     while (fread(agendamento,sizeof(Agendamento),1,arquivo)){
         if (agendamento->status == True) {
-            printf("%-10s | %-20s | %-25s | %-10s | %-12s | %-8s\n",
-                agendamento->id,
-                exibeCpf(agendamento->cpfCliente),
-                agendamento->nomeCliente,
-                agendamento->idServico, 
-                agendamento->data,
-                agendamento->hora);
+            exibirDadosAgendamento(agendamento);
         }
     }
     fclose(arquivo);
@@ -222,7 +216,7 @@ void opcaoAgendamento() {
                 break;
 
             case '3':
-                listaAgendamento();
+                listagemAgendamento();
                 break;
 
             case '4':
@@ -348,4 +342,74 @@ void exibirAgendamento(char idAgendamento[]) {
     free(agendamento);
 }
 
+void listagemAgendamento(void) {
+    char opcao = '0';
+    do {
+        system("clear||cls");
+        printf("\n");
+        printf("|_________________________________________________________________________________________________|\n");
+        printf("|                                                                                                 |\n");
+        printf("|                                     ESCOLHA O TIPO DE LISTAGEM                                  |\n");
+        printf("|_________________________________________________________________________________________________|\n");
+        printf("|                                                                                                 |\n");
+        printf("|                                   1 Todos os agendamentos                                       |\n");
+        printf("|                                   2 Filtrar data                                                |\n");
+        printf("|                                   0 Sair                                                        |\n");
+        printf("|_________________________________________________________________________________________________|\n\n");
+        
+        char dataBusca[15];
+        recebeOpcao(&opcao);
+        switch (opcao) {
+            case '1':
+                listaAgendamento();
+                break;
 
+            case '2':
+                printf("Digite a data pelo qual deseja buscar: ");
+                scanf(" %15[^\n]", dataBusca);
+                getchar();
+                listarAgendamentosData(dataBusca);
+                break;
+
+            case '0':
+                break;
+
+            default:
+                printf("\n>>> Opção inválida.");
+                printf("\n>>> Tecle <ENTER> para continuar...\n");
+                getchar();
+        }
+    } while (opcao != '0');
+}
+
+void exibirDadosAgendamento(Agendamento* agendamento){
+    printf("%-10s | %-20s | %-25s | %-10s | %-12s | %-8s\n",
+    agendamento->id,
+    exibeCpf(agendamento->cpfCliente),
+    agendamento->nomeCliente,
+    agendamento->idServico, 
+    agendamento->data,
+    agendamento->hora);
+}
+ 
+void listarAgendamentosData(char* dataBusca){
+    Agendamento * agendamento = malloc(sizeof(Agendamento));
+    FILE *arquivo = fopen("./dados/agendamentos.bin", "rb");
+    verificaArquivo(arquivo);
+
+    printf("\n%-10s | %-20s | %-25s | %-10s | %-12s | %-8s\n", "ID", "CPF", "Nome", "ID Serviço", "Data", "Hora");
+    printf("--------------------------------------------------------------------------------------------------\n");
+    while (fread(agendamento, sizeof(Agendamento), 1, arquivo)) {
+
+        char* filtrado = strstr(agendamento->data, dataBusca);
+        if (agendamento->status == True && filtrado != NULL) {
+        
+            exibirDadosAgendamento(agendamento);
+        }
+    }
+    fclose(arquivo);
+    free(agendamento); 
+
+    printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
+    getchar();
+}
