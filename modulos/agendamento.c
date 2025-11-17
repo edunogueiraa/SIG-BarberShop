@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <errno.h>
 #include "include/agendamento.h"
+#include "include/cliente.h"
 #include "include/utils.h"
 
 void telaAgendamento(void) {
