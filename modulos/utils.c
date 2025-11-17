@@ -114,7 +114,7 @@ int validaData(char *data) {
         return False;
     }
     
-    if (tamanho > 11) {
+    if (tamanho != 10) {
         return False;
     }
 
@@ -140,7 +140,7 @@ int validaCelular(char *celular) {
         return False;
     }
     
-    if (tamanho > 12) {
+    if (tamanho != 11) {
         return False;
     }
 
