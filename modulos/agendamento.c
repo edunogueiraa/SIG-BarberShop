@@ -356,7 +356,7 @@ void listagemAgendamento(void) {
         printf("|                                   0 Sair                                                        |\n");
         printf("|_________________________________________________________________________________________________|\n\n");
         
-        char dataBusca[15];
+        char dataBusca[16];
         recebeOpcao(&opcao);
         switch (opcao) {
             case '1':
