@@ -49,7 +49,7 @@ void cadastroAgendamento(void) {
     sprintf(agendamento->id, "%d", idInteiro); // Converte int para string
 
     recebeCpf(agendamento->cpfCliente);
-    recebeNome(agendamento->nomeCliente,"agendamento");
+    recebeNome(agendamento->nome,"agendamento");
     recebeId(agendamento->idServico,"servico");
     recebeData(agendamento->data,"agendamento");
     recebeHora(agendamento->hora);
@@ -276,7 +276,7 @@ void atualizarAgendamento(char idAgendamento[], int opcao) {
             if (opcao == 1) {
                 strcpy(agendamento->cpfCliente, dado);
             } else if (opcao == 2) {
-                strcpy(agendamento->nomeCliente, dado);
+                strcpy(agendamento->nome, dado);
             } else if (opcao == 3) {
                 strcpy(agendamento->idServico, dado);
             } else if (opcao == 4) {
@@ -327,7 +327,7 @@ void exibirAgendamento(char idAgendamento[]) {
                 printf("\n\t\t\t <--- Agendamento Encontrado ---> \n\n");
                 printf("\t\t\tID: %s\n",agendamento->id);
                 printf("\t\t\tCPF: %s\n", exibeCpf(agendamento->cpfCliente));
-                printf("\t\t\tNome: %s\n",agendamento->nomeCliente);
+                printf("\t\t\tNome: %s\n",agendamento->nome);
                 printf("\t\t\tID Servico: %s\n",agendamento->idServico);
                 printf("\t\t\tData: %s\n",agendamento->data);
                 printf("\t\t\tHora: %s\n",agendamento->hora);
@@ -385,12 +385,12 @@ void exibirDadosAgendamento(Agendamento* agendamento){
     printf("%-10s | %-20s | %-25s | %-10s | %-12s | %-8s\n",
     agendamento->id,
     exibeCpf(agendamento->cpfCliente),
-    agendamento->nomeCliente,
+    agendamento->nome,
     agendamento->idServico, 
     agendamento->data,
     agendamento->hora);
 }
- 
+
 void listarAgendamentosData(char* dataBusca){
     Agendamento * agendamento = malloc(sizeof(Agendamento));
     FILE *arquivo = fopen("./dados/agendamentos.bin", "rb");
