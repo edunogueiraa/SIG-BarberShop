@@ -18,7 +18,11 @@ void atualizaServico(void);
 void deletaServico(void);
 void limparBancoServico(void); 
 void opcaoServicos(void);
+void listaServico(void);
+void listagemServico(void);
 
+void exibirDadosServicos(Servico * servico);
+void listarServicosNome(char* filtro);
 void exibirServico(char idServico[]);
 void cadastrarServico(Servico * servico);
 void atualizarServico(char idServico[], int opcao);

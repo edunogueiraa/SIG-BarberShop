@@ -370,31 +370,31 @@ void recebeOpcao(char ponteiroOpcao[]) {
 }
 
 // Funções de exibicao
-void exibeValor(char *valor) {
-    float valorFormatado = atof(valor);
-    printf("\t\t\tValor: R$ %.2f\n", valorFormatado);
-}
-void exibeCpf(char *cpf) {
+void formataCpf(char* destino) {
     char formatado[15];
     
     int posicao = 0;
-    for (int i = 0; cpf[i] != '\0'; ++i) {
+    for (int i = 0; destino[i] != '\0'; ++i) {
         if (i == 3 || i == 6) {
             formatado[posicao++] = '.';
         } else if (i == 9) {
             formatado[posicao++] = '-';
         }
-        formatado[posicao++] = cpf[i];
+        formatado[posicao++] = destino[i];
     }
 
     formatado[posicao] = '\0';
-    printf("\t\t\tCPF: %s\n", formatado);
+    strcpy(destino, formatado);
 }
-void exibeCelular(char *celular) {
+char* exibeCpf(char *cpf) {
+    formataCpf(cpf);
+    return cpf;
+}
+void formataCelular(char* destino) {
     char formatado[15];
     
     int posicao = 0;
-    for (int i = 0; celular[i] != '\0'; ++i) {
+    for (int i = 0; destino[i] != '\0'; ++i) {
         if (i == 0) {
             formatado[posicao++] = '(';
         } else if (i == 2) {
@@ -402,11 +402,15 @@ void exibeCelular(char *celular) {
         } else if (i == 7) {
             formatado[posicao++] = '-';
         }
-        formatado[posicao++] = celular[i];
+        formatado[posicao++] = destino[i];
     }
 
     formatado[posicao] = '\0';
-    printf("\t\t\tCelular: %s\n", formatado);
+    strcpy(destino, formatado);
+}
+char* exibeCelular(char *celular) {
+    formataCelular(celular);
+    return celular;
 }
 
 // Funções de verificação de arquivos
@@ -466,7 +470,6 @@ void criarDiretorio(void) {
         exit(1);
     }
 }
-
 int atribuirId(const char *nomeArquivo, int tamanhoRegistro) {
     FILE *arquivo = fopen(nomeArquivo, "rb");
     if (arquivo == NULL) {

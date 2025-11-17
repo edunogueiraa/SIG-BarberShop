@@ -8,10 +8,16 @@
 
 // Assinatura de funções
 void cadastrarCliente(Cliente * cliente);
+void exibirDadosCliente(Cliente* cliente);
 void exibirCliente(char cpfCliente[]);
+void listarClientes(void);
+void listarClientesNome(char* filtro);
 void atualizarCliente(char cpfCliente[], int opcao);
 void deletarCliente(char cpfCliente[]);
 void excluirBancoCliente(void);
+// Cliente* iniciarLista(void);
+// Cliente* retornaUltimo(void);
+void atualizarLista(Cliente* ultimo, Cliente* novo, FILE* arquivo);
 
 void telaCliente(void) {
     system("clear||cls");
@@ -55,7 +61,7 @@ void cadastroCliente(void) {
     recebeNome(cliente->nome,"cliente");
     recebeCpf(cliente->cpf);
     recebeEmail(cliente->email);
-    recebeData(cliente->data,"Nascimento");
+    recebeData(cliente->data,"nascimento");
     recebeCelular(cliente->celular);
 
     cadastrarCliente(cliente);
@@ -80,32 +86,43 @@ void exibeCliente(void) {
 }
 
 void listaClientes(void) {
-    system("clear||cls");
-    printf("\n");
-    printf("___________________________________________________________________________________________________\n");
-    printf("|                                                                                                 |\n");
-    printf("|                                        LISTA DE CLIENTES                                        |\n");
-    printf("|_________________________________________________________________________________________________|\n");
-    Cliente * cliente;
-    cliente = (Cliente *)malloc(sizeof(Cliente));
-    
-    FILE * arquivo = fopen("./dados/clientes.bin", "rb");
-    verificaArquivo(arquivo);
+    char opcao = '0';
+    do {
+        system("clear||cls");
+        printf("\n");
+        printf("|_________________________________________________________________________________________________|\n");
+        printf("|                                                                                                 |\n");
+        printf("|                                     ESCOLHA O TIPO DE LISTAGEM                                  |\n");
+        printf("|_________________________________________________________________________________________________|\n");
+        printf("|                                                                                                 |\n");
+        printf("|                                   1 Todos os clientes                                           |\n");
+        printf("|                                   2 Filtrar nome                                                |\n");
+        printf("|                                   0 Sair                                                        |\n");
+        printf("|_________________________________________________________________________________________________|\n\n");
+        
+        char filtro[50];
+        recebeOpcao(&opcao);
+        switch (opcao) {
+            case '1':
+                listarClientes();
+                break;
 
-    while (fread(cliente, sizeof(Cliente), 1, arquivo)) {
-        if (cliente->status == True) {
-            printf("\n\t\t\tNome: %s\n", cliente->nome);
-            exibeCpf(cliente->cpf);
-            printf("\t\t\tEmail: %s\n", cliente->email);
-            printf("\t\t\tData: %s\n", cliente->data);
-            exibeCelular(cliente->celular);
+            case '2':
+                printf("Digite o nome pelo qual buscar: ");
+                scanf("%[^\n]", filtro);
+                getchar();
+                listarClientesNome(filtro);
+                break;
+
+            case '0':
+                break;
+
+            default:
+                printf("\n>>> Opção inválida.");
+                printf("\n>>> Tecle <ENTER> para continuar...\n");
+                getchar();
         }
-    }
-    fclose(arquivo);
-    free(cliente);
-
-    printf("\n>>> Tecle <ENTER> para continuar...\n");
-    getchar();
+    } while (opcao != '0');
 }
 
 void atualizaCliente(void) {
@@ -225,10 +242,23 @@ void cadastrarCliente(Cliente * cliente) {
     FILE * arquivo = fopen("./dados/clientes.bin", "ab");
     verificaArquivo(arquivo);
     
+    // Cliente* ultimo = retornaUltimo();
     cliente->status = True;
+    // cliente->proximo = NULL;
     fwrite(cliente, sizeof(Cliente), 1, arquivo);
-
+    // atualizarLista(ultimo, cliente, arquivo);
+    
     fclose(arquivo);
+    // free(ultimo);
+}
+
+void exibirDadosCliente(Cliente* cliente) {
+    printf("%-35s | %-20s | %-35s | %-10s | %-12s\n",
+        cliente->nome,
+        exibeCpf(cliente->cpf),
+        cliente->email,
+        cliente->data,
+        exibeCelular(cliente->celular));
 }
 
 void exibirCliente(char cpfCliente[]) {
@@ -243,7 +273,7 @@ void exibirCliente(char cpfCliente[]) {
         if(strcmp(cliente->cpf, cpfCliente) == 0 && cliente->status == True) {
             printf("\n\t\t\t <--- Cliente Encontrado ---> \n\n");
             printf("\t\t\tNome: %s\n", cliente->nome);
-            exibeCpf(cliente->cpf);
+            printf("\t\t\tCPF: %s\n", exibeCpf(cliente->cpf));
             printf("\t\t\tEmail: %s\n", cliente->email);
             printf("\t\t\tData: %s\n", cliente->data);
             exibeCelular(cliente->celular);
@@ -252,6 +282,49 @@ void exibirCliente(char cpfCliente[]) {
     }
     fclose(arquivo);
     free(cliente);
+}
+
+void listarClientes(void) {
+    // Cliente * cliente = iniciarLista();
+    
+    Cliente* cliente = malloc(sizeof(Cliente));
+    FILE * arquivo = fopen("./dados/clientes.bin", "rb");
+    verificaArquivo(arquivo);
+
+    printf("\n%-35s | %-20s | %-35s | %-10s | %-12s\n", "Nome", "CPF", "Email", "Data de nascimento", "Celular");
+    printf("----------------------------------------------------------------------------------------------------------------------\n");
+    while (fread(cliente, sizeof(Cliente), 1, arquivo)) {
+    // while (cliente->proximo != NULL) {
+        if (cliente->status == True) {
+            exibirDadosCliente(cliente);
+        }
+        // cliente = cliente->proximo;
+    }
+    fclose(arquivo);
+    free(cliente);
+
+    printf("\n>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+}
+
+void listarClientesNome(char* filtro) {
+    Cliente* cliente = malloc(sizeof(Cliente));
+    FILE * arquivo = fopen("./dados/clientes.bin", "rb");
+    verificaArquivo(arquivo);
+
+    printf("\n%-35s | %-20s | %-35s | %-10s | %-12s\n", "Nome", "CPF", "Email", "Data de nascimento", "Celular");
+    printf("----------------------------------------------------------------------------------------------------------------------\n");
+    while (fread(cliente, sizeof(Cliente), 1, arquivo)) {
+        char* filtrado = strstr(cliente->nome, filtro);
+        if (cliente->status == True && filtrado != NULL) {
+            exibirDadosCliente(cliente);
+        }
+    }
+    fclose(arquivo);
+    free(cliente);
+
+    printf("\n>>> Tecle <ENTER> para continuar...\n");
+    getchar();
 }
 
 void atualizarCliente(char cpfCliente[], int opcao) {
@@ -291,6 +364,31 @@ void atualizarCliente(char cpfCliente[], int opcao) {
     }
     fclose(arquivo);
     free(cliente);
+}
+
+// Cliente* iniciarLista(void) {
+//     Cliente* cliente = (Cliente*) malloc(sizeof(Cliente));
+
+//     FILE *arquivo = fopen("./dados/clientes.bin", "rb");
+//     fread(cliente, sizeof(Cliente), 1, arquivo);
+
+//     return cliente;
+// }
+
+// Cliente* retornaUltimo(void) {
+//     Cliente* cliente = (Cliente*) malloc(sizeof(Cliente));
+
+//     FILE *arquivo = fopen("./dados/clientes.bin", "r+b");
+//     fseek(arquivo, -sizeof(Cliente), SEEK_END);
+//     fread(cliente, sizeof(Cliente), 1, arquivo);
+
+//     return cliente;
+// }
+
+void atualizarLista(Cliente* ultimo, Cliente* novo, FILE* arquivo) {
+    ultimo->proximo = novo;
+
+    fwrite(ultimo, sizeof(Cliente), 1, arquivo);
 }
 
 void deletarCliente(char cpfCliente[]) {
