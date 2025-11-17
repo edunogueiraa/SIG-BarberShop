@@ -237,6 +237,25 @@ void opcaoCliente(void) {
     } while (opcao != '0');
 }
 
+char* nomeCliente(char* cpf) {
+    Cliente * cliente;
+    cliente = (Cliente*) malloc(sizeof(Cliente));
+
+    char nome[50];
+    FILE * arquivo = fopen("./dados/clientes.bin", "rb");
+    verificaArquivo(arquivo);
+
+    while (fread(cliente, sizeof(Cliente), 1, arquivo)) {
+        if(strcmp(cliente->cpf, cpf) == 0 && cliente->status == True) {
+            strcpy(nome, cliente->nome);
+            free(cliente);
+            fclose(arquivo);
+        }
+    }
+
+    return nome;
+}
+
 void cadastrarCliente(Cliente * cliente) {
     criarDiretorio();
     FILE * arquivo = fopen("./dados/clientes.bin", "ab");
