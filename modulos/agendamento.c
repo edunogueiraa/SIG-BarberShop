@@ -50,8 +50,7 @@ void cadastroAgendamento(void) {
     sprintf(agendamento->id, "%d", idInteiro); // Converte int para string
 
     recebeCpf(agendamento->cpfCliente);
-    recebeNome(agendamento->nome,"agendamento");
-    recebeId(agendamento->idServico,"servico");
+    recebeId(agendamento->idServico,"serviço");
     recebeData(agendamento->data,"agendamento");
     recebeHora(agendamento->hora);
 
@@ -111,10 +110,9 @@ void atualizaAgendamento(void) {
 
         printf("\nQual dado você deseja alterar?\n");
         printf("\n1 CPF");
-        printf("\n2 Nome");
-        printf("\n3 ID Servico");
-        printf("\n4 Data");
-        printf("\n5 Hora");
+        printf("\n2 ID Servico");
+        printf("\n3 Data");
+        printf("\n4 Hora");
         printf("\n0 Finalizar operação\n\n");
         scanf("%d", &opcao);
         getchar();
@@ -254,13 +252,11 @@ void atualizarAgendamento(char idAgendamento[], int opcao) {
     if (opcao == 1) {
         recebeCpf(dado);
     } else if (opcao == 2) {
-        recebeNome(dado, "cliente");
-    } else if (opcao == 3) {
         printf("\nID Servico: ");
         scanf("%[^\n]", dado);
-    } else if (opcao == 4) {
+    } else if (opcao == 3) {
         recebeData(dado, "agendamento");
-    } else if (opcao == 5) {
+    } else if (opcao == 4) {
         recebeHora(dado);
     }
 
@@ -277,12 +273,10 @@ void atualizarAgendamento(char idAgendamento[], int opcao) {
             if (opcao == 1) {
                 strcpy(agendamento->cpfCliente, dado);
             } else if (opcao == 2) {
-                strcpy(agendamento->nome, dado);
-            } else if (opcao == 3) {
                 strcpy(agendamento->idServico, dado);
-            } else if (opcao == 4) {
+            } else if (opcao == 3) {
                 strcpy(agendamento->data, dado);
-            } else if (opcao == 5) {
+            } else if (opcao == 4) {
                 strcpy(agendamento->hora, dado);
             }
             
