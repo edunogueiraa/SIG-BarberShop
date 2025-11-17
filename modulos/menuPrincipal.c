@@ -17,12 +17,12 @@ char menuPrincipal() {
     printf("|_________________________________________________________________________________________________|\n");
     printf("|                                                                                                 |\n");
     printf("|                                   1 Módulo Cliente                                              |\n");
-    printf("|                                   2 Módulo Serviço                                              |\n");
-    printf("|                                   3 Módulo Agendamento                                          |\n");
-    printf("|                                   4 Módulo Relatório                                            |\n");
-    printf("|                                   5 Módulo Colaboradores                                        |\n");
-    printf("|                                   6 Módulo Sobre                                                |\n");
-    printf("|                                   7 Módulo Estoque                                              |\n");
+    printf("|                                   2 Módulo Estoque                                              |\n");
+    printf("|                                   3 Módulo Serviço                                              |\n");
+    printf("|                                   4 Módulo Agendamento                                          |\n");
+    printf("|                                   5 Módulo Relatório                                            |\n");
+    printf("|                                   6 Módulo Colaboradores                                        |\n");
+    printf("|                                   7 Módulo Sobre                                                |\n");
     printf("|                                   0 Sair                                                        |\n");
     printf("|_________________________________________________________________________________________________|\n\n");
 

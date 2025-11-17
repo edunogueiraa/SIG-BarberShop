@@ -27,27 +27,27 @@ int main() {
                 break;
 
             case '2':
+                opcaoEstoque();
+                break;
+                
+            case '3':
                 opcaoServicos();
                 break;
-
-            case '3':
+            
+            case '4':
                 opcaoAgendamento();
                 break;
-
-            case '4':
+            
+            case '5':
                 opcaoRelatorio();
                 break;
-
-            case '5':
+            
+            case '6':
                 colaboradores();
                 break;
-
-            case '6':
-                telaSobre();
-                break;
-
+            
             case '7':
-                opcaoEstoque();
+                telaSobre();
                 break;
 
             case '0':
