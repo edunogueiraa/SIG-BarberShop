@@ -241,7 +241,7 @@ char* nomeCliente(char* cpf) {
     Cliente * cliente;
     cliente = (Cliente*) malloc(sizeof(Cliente));
 
-    char nome[50];
+    char* nome = (char*) malloc(50);
     FILE * arquivo = fopen("./dados/clientes.bin", "rb");
     verificaArquivo(arquivo);
 

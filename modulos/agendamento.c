@@ -319,14 +319,16 @@ void exibirAgendamento(char idAgendamento[]) {
 
         while (fread(agendamento,sizeof(Agendamento),1,arquivo)){
             if(strcmp(idAgendamento,agendamento->id) == 0 && agendamento->status == True){
+                char* cliente = nomeCliente(agendamento->cpfCliente);
                 printf("\n\t\t\t <--- Agendamento Encontrado ---> \n\n");
                 printf("\t\t\tID: %s\n",agendamento->id);
-                printf("\t\t\tNome do cliente: %s\n", nomeCliente(agendamento->cpfCliente));
+                printf("\t\t\tNome do cliente: %s\n", cliente);
                 printf("\t\t\tID Servico: %s\n",agendamento->idServico);
                 printf("\t\t\tData: %s\n",agendamento->data);
                 printf("\t\t\tHora: %s\n",agendamento->hora);
                 printf("\n>>> Tecle <ENTER> para continuar...\n");
                 getchar();
+                free(cliente);
                 fclose(arquivo);
                 return;
             }
@@ -376,12 +378,14 @@ void listagemAgendamento(void) {
 }
 
 void exibirDadosAgendamento(Agendamento* agendamento){
+    char* cliente = nomeCliente(agendamento->cpfCliente);
     printf("%-10s | %-25s | %-10s | %-12s | %-8s\n",
     agendamento->id,
-    nomeCliente(agendamento->cpfCliente),
+    cliente,
     agendamento->idServico, 
     agendamento->data,
     agendamento->hora);
+    free(cliente);
 }
 
 void listarAgendamentosData(char* dataBusca){
@@ -395,7 +399,6 @@ void listarAgendamentosData(char* dataBusca){
 
         char* filtrado = strstr(agendamento->data, dataBusca);
         if (agendamento->status == True && filtrado != NULL) {
-        
             exibirDadosAgendamento(agendamento);
         }
     }
