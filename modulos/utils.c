@@ -333,7 +333,7 @@ void recebeDuracaoTempo(char ponteiroDuracao[]) {
     int validado = False;
 
     do {
-        printf("Duracao: ");
+        printf("Duração: ");
         scanf("%[^\n]", duracao);
         getchar();
 

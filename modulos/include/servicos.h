@@ -5,7 +5,7 @@ struct servico {
     char id[10];
     char nome[50];
     char valor[20];
-    char duracao[10];
+    char duracao[9];
     int status;
 };
 
