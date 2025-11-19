@@ -250,10 +250,11 @@ char* nomeCliente(char* cpf) {
             strcpy(nome, cliente->nome);
             free(cliente);
             fclose(arquivo);
+            return nome;
         }
     }
 
-    return nome;
+    return NULL;
 }
 
 void cadastrarCliente(Cliente * cliente) {
