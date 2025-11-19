@@ -5,7 +5,7 @@ struct agendamento {
     char id[50];
     char cpfCliente[15];
     char idServico[10];
-    char data[15];
+    char data[11];
     char hora[9];
     int status;
 };
