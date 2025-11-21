@@ -11,13 +11,12 @@ void cadastrarCliente(Cliente * cliente);
 void exibirDadosCliente(Cliente* cliente);
 void exibirCliente(char cpfCliente[]);
 void listarClientes(void);
+// void listarClientes(Cliente* lista);
 void listarClientesNome(char* filtro);
 void atualizarCliente(char cpfCliente[], int opcao);
 void deletarCliente(char cpfCliente[]);
 void excluirBancoCliente(void);
-// Cliente* iniciarLista(void);
-// Cliente* retornaUltimo(void);
-void atualizarLista(Cliente* ultimo, Cliente* novo, FILE* arquivo);
+Cliente* gerarLista(void);
 
 void telaCliente(void) {
     system("clear||cls");
@@ -87,6 +86,7 @@ void exibeCliente(void) {
 
 void listaClientes(void) {
     char opcao = '0';
+    // Cliente* lista = gerarLista();
     do {
         system("clear||cls");
         printf("\n");
@@ -105,6 +105,7 @@ void listaClientes(void) {
         switch (opcao) {
             case '1':
                 listarClientes();
+                // listarClientes(lista);
                 break;
 
             case '2':
@@ -123,6 +124,13 @@ void listaClientes(void) {
                 getchar();
         }
     } while (opcao != '0');
+
+    // Cliente* cliente = lista;
+    // while (lista != NULL) {
+    //     lista = lista->proximo;
+    //     free(cliente);
+    //     cliente = lista;
+    // }
 }
 
 void atualizaCliente(void) {
@@ -273,6 +281,7 @@ void cadastrarCliente(Cliente * cliente) {
 }
 
 void exibirDadosCliente(Cliente* cliente) {
+    // o problema tá nos exibe, falar com Flavius depois
     printf("%-35s | %-20s | %-35s | %-10s | %-12s\n",
         cliente->nome,
         exibeCpf(cliente->cpf),
@@ -305,8 +314,17 @@ void exibirCliente(char cpfCliente[]) {
 }
 
 void listarClientes(void) {
-    // Cliente * cliente = iniciarLista();
+// void listarClientes(Cliente* lista) {
+    // Cliente* cliente = lista;
     
+    // printf("\n%-35s | %-20s | %-35s | %-10s | %-12s\n", "Nome", "CPF", "Email", "Data de nascimento", "Celular");
+    // printf("-------------------------------------------------------------------------------------------------------------------------------\n");
+    // while (cliente != NULL) {
+    //     exibirDadosCliente(cliente);
+    //     printf("Endereço do próximo: %p\n", cliente->proximo);
+    //     cliente = cliente->proximo;
+    // }
+
     Cliente* cliente = malloc(sizeof(Cliente));
     FILE * arquivo = fopen("./dados/clientes.bin", "rb");
     verificaArquivo(arquivo);
@@ -314,11 +332,9 @@ void listarClientes(void) {
     printf("\n%-35s | %-20s | %-35s | %-10s | %-12s\n", "Nome", "CPF", "Email", "Data de nascimento", "Celular");
     printf("----------------------------------------------------------------------------------------------------------------------\n");
     while (fread(cliente, sizeof(Cliente), 1, arquivo)) {
-    // while (cliente->proximo != NULL) {
         if (cliente->status == True) {
             exibirDadosCliente(cliente);
         }
-        // cliente = cliente->proximo;
     }
     fclose(arquivo);
     free(cliente);
@@ -386,29 +402,23 @@ void atualizarCliente(char cpfCliente[], int opcao) {
     free(cliente);
 }
 
-// Cliente* iniciarLista(void) {
-//     Cliente* cliente = (Cliente*) malloc(sizeof(Cliente));
+Cliente* gerarLista(void) {
+    Cliente* lista = NULL;
+    Cliente temporario;
+    
+    FILE *arquivo = fopen("./dados/clientes.bin", "rb");
+    while (fread(&temporario, sizeof(Cliente), 1, arquivo)) {
+        if (temporario.status == True) {
+            Cliente* cliente = (Cliente*) malloc(sizeof(Cliente));
+            *cliente = temporario;
 
-//     FILE *arquivo = fopen("./dados/clientes.bin", "rb");
-//     fread(cliente, sizeof(Cliente), 1, arquivo);
+            cliente->proximo = lista;
+            lista = cliente;
+        }
+    }
+    fclose(arquivo);
 
-//     return cliente;
-// }
-
-// Cliente* retornaUltimo(void) {
-//     Cliente* cliente = (Cliente*) malloc(sizeof(Cliente));
-
-//     FILE *arquivo = fopen("./dados/clientes.bin", "r+b");
-//     fseek(arquivo, -sizeof(Cliente), SEEK_END);
-//     fread(cliente, sizeof(Cliente), 1, arquivo);
-
-//     return cliente;
-// }
-
-void atualizarLista(Cliente* ultimo, Cliente* novo, FILE* arquivo) {
-    ultimo->proximo = novo;
-
-    fwrite(ultimo, sizeof(Cliente), 1, arquivo);
+    return lista;
 }
 
 void deletarCliente(char cpfCliente[]) {
