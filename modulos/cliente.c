@@ -11,7 +11,7 @@ void cadastrarCliente(Cliente * cliente);
 void exibirDadosCliente(Cliente* cliente);
 void exibirCliente(char cpfCliente[]);
 void listarClientes(Cliente* lista);
-void listarClientesNome(char* filtro);
+void listarClientesNome(Cliente* lista, char* filtro);
 void atualizarCliente(char cpfCliente[], int opcao);
 void deletarCliente(char cpfCliente[]);
 void excluirBancoCliente(void);
@@ -110,7 +110,7 @@ void listaClientes(void) {
                 printf("Digite o nome pelo qual buscar: ");
                 scanf("%[^\n]", filtro);
                 getchar();
-                listarClientesNome(filtro);
+                listarClientesNome(lista, filtro);
                 break;
 
             case '0':
@@ -333,20 +333,18 @@ void listarClientes(Cliente* lista) {
     getchar();
 }
 
-void listarClientesNome(char* filtro) {
-    Cliente* cliente = malloc(sizeof(Cliente));
-    FILE * arquivo = fopen("./dados/clientes.bin", "rb");
-    verificaArquivo(arquivo);
+void listarClientesNome(Cliente* lista, char* filtro) {
+    Cliente* cliente = lista;
 
     printf("\n%-35s | %-20s | %-35s | %-10s | %-12s\n", "Nome", "CPF", "Email", "Data de nascimento", "Celular");
     printf("----------------------------------------------------------------------------------------------------------------------\n");
-    while (fread(cliente, sizeof(Cliente), 1, arquivo)) {
+    while (cliente != NULL) {
         char* filtrado = strstr(cliente->nome, filtro);
-        if (cliente->status == True && filtrado != NULL) {
+        if (filtrado != NULL) {
             exibirDadosCliente(cliente);
         }
+        cliente = cliente->proximo;
     }
-    fclose(arquivo);
     free(cliente);
 
     printf("\n>>> Tecle <ENTER> para continuar...\n");
