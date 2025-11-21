@@ -370,8 +370,8 @@ void recebeOpcao(char ponteiroOpcao[]) {
 }
 
 // Funções de exibicao
-void formataCpf(char* destino) {
-    char formatado[15];
+char* formataCpf(char* destino) {
+    char* formatado = malloc(15);
     
     int posicao = 0;
     for (int i = 0; destino[i] != '\0'; ++i) {
@@ -384,14 +384,10 @@ void formataCpf(char* destino) {
     }
 
     formatado[posicao] = '\0';
-    strcpy(destino, formatado);
+    return formatado;
 }
-char* exibeCpf(char *cpf) {
-    formataCpf(cpf);
-    return cpf;
-}
-void formataCelular(char* destino) {
-    char formatado[15];
+char* formataCelular(char* destino) {
+    char* formatado = malloc(16);
     
     int posicao = 0;
     for (int i = 0; destino[i] != '\0'; ++i) {
@@ -406,11 +402,7 @@ void formataCelular(char* destino) {
     }
 
     formatado[posicao] = '\0';
-    strcpy(destino, formatado);
-}
-char* exibeCelular(char *celular) {
-    formataCelular(celular);
-    return celular;
+    return formatado;
 }
 
 // Funções de verificação de arquivos
