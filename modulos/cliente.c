@@ -281,13 +281,18 @@ void cadastrarCliente(Cliente * cliente) {
 }
 
 void exibirDadosCliente(Cliente* cliente) {
-    // o problema tá nos exibe, falar com Flavius depois
+    char* cpf = formataCpf(cliente->cpf);
+    char* celular = formataCelular(cliente->celular);
+
     printf("%-35s | %-20s | %-35s | %-10s | %-12s\n",
         cliente->nome,
-        exibeCpf(cliente->cpf),
+        cpf,
         cliente->email,
         cliente->data,
-        exibeCelular(cliente->celular));
+        celular);
+
+    free(cpf);
+    free(celular);
 }
 
 void exibirCliente(char cpfCliente[]) {
@@ -300,12 +305,18 @@ void exibirCliente(char cpfCliente[]) {
     int encontrado = False;
     while (fread(cliente, sizeof(Cliente), 1, arquivo) && encontrado == False) {
         if(strcmp(cliente->cpf, cpfCliente) == 0 && cliente->status == True) {
+            char* cpf = formataCpf(cliente->cpf);
+            char* celular = formataCelular(cliente->celular);
+
             printf("\n\t\t\t <--- Cliente Encontrado ---> \n\n");
             printf("\t\t\tNome: %s\n", cliente->nome);
-            printf("\t\t\tCPF: %s\n", exibeCpf(cliente->cpf));
+            printf("\t\t\tCPF: %s\n", cpf);
             printf("\t\t\tEmail: %s\n", cliente->email);
             printf("\t\t\tData: %s\n", cliente->data);
-            exibeCelular(cliente->celular);
+            printf("\t\t\tCelular: %s\n", celular);
+
+            free(cpf);
+            free(celular);
             encontrado = True;
         }
     }
