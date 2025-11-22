@@ -109,11 +109,11 @@ void atualizaAgendamento(void) {
         exibirAgendamento(idAgendamento);
 
         printf("\nQual dado você deseja alterar?\n");
-        printf("\n1 CPF");
-        printf("\n2 ID Servico");
-        printf("\n3 Data");
-        printf("\n4 Hora");
-        printf("\n0 Finalizar operação\n\n");
+        printf("\n1 - CPF");
+        printf("\n2 - ID Servico");
+        printf("\n3 - Data");
+        printf("\n4 - Hora");
+        printf("\n0 - Finalizar operação\n\n");
         scanf("%d", &opcao);
         getchar();
         if (opcao != 0) {
@@ -252,7 +252,7 @@ void atualizarAgendamento(char idAgendamento[], int opcao) {
     if (opcao == 1) {
         recebeCpf(dado);
     } else if (opcao == 2) {
-        printf("\nID Servico: ");
+        printf("\nDigite o ID serviço: ");
         scanf("%[^\n]", dado);
     } else if (opcao == 3) {
         recebeData(dado, "agendamento");

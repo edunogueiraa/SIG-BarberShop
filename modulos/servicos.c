@@ -48,7 +48,7 @@ void cadastroServico(void) {
     int idInteiro = atribuirId("./dados/servicos.bin", sizeof(Servico));
     sprintf(servico->id, "%d", idInteiro); // Converte int para string
 
-    recebeNome(servico->nome,"servico");
+    recebeNome(servico->nome,"serviço");
     recebeValor(servico->valor);
     recebeDuracaoTempo(servico->duracao);
 
@@ -115,7 +115,7 @@ void exibeServico(void) {
     printf("|_________________________________________________________________________________________________|\n");
 
     char idServico[50];
-    recebeId(idServico,"servico");
+    recebeId(idServico,"serviço");
     exibirServico(idServico);
     
 }
@@ -129,7 +129,7 @@ void atualizaServico(void) {
     printf("|_________________________________________________________________________________________________|\n");
 
     char idServico[50];
-    recebeId(idServico,"servico");
+    recebeId(idServico,"serviço");
 
     int opcao;
     do {
@@ -137,10 +137,10 @@ void atualizaServico(void) {
         exibirServico(idServico);
 
         printf("\nQual dado você deseja alterar?\n");
-        printf("\n1 Nome Servico");
-        printf("\n2 Valor");
-        printf("\n3 Duracao Servico");
-        printf("\n0 Finalizar operação\n\n");
+        printf("\n1 - Nome Serviço");
+        printf("\n2 - Valor");
+        printf("\n3 - Duracao Serviço");
+        printf("\n0 - Finalizar operação\n\n");
         scanf("%d", &opcao);
         getchar();
         if (opcao != 0) {
@@ -158,7 +158,7 @@ void deletaServico(void) {
     printf("|_________________________________________________________________________________________________|\n");
 
     char idServico[50];
-    recebeId(idServico,"servico");
+    recebeId(idServico,"serviço");
     
     exibirServico(idServico);
 
@@ -341,7 +341,7 @@ void exibirServico(char idServico[]) {
                 printf("\n\t\t\t <--- Servico Encontrado ---> \n\n");
                 printf("\t\t\tNome do serviço: %s\n", servico->nome);
                 printf("\t\t\tID do serviço: %s\n", servico->id);
-                printf("\t\t\tValor: R$ %.f2\n", atof(servico->valor));
+                printf("\t\t\tValor: R$ %.2f\n", atof(servico->valor));
                 printf("\t\t\tDuração do serviço: %s\n", servico->duracao);
                 printf("\n>>> Tecle <ENTER> para continuar...\n");
                 getchar();

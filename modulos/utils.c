@@ -217,7 +217,7 @@ void recebeCpf(char ponteiroCpf[]) {
     int validado = False;
 
     do {
-        printf("CPF: ");
+        printf("Digite o CPF: ");
         scanf("%[^\n]", cpf);
         getchar();
         
@@ -232,7 +232,7 @@ void recebeCpf(char ponteiroCpf[]) {
 }
 void recebeId(char ponteiroId[], char tipo[]) {
     char id[50];
-    printf("Digite o ID de %s: ",tipo);
+    printf("Digite o ID do %s: ",tipo);
     
     scanf("%[^\n]", id);
     getchar();
@@ -244,7 +244,7 @@ void recebeEmail(char ponteiroEmail[]) {
     int validado = False;
 
     do {
-        printf("E-mail: ");
+        printf("Digite o E-mail: ");
         scanf("%[^\n]", email);
         getchar();
 
@@ -279,7 +279,7 @@ void recebeCelular(char ponteiroCelular[]) {
     int validado = False;
 
     do {
-        printf("Celular: ");
+        printf("Digite o Celular: ");
         scanf("%[^\n]", celular);
         getchar();
 
@@ -314,7 +314,7 @@ void recebeValor(char ponteiroValor[]) {
     int validado = False;
 
     do {
-        printf("Valor: ");
+        printf("Digite o Valor: ");
         scanf("%[^\n]", valor);
         getchar();
 
@@ -333,7 +333,7 @@ void recebeDuracaoTempo(char ponteiroDuracao[]) {
     int validado = False;
 
     do {
-        printf("Duração: ");
+        printf("Digite a Duração: ");
         scanf("%[^\n]", duracao);
         getchar();
 
@@ -347,7 +347,7 @@ void recebeHora(char ponteiroHora[]) {
     int validado = False;
 
     do {
-        printf("Horário: ");
+        printf("Digite o Horário: ");
         scanf("%s", hora);
         getchar();
 

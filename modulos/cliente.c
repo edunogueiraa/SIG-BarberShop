@@ -153,11 +153,11 @@ void atualizaCliente(void) {
         exibirCliente(cpfCliente);
 
         printf("\nQual dado você deseja alterar?\n");
-        printf("\n1 Nome");
-        printf("\n2 Email");
-        printf("\n3 Data de nascimento");
-        printf("\n4 Celular");
-        printf("\n0 Finalizar operação\n\n");
+        printf("\n1 - Nome");
+        printf("\n2 - Email");
+        printf("\n3 - Data de nascimento");
+        printf("\n4 - Celular");
+        printf("\n0 - Finalizar operação\n\n");
         scanf("%d", &opcao);
         getchar();
         if (opcao != 0) {
