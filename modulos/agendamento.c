@@ -65,7 +65,7 @@ void listaAgendamento(void) {
     FILE * arquivo = fopen("./dados/agendamentos.bin", "rb");
     verificaArquivo(arquivo);
     
-    printf("\n%-10s | %-25s | %-20s | %-12s | %-8s\n", "ID", "Nome do cliente", "Nome do Serviço", "Data", "Hora");
+    printf("\n%-10s | %-25s | %-15s  | %-12s | %-8s\n", "ID", "Nome do cliente", "Serviço", "Data", "Hora");
     printf("--------------------------------------------------------------------------------------------------\n");
     while (fread(agendamento,sizeof(Agendamento),1,arquivo)){
         if (agendamento->status == True) {
@@ -321,10 +321,11 @@ void exibirAgendamento(char idAgendamento[]) {
         while (fread(agendamento,sizeof(Agendamento),1,arquivo)){
             if(strcmp(idAgendamento,agendamento->id) == 0 && agendamento->status == True){
                 char* cliente = nomeCliente(agendamento->cpfCliente);
+                char* servico = nomeServico(agendamento->idServico);
                 printf("\n\t\t\t <--- Agendamento Encontrado ---> \n\n");
                 printf("\t\t\tID: %s\n",agendamento->id);
                 printf("\t\t\tNome do cliente: %s\n", cliente);
-                printf("\t\t\tID Servico: %s\n",agendamento->idServico);
+                printf("\t\t\tServiço: %s\n",servico);
                 printf("\t\t\tData: %s\n",agendamento->data);
                 printf("\t\t\tHora: %s\n",agendamento->hora);
                 printf("\n>>> Tecle <ENTER> para continuar...\n");
@@ -381,7 +382,7 @@ void listagemAgendamento(void) {
 void exibirDadosAgendamento(Agendamento* agendamento){
     char* cliente = nomeCliente(agendamento->cpfCliente);
     char* servico = nomeServico(agendamento->idServico);
-    printf("%-10s | %-25s | %-20s | %-12s | %-8s\n",
+    printf("%-10s | %-25s | %-15s | %-12s | %-8s\n",
     agendamento->id,
     cliente,
     servico, 
@@ -396,7 +397,7 @@ void listarAgendamentosData(char* dataBusca){
     FILE *arquivo = fopen("./dados/agendamentos.bin", "rb");
     verificaArquivo(arquivo);
 
-    printf("\n%-10s | %-25s | %-20s | %-12s | %-8s\n", "ID", "Nome do cliente", "Nome do Serviço", "Data", "Hora");
+    printf("\n%-10s | %-25s | %-15s  | %-12s | %-8s\n", "ID", "Nome do cliente", "Serviço", "Data", "Hora");
     printf("--------------------------------------------------------------------------------------------------\n");
     while (fread(agendamento, sizeof(Agendamento), 1, arquivo)) {
 
