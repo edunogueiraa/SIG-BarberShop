@@ -393,6 +393,25 @@ void listagemServico(void) {
     } while (opcao != '0');
 }
 
+char* nomeServico(char* id) {
+    Servico* servico;
+    servico = (Servico*) malloc(sizeof(Servico));
+    
+    char* servicoNome = (char*) malloc(50);
+    FILE * arquivo = fopen("./dados/servicos.bin", "rb");
+    verificaArquivo(arquivo);
+
+    while (fread(servico, sizeof(Servico), 1, arquivo)) {
+        if (strcmp(servico->id, id) == 0 && servico->status == True) {
+            strcpy(servicoNome, servico->nome);
+            free(servico);
+            fclose(arquivo);
+            return servicoNome;
+        }
+    }
+    
+    return NULL;
+}
 
 
 
