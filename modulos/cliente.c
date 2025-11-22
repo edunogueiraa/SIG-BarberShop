@@ -126,8 +126,8 @@ void listaClientes(void) {
     Cliente* cliente = lista;
     while (lista != NULL) {
         lista = lista->proximo;
-        free(cliente);
         cliente = lista;
+        free(cliente);
     }
 }
 
