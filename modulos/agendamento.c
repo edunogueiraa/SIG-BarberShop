@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <errno.h>
+#include "include/servicos.h"
 #include "include/agendamento.h"
 #include "include/cliente.h"
 #include "include/utils.h"
@@ -64,7 +65,7 @@ void listaAgendamento(void) {
     FILE * arquivo = fopen("./dados/agendamentos.bin", "rb");
     verificaArquivo(arquivo);
     
-    printf("\n%-10s | %-25s | %-10s | %-12s | %-8s\n", "ID", "Nome do cliente", "ID Serviço", "Data", "Hora");
+    printf("\n%-10s | %-25s | %-20s | %-12s | %-8s\n", "ID", "Nome do cliente", "Nome do Serviço", "Data", "Hora");
     printf("--------------------------------------------------------------------------------------------------\n");
     while (fread(agendamento,sizeof(Agendamento),1,arquivo)){
         if (agendamento->status == True) {
@@ -379,13 +380,15 @@ void listagemAgendamento(void) {
 
 void exibirDadosAgendamento(Agendamento* agendamento){
     char* cliente = nomeCliente(agendamento->cpfCliente);
-    printf("%-10s | %-25s | %-10s | %-12s | %-8s\n",
+    char* servico = nomeServico(agendamento->idServico);
+    printf("%-10s | %-25s | %-20s | %-12s | %-8s\n",
     agendamento->id,
     cliente,
-    agendamento->idServico, 
+    servico, 
     agendamento->data,
     agendamento->hora);
     free(cliente);
+    free(servico);
 }
 
 void listarAgendamentosData(char* dataBusca){
@@ -393,7 +396,7 @@ void listarAgendamentosData(char* dataBusca){
     FILE *arquivo = fopen("./dados/agendamentos.bin", "rb");
     verificaArquivo(arquivo);
 
-    printf("\n%-10s | %-25s | %-10s | %-12s | %-8s\n", "ID", "Nome do cliente", "ID Serviço", "Data", "Hora");
+    printf("\n%-10s | %-25s | %-20s | %-12s | %-8s\n", "ID", "Nome do cliente", "Nome do Serviço", "Data", "Hora");
     printf("--------------------------------------------------------------------------------------------------\n");
     while (fread(agendamento, sizeof(Agendamento), 1, arquivo)) {
 
