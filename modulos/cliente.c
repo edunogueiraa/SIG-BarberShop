@@ -124,10 +124,15 @@ void listaClientes(void) {
     } while (opcao != '0');
 
     Cliente* cliente = lista;
-    while (lista != NULL) {
-        lista = lista->proximo;
-        cliente = lista;
+    // while (lista != NULL) {   //não funcionando
+    //     lista = lista->proximo;
+    //     cliente = lista;
+    //     free(cliente);
+    // }
+    while (cliente != NULL) {   //funcionando
+        Cliente* proximo = cliente->proximo;
         free(cliente);
+        cliente = proximo;
     }
 }
 
@@ -327,7 +332,7 @@ void listarClientes(Cliente* lista) {
         exibirDadosCliente(cliente);
         cliente = cliente->proximo;
     }
-    free(cliente);
+    // free(cliente);
 
     printf("\n>>> Tecle <ENTER> para continuar...\n");
     getchar();
@@ -345,7 +350,7 @@ void listarClientesNome(Cliente* lista, char* filtro) {
         }
         cliente = cliente->proximo;
     }
-    free(cliente);
+    // free(cliente);
 
     printf("\n>>> Tecle <ENTER> para continuar...\n");
     getchar();
