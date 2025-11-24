@@ -337,7 +337,11 @@ void recebeDuracaoTempo(char ponteiroDuracao[]) {
         scanf("%[^\n]", duracao);
         getchar();
 
-        validado = True;
+        if (validaHora(duracao)) {
+            validado = True;
+        } else {
+            printf("Duração inválida. Por favor use o formato HH:MM:SS ou apenas HH:MM.\n");
+        }
     } while (validado == False);
 
     strcpy(ponteiroDuracao, duracao);
