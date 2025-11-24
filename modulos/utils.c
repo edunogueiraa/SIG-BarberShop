@@ -314,7 +314,7 @@ void recebeValor(char ponteiroValor[]) {
     int validado = False;
 
     do {
-        printf("Digite o Valor: ");
+        printf("Digite o valor: ");
         scanf("%[^\n]", valor);
         getchar();
 
@@ -333,7 +333,7 @@ void recebeDuracaoTempo(char ponteiroDuracao[]) {
     int validado = False;
 
     do {
-        printf("Digite a Duração: ");
+        printf("Digite a duração: ");
         scanf("%[^\n]", duracao);
         getchar();
 
