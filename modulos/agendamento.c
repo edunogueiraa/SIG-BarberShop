@@ -383,11 +383,11 @@ void exibirDadosAgendamento(Agendamento* agendamento){
     char* cliente = nomeCliente(agendamento->cpfCliente);
     char* servico = nomeServico(agendamento->idServico);
     printf("%-10s | %-25s | %-15s | %-12s | %-8s\n",
-    agendamento->id,
-    cliente,
-    servico, 
-    agendamento->data,
-    agendamento->hora);
+        agendamento->id,
+        cliente,
+        servico, 
+        agendamento->data,
+        agendamento->hora);
     free(cliente);
     free(servico);
 }
