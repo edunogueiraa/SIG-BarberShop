@@ -332,7 +332,7 @@ void listarClientes(Cliente* lista) {
         exibirDadosCliente(cliente);
         cliente = cliente->proximo;
     }
-    // free(cliente);
+    free(cliente);
 
     printf("\n>>> Tecle <ENTER> para continuar...\n");
     getchar();
@@ -350,7 +350,7 @@ void listarClientesNome(Cliente* lista, char* filtro) {
         }
         cliente = cliente->proximo;
     }
-    // free(cliente);
+    free(cliente);
 
     printf("\n>>> Tecle <ENTER> para continuar...\n");
     getchar();
