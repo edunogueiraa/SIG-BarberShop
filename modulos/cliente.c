@@ -462,7 +462,7 @@ void excluirBancoCliente(void) {
 void limpaLista(Cliente** lista) {
     Cliente* cliente;
 
-    while (*lista != NULL) {   //não funcionando
+    while (*lista != NULL) {
         cliente = *lista;
         *lista = (*lista)->proximo;
         free(cliente);
