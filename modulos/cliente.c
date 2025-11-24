@@ -400,6 +400,8 @@ Cliente* gerarLista(void) {
     Cliente temporario;
     
     FILE *arquivo = fopen("./dados/clientes.bin", "rb");
+    verificaArquivo(arquivo);
+
     while (fread(&temporario, sizeof(Cliente), 1, arquivo)) {
         if (temporario.status == True) {
             Cliente* cliente = (Cliente*) malloc(sizeof(Cliente));
