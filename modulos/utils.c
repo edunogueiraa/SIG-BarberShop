@@ -114,7 +114,7 @@ int validaData(char *data) {
         return False;
     }
     
-    if (tamanho > 11) {
+    if (tamanho != 10) {
         return False;
     }
 
@@ -140,7 +140,7 @@ int validaCelular(char *celular) {
         return False;
     }
     
-    if (tamanho > 12) {
+    if (tamanho != 11) {
         return False;
     }
 
@@ -217,7 +217,7 @@ void recebeCpf(char ponteiroCpf[]) {
     int validado = False;
 
     do {
-        printf("CPF: ");
+        printf("Digite o CPF: ");
         scanf("%[^\n]", cpf);
         getchar();
         
@@ -232,7 +232,7 @@ void recebeCpf(char ponteiroCpf[]) {
 }
 void recebeId(char ponteiroId[], char tipo[]) {
     char id[50];
-    printf("Digite o ID de %s: ",tipo);
+    printf("Digite o ID do %s: ",tipo);
     
     scanf("%[^\n]", id);
     getchar();
@@ -244,7 +244,7 @@ void recebeEmail(char ponteiroEmail[]) {
     int validado = False;
 
     do {
-        printf("E-mail: ");
+        printf("Digite o E-mail: ");
         scanf("%[^\n]", email);
         getchar();
 
@@ -279,7 +279,7 @@ void recebeCelular(char ponteiroCelular[]) {
     int validado = False;
 
     do {
-        printf("Celular: ");
+        printf("Digite o Celular: ");
         scanf("%[^\n]", celular);
         getchar();
 
@@ -314,7 +314,7 @@ void recebeValor(char ponteiroValor[]) {
     int validado = False;
 
     do {
-        printf("Valor: ");
+        printf("Digite o valor: ");
         scanf("%[^\n]", valor);
         getchar();
 
@@ -333,11 +333,15 @@ void recebeDuracaoTempo(char ponteiroDuracao[]) {
     int validado = False;
 
     do {
-        printf("Duração: ");
+        printf("Digite a duração: ");
         scanf("%[^\n]", duracao);
         getchar();
 
-        validado = True;
+        if (validaHora(duracao)) {
+            validado = True;
+        } else {
+            printf("Duração inválida. Por favor use o formato HH:MM:SS ou apenas HH:MM.\n");
+        }
     } while (validado == False);
 
     strcpy(ponteiroDuracao, duracao);
@@ -347,7 +351,7 @@ void recebeHora(char ponteiroHora[]) {
     int validado = False;
 
     do {
-        printf("Horário: ");
+        printf("Digite o Horário: ");
         scanf("%s", hora);
         getchar();
 
@@ -360,18 +364,18 @@ void recebeHora(char ponteiroHora[]) {
 
     strcpy(ponteiroHora, hora);
 }
-void recebeOpcao(char ponteiroOpcao[]) {
-    char opcao[2];
+char recebeOpcao(void) {
+    char opcao;
     printf("Digite a opção desejada: ");
-    scanf("%c", opcao);
+    scanf("%c", &opcao);
     getchar();
 
-    strcpy(ponteiroOpcao, opcao);
+    return opcao;
 }
 
 // Funções de exibicao
-void formataCpf(char* destino) {
-    char formatado[15];
+char* formataCpf(char* destino) {
+    char* formatado = malloc(15);
     
     int posicao = 0;
     for (int i = 0; destino[i] != '\0'; ++i) {
@@ -384,14 +388,10 @@ void formataCpf(char* destino) {
     }
 
     formatado[posicao] = '\0';
-    strcpy(destino, formatado);
+    return formatado;
 }
-char* exibeCpf(char *cpf) {
-    formataCpf(cpf);
-    return cpf;
-}
-void formataCelular(char* destino) {
-    char formatado[15];
+char* formataCelular(char* destino) {
+    char* formatado = malloc(16);
     
     int posicao = 0;
     for (int i = 0; destino[i] != '\0'; ++i) {
@@ -406,11 +406,7 @@ void formataCelular(char* destino) {
     }
 
     formatado[posicao] = '\0';
-    strcpy(destino, formatado);
-}
-char* exibeCelular(char *celular) {
-    formataCelular(celular);
-    return celular;
+    return formatado;
 }
 
 // Funções de verificação de arquivos

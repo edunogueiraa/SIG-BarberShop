@@ -48,7 +48,7 @@ void cadastroServico(void) {
     int idInteiro = atribuirId("./dados/servicos.bin", sizeof(Servico));
     sprintf(servico->id, "%d", idInteiro); // Converte int para string
 
-    recebeNome(servico->nome,"servico");
+    recebeNome(servico->nome,"serviço");
     recebeValor(servico->valor);
     recebeDuracaoTempo(servico->duracao);
 
@@ -58,11 +58,11 @@ void cadastroServico(void) {
 
 void exibirDadosServicos(Servico * servico){
     float valorNumerico = atof(servico->valor);
-        printf("%-20s | %-10s | %-15s | R$ %.2f\n",
-        servico->nome,
-        servico->id,
-        servico->duracao,
-        valorNumerico);
+        printf("%-19s | %-10s | %-13s | R$ %.2f\n",
+            servico->nome,
+            servico->id,
+            servico->duracao,
+            valorNumerico);
 }
 
 void listaServico(void){
@@ -115,7 +115,7 @@ void exibeServico(void) {
     printf("|_________________________________________________________________________________________________|\n");
 
     char idServico[50];
-    recebeId(idServico,"servico");
+    recebeId(idServico,"serviço");
     exibirServico(idServico);
     
 }
@@ -129,7 +129,7 @@ void atualizaServico(void) {
     printf("|_________________________________________________________________________________________________|\n");
 
     char idServico[50];
-    recebeId(idServico,"servico");
+    recebeId(idServico,"serviço");
 
     int opcao;
     do {
@@ -137,10 +137,10 @@ void atualizaServico(void) {
         exibirServico(idServico);
 
         printf("\nQual dado você deseja alterar?\n");
-        printf("\n1 Nome Servico");
-        printf("\n2 Valor");
-        printf("\n3 Duracao Servico");
-        printf("\n0 Finalizar operação\n\n");
+        printf("\n1 - Nome Serviço");
+        printf("\n2 - Valor");
+        printf("\n3 - Duracao Serviço");
+        printf("\n0 - Finalizar operação\n\n");
         scanf("%d", &opcao);
         getchar();
         if (opcao != 0) {
@@ -158,7 +158,7 @@ void deletaServico(void) {
     printf("|_________________________________________________________________________________________________|\n");
 
     char idServico[50];
-    recebeId(idServico,"servico");
+    recebeId(idServico,"serviço");
     
     exibirServico(idServico);
 
@@ -228,7 +228,7 @@ void opcaoServicos(void) {
     do {
 
         telaServico();
-        recebeOpcao(&opcao);
+        opcao = recebeOpcao();
 
         switch (opcao) {
 
@@ -341,7 +341,7 @@ void exibirServico(char idServico[]) {
                 printf("\n\t\t\t <--- Servico Encontrado ---> \n\n");
                 printf("\t\t\tNome do serviço: %s\n", servico->nome);
                 printf("\t\t\tID do serviço: %s\n", servico->id);
-                printf("\t\t\tValor: R$ %.f2\n", atof(servico->valor));
+                printf("\t\t\tValor: R$ %.2f\n", atof(servico->valor));
                 printf("\t\t\tDuração do serviço: %s\n", servico->duracao);
                 printf("\n>>> Tecle <ENTER> para continuar...\n");
                 getchar();
@@ -369,7 +369,7 @@ void listagemServico(void) {
         printf("|_________________________________________________________________________________________________|\n\n");
         
         char filtro[50];
-        recebeOpcao(&opcao);
+        opcao = recebeOpcao();
         switch (opcao) {
             case '1':
                 listaServico();
@@ -393,6 +393,25 @@ void listagemServico(void) {
     } while (opcao != '0');
 }
 
+char* nomeServico(char* id) {
+    Servico* servico;
+    servico = (Servico*) malloc(sizeof(Servico));
+    
+    char* servicoNome = (char*) malloc(50);
+    FILE * arquivo = fopen("./dados/servicos.bin", "rb");
+    verificaArquivo(arquivo);
+
+    while (fread(servico, sizeof(Servico), 1, arquivo)) {
+        if (strcmp(servico->id, id) == 0 && servico->status == True) {
+            strcpy(servicoNome, servico->nome);
+            free(servico);
+            fclose(arquivo);
+            return servicoNome;
+        }
+    }
+    
+    return NULL;
+}
 
 
 

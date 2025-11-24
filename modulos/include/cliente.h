@@ -19,3 +19,4 @@ void exibeCliente(void);
 void atualizaCliente(void);
 void deletaCliente(void);
 void opcaoCliente(void);
+char* nomeCliente(char* cpf);

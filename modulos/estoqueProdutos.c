@@ -99,7 +99,7 @@ void listaEstoque(void) {
         printf("|_________________________________________________________________________________________________|\n\n");
         
         float filtro[2];
-        recebeOpcao(&opcao);
+        opcao = recebeOpcao();
         switch (opcao) {
             case '1':
                 listarProdutos();
@@ -145,10 +145,10 @@ void atualizaProduto(void) {
         exibirProduto(idProduto);
 
         printf("\nQual dado você deseja alterar?\n");
-        printf("\n1 Nome");
-        printf("\n2 Tipo");
-        printf("\n3 Valor");
-        printf("\n0 Finalizar operação\n\n");
+        printf("\n1 - Nome");
+        printf("\n2 - Tipo");
+        printf("\n3 - Valor");
+        printf("\n0 - Finalizar operação\n\n");
         scanf("%d", &opcao);
         getchar();
         if (opcao != 0) {
@@ -208,7 +208,7 @@ void opcaoEstoque(void) {
 
     do {
         telaEstoque();
-        recebeOpcao(&opcao);
+        opcao = recebeOpcao();
 
         switch (opcao) {
 

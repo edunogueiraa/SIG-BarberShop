@@ -27,3 +27,4 @@ void exibirServico(char idServico[]);
 void cadastrarServico(Servico * servico);
 void atualizarServico(char idServico[], int opcao);
 void deletarServico(char idServico[]);
+char* nomeServico(char* id);
