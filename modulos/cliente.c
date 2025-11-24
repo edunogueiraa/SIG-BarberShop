@@ -283,7 +283,7 @@ void exibirDadosCliente(Cliente* cliente) {
     char* cpf = formataCpf(cliente->cpf);
     char* celular = formataCelular(cliente->celular);
 
-    printf("%-35s | %-20s | %-35s | %-10s | %-12s\n",
+    printf("%-35s | \t%-18s | %-35s | \t%-14s | %-12s\n",
         cliente->nome,
         cpf,
         cliente->email,
@@ -326,8 +326,9 @@ void exibirCliente(char cpfCliente[]) {
 void listarClientes(Cliente* lista) {
     Cliente* cliente = lista;
     
-    printf("\n%-35s | %-20s | %-35s | %-10s | %-12s\n", "Nome", "CPF", "Email", "Data de nascimento", "Celular");
-    printf("-------------------------------------------------------------------------------------------------------------------------------\n");
+    printf("\n\t\t\t\t\t\t <--- Lista de clientes ---> \n\n");
+    printf("%-35s | %-20s | %-35s | %-14s  | %-12s\n", "Nome", "CPF", "Email", "Data de nascimento", "Celular");
+    printf("---------------------------------------------------------------------------------------------------------------------------------------\n");
     while (cliente != NULL) {
         exibirDadosCliente(cliente);
         cliente = cliente->proximo;
@@ -340,9 +341,9 @@ void listarClientes(Cliente* lista) {
 
 void listarClientesNome(Cliente* lista, char* filtro) {
     Cliente* cliente = lista;
-
-    printf("\n%-35s | %-20s | %-35s | %-10s | %-12s\n", "Nome", "CPF", "Email", "Data de nascimento", "Celular");
-    printf("----------------------------------------------------------------------------------------------------------------------\n");
+    printf("\n\t\t\t\t\t <--- Lista de clientes filtrada por nome---> \n\n");
+    printf("\n%-35s | %-20s | %-35s | %-14s  | %-12s\n", "Nome", "CPF", "Email", "Data de nascimento", "Celular");
+    printf("---------------------------------------------------------------------------------------------------------------------------------------\n");
     while (cliente != NULL) {
         char* filtrado = strstr(cliente->nome, filtro);
         if (filtrado != NULL) {
