@@ -101,7 +101,7 @@ void listaClientes(void) {
         printf("|_________________________________________________________________________________________________|\n\n");
         
         char filtro[50];
-        recebeOpcao(&opcao);
+        opcao = recebeOpcao();
         switch (opcao) {
             case '1':
                 listarClientes(lista);
@@ -209,7 +209,7 @@ void opcaoCliente(void) {
 
     do {
         telaCliente();
-        recebeOpcao(&opcao);
+        opcao = recebeOpcao();
         
         switch (opcao) {
             case '1':
@@ -285,9 +285,8 @@ void exibirDadosCliente(Cliente* cliente) {
     free(celular);
 }
 
-void exibirCliente(char cpfCliente[]) {
-    Cliente * cliente;
-    cliente = (Cliente*) malloc(sizeof(Cliente));
+void exibirCliente(char* cpfCliente) {
+    Cliente * cliente = (Cliente*) malloc(sizeof(Cliente));
 
     FILE * arquivo = fopen("./dados/clientes.bin", "rb");
     verificaArquivo(arquivo);
@@ -312,6 +311,7 @@ void exibirCliente(char cpfCliente[]) {
     }
     fclose(arquivo);
     free(cliente);
+    printf("nada");
 }
 
 void listarClientes(Cliente* lista) {
@@ -389,18 +389,16 @@ void atualizarCliente(char cpfCliente[], int opcao) {
 
 Cliente* gerarLista(void) {
     Cliente* lista = NULL;
-    Cliente temporario;
+    Cliente* cliente = (Cliente*) malloc(sizeof(Cliente));
     
     FILE *arquivo = fopen("./dados/clientes.bin", "rb");
     verificaArquivo(arquivo);
 
-    while (fread(&temporario, sizeof(Cliente), 1, arquivo)) {
-        if (temporario.status == True) {
-            Cliente* cliente = (Cliente*) malloc(sizeof(Cliente));
-            *cliente = temporario;
-
+    while (fread(cliente, sizeof(Cliente), 1, arquivo)) {
+        if (cliente->status == True) {
             cliente->proximo = lista;
             lista = cliente;
+            cliente = (Cliente*) malloc(sizeof(Cliente));
         }
     }
     fclose(arquivo);

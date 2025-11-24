@@ -11,7 +11,7 @@ void recebeTipo(char ponteiroTipo[]);
 void recebeValor(char ponteiroValor[]);
 void recebeDuracaoTempo(char ponteiroDuracao[]); 
 void recebeHora(char ponteiroHora[]);
-void recebeOpcao(char ponteiroOpcao[]);
+char recebeOpcao(void);
 char* formataCpf(char *cpf);
 char* formataCelular(char *celular);
 void verificaArquivo(FILE * arquivo);

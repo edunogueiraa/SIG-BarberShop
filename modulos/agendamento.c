@@ -202,7 +202,7 @@ void opcaoAgendamento() {
     do{
 
         telaAgendamento();
-        recebeOpcao(&opcao);
+        opcao = recebeOpcao();
 
         switch (opcao) {
 
@@ -355,7 +355,7 @@ void listagemAgendamento(void) {
         printf("|_________________________________________________________________________________________________|\n\n");
         
         char dataBusca[16];
-        recebeOpcao(&opcao);
+        opcao = recebeOpcao();
         switch (opcao) {
             case '1':
                 listaAgendamento();

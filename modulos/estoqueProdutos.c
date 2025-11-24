@@ -99,7 +99,7 @@ void listaEstoque(void) {
         printf("|_________________________________________________________________________________________________|\n\n");
         
         float filtro[2];
-        recebeOpcao(&opcao);
+        opcao = recebeOpcao();
         switch (opcao) {
             case '1':
                 listarProdutos();
@@ -208,7 +208,7 @@ void opcaoEstoque(void) {
 
     do {
         telaEstoque();
-        recebeOpcao(&opcao);
+        opcao = recebeOpcao();
 
         switch (opcao) {
 

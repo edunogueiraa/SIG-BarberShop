@@ -364,13 +364,13 @@ void recebeHora(char ponteiroHora[]) {
 
     strcpy(ponteiroHora, hora);
 }
-void recebeOpcao(char ponteiroOpcao[]) {
-    char opcao[2];
+char recebeOpcao(void) {
+    char opcao;
     printf("Digite a opção desejada: ");
-    scanf("%c", opcao);
+    scanf("%c", &opcao);
     getchar();
 
-    strcpy(ponteiroOpcao, opcao);
+    return opcao;
 }
 
 // Funções de exibicao

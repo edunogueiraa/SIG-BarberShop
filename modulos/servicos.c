@@ -228,7 +228,7 @@ void opcaoServicos(void) {
     do {
 
         telaServico();
-        recebeOpcao(&opcao);
+        opcao = recebeOpcao();
 
         switch (opcao) {
 
@@ -369,7 +369,7 @@ void listagemServico(void) {
         printf("|_________________________________________________________________________________________________|\n\n");
         
         char filtro[50];
-        recebeOpcao(&opcao);
+        opcao = recebeOpcao();
         switch (opcao) {
             case '1':
                 listaServico();
