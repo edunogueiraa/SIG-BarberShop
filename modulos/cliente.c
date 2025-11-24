@@ -16,6 +16,7 @@ void atualizarCliente(char cpfCliente[], int opcao);
 void deletarCliente(char cpfCliente[]);
 void excluirBancoCliente(void);
 Cliente* gerarLista(void);
+void limpaLista(Cliente** lista);
 
 void telaCliente(void) {
     system("clear||cls");
@@ -123,17 +124,7 @@ void listaClientes(void) {
         }
     } while (opcao != '0');
 
-    Cliente* cliente = lista;
-    // while (lista != NULL) {   //não funcionando
-    //     lista = lista->proximo;
-    //     cliente = lista;
-    //     free(cliente);
-    // }
-    while (cliente != NULL) {   //funcionando
-        Cliente* proximo = cliente->proximo;
-        free(cliente);
-        cliente = proximo;
-    }
+    limpaLista(&lista);
 }
 
 void atualizaCliente(void) {
@@ -466,4 +457,16 @@ void excluirBancoCliente(void) {
     printf("Limpeza do banco concluída com sucesso!\n");
     printf("Clientes mantidos: %d\n", clientesMantidos);
     printf("Clientes removidos: %d\n", clientesRemovidos);
+}
+
+void limpaLista(Cliente** lista) {
+    Cliente* cliente;
+
+    while (*lista != NULL) {   //não funcionando
+        cliente = *lista;
+        *lista = (*lista)->proximo;
+        free(cliente);
+    }
+
+    *lista = NULL;
 }
