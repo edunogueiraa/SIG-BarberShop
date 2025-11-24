@@ -58,11 +58,11 @@ void cadastroServico(void) {
 
 void exibirDadosServicos(Servico * servico){
     float valorNumerico = atof(servico->valor);
-        printf("%-20s | %-10s | %-15s | R$ %.2f\n",
-        servico->nome,
-        servico->id,
-        servico->duracao,
-        valorNumerico);
+        printf("%-19s | %-10s | %-13s | R$ %.2f\n",
+            servico->nome,
+            servico->id,
+            servico->duracao,
+            valorNumerico);
 }
 
 void listaServico(void){
