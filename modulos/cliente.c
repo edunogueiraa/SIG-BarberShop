@@ -260,6 +260,15 @@ char* nomeCliente(char* cpf) {
 
     return NULL;
 }
+int comparaNomes(char* primeiro, char* segundo) {
+    char* nome1 = paraMaiusculo(primeiro);
+    char* nome2 = paraMaiusculo(segundo);
+    int resultado = strcmp(nome1, nome2);
+
+    free(nome1);
+    free(nome2);
+    return resultado;
+}
 void cadastrarCliente(Cliente * cliente) {
     criarDiretorio();
     FILE * arquivo = fopen("./dados/clientes.bin", "ab");
@@ -411,14 +420,14 @@ Cliente* gerarListaAlfabetica(void) {
             if (lista == NULL) {
                 lista = cliente;
                 cliente->proximo = NULL;
-            } else if (strcmp(cliente->nome, lista->nome) < 0) {
+            } else if (comparaNomes(cliente->nome, lista->nome) < 0) {
                 cliente->proximo = lista;
                 lista = cliente;
             } else {
                 Cliente* anterior = lista;
                 Cliente* atual = lista->proximo;
 
-                while ((atual != NULL) && strcmp(cliente->nome, cliente->nome) < 0) {
+                while ((atual != NULL) && comparaNomes(atual->nome, cliente->nome) < 0) {
                     anterior = atual;
                     atual = atual->proximo;
                 }

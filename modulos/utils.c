@@ -374,6 +374,13 @@ char recebeOpcao(void) {
 }
 
 // Funções de formatação
+char* paraMaiusculo(char* palavra) {
+    char* maiuscula = malloc(sizeof(palavra));
+    for (int i = 0; palavra[i] != '\0'; i++) {
+        maiuscula[i] = toupper(palavra[i]);
+    }
+    return maiuscula;
+}
 char* formataCpf(char* destino) {
     char* formatado = malloc(15);
     

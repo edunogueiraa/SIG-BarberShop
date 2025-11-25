@@ -15,6 +15,7 @@ void recebeHora(char ponteiroHora[]);
 char recebeOpcao(void);
 
 // Funções de formatação
+char* paraMaiusculo(char* palavra);
 char* formataCpf(char *cpf);
 char* formataCelular(char *celular);
 
