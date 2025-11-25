@@ -311,7 +311,6 @@ void exibirCliente(char* cpfCliente) {
     }
     fclose(arquivo);
     free(cliente);
-    printf("nada");
 }
 
 void listarClientes(Cliente* lista) {
