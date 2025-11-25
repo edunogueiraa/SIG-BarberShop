@@ -45,7 +45,6 @@ void telaCliente(void) {
     printf("|_________________________________________________________________________________________________|\n\n");
 
 }
-
 void cadastroCliente(void) {
     system("clear||cls");
     printf("\n");
@@ -66,7 +65,6 @@ void cadastroCliente(void) {
     cadastrarCliente(cliente);
     free(cliente);
 }
-
 void exibeCliente(void) {
     system("clear||cls");
     printf("\n");
@@ -83,7 +81,6 @@ void exibeCliente(void) {
     printf("\n>>> Tecle <ENTER> para continuar...\n");
     getchar();
 }
-
 void listaClientes(void) {
     char opcao = '0';
     Cliente* lista = gerarLista();
@@ -126,7 +123,6 @@ void listaClientes(void) {
 
     limpaLista(&lista);
 }
-
 void atualizaCliente(void) {
     system("clear||cls");
     printf("\n");
@@ -157,7 +153,6 @@ void atualizaCliente(void) {
     } while (opcao != 0);
     
 }
-
 void deletaCliente(void) {
     system("clear||cls");
     printf("\n");
@@ -189,7 +184,6 @@ void deletaCliente(void) {
         getchar();
     }
 }
-
 void limparBancoCliente(void) {
     system("clear||cls");
     printf("\n");
@@ -203,7 +197,6 @@ void limparBancoCliente(void) {
     printf("\n>>> Tecle <ENTER> para continuar.\n");
     getchar();
 }
-
 void opcaoCliente(void) {
     char opcao = '9';
 
@@ -258,7 +251,6 @@ char* nomeCliente(char* cpf) {
 
     return NULL;
 }
-
 void cadastrarCliente(Cliente * cliente) {
     criarDiretorio();
     FILE * arquivo = fopen("./dados/clientes.bin", "ab");
@@ -269,7 +261,6 @@ void cadastrarCliente(Cliente * cliente) {
     
     fclose(arquivo);
 }
-
 void exibirDadosCliente(Cliente* cliente) {
     char* cpf = formataCpf(cliente->cpf);
     char* celular = formataCelular(cliente->celular);
@@ -284,7 +275,6 @@ void exibirDadosCliente(Cliente* cliente) {
     free(cpf);
     free(celular);
 }
-
 void exibirCliente(char* cpfCliente) {
     Cliente * cliente = (Cliente*) malloc(sizeof(Cliente));
 
@@ -312,7 +302,6 @@ void exibirCliente(char* cpfCliente) {
     fclose(arquivo);
     free(cliente);
 }
-
 void listarClientes(Cliente* lista) {
     Cliente* cliente = lista;
     
@@ -328,7 +317,6 @@ void listarClientes(Cliente* lista) {
     printf("\n>>> Tecle <ENTER> para continuar...\n");
     getchar();
 }
-
 void listarClientesNome(Cliente* lista, char* filtro) {
     Cliente* cliente = lista;
     printf("\n\t\t\t\t\t <--- Lista de clientes filtrada por nome---> \n\n");
@@ -346,7 +334,6 @@ void listarClientesNome(Cliente* lista, char* filtro) {
     printf("\n>>> Tecle <ENTER> para continuar...\n");
     getchar();
 }
-
 void atualizarCliente(char cpfCliente[], int opcao) {
     char dado[50];
     if (opcao == 1) {
@@ -385,7 +372,6 @@ void atualizarCliente(char cpfCliente[], int opcao) {
     fclose(arquivo);
     free(cliente);
 }
-
 Cliente* gerarLista(void) {
     Cliente* lista = NULL;
     Cliente* cliente = (Cliente*) malloc(sizeof(Cliente));
@@ -404,7 +390,6 @@ Cliente* gerarLista(void) {
 
     return lista;
 }
-
 void deletarCliente(char cpfCliente[]) {
     Cliente * cliente;
     cliente = (Cliente*) malloc(sizeof(Cliente));
@@ -424,7 +409,6 @@ void deletarCliente(char cpfCliente[]) {
     free(cliente);
     fclose(arquivo);
 }
-
 void excluirBancoCliente(void) {
     Cliente * cliente;
     cliente = (Cliente *) malloc(sizeof(Cliente));
@@ -455,7 +439,6 @@ void excluirBancoCliente(void) {
     printf("Clientes mantidos: %d\n", clientesMantidos);
     printf("Clientes removidos: %d\n", clientesRemovidos);
 }
-
 void limpaLista(Cliente** lista) {
     Cliente* cliente;
 
