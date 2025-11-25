@@ -16,6 +16,7 @@ void atualizarCliente(char cpfCliente[], int opcao);
 void deletarCliente(char cpfCliente[]);
 void excluirBancoCliente(void);
 Cliente* gerarLista(void);
+Cliente* gerarListaAlfabetica(void);
 void limpaLista(Cliente** lista);
 
 void telaCliente(void) {
@@ -83,7 +84,7 @@ void exibeCliente(void) {
 }
 void listaClientes(void) {
     char opcao = '0';
-    Cliente* lista = gerarLista();
+    Cliente* lista;
     do {
         system("clear||cls");
         printf("\n");
@@ -92,8 +93,9 @@ void listaClientes(void) {
         printf("|                                     ESCOLHA O TIPO DE LISTAGEM                                  |\n");
         printf("|_________________________________________________________________________________________________|\n");
         printf("|                                                                                                 |\n");
-        printf("|                                   1 Todos os clientes                                           |\n");
-        printf("|                                   2 Filtrar nome                                                |\n");
+        printf("|                                   1 Todos os clientes (Ordem alfabética)                        |\n");
+        printf("|                                   2 Todos os clientes (Ordem de recentes)                       |\n");
+        printf("|                                   3 Filtrar nome                                                |\n");
         printf("|                                   0 Sair                                                        |\n");
         printf("|_________________________________________________________________________________________________|\n\n");
         
@@ -101,10 +103,17 @@ void listaClientes(void) {
         opcao = recebeOpcao();
         switch (opcao) {
             case '1':
+                lista = gerarListaAlfabetica();
                 listarClientes(lista);
                 break;
 
             case '2':
+                lista = gerarLista();
+                listarClientes(lista);
+                break;
+
+            case '3':
+                lista = gerarLista();
                 printf("Digite o nome pelo qual buscar: ");
                 scanf("%[^\n]", filtro);
                 getchar();
@@ -389,6 +398,39 @@ Cliente* gerarLista(void) {
     fclose(arquivo);
 
     return lista;
+}
+Cliente* gerarListaAlfabetica(void) {
+    Cliente* lista = NULL;
+    Cliente* cliente = (Cliente*) malloc(sizeof(Cliente));
+    
+    FILE *arquivo = fopen("./dados/clientes.bin", "rb");
+    verificaArquivo(arquivo);
+
+    while (fread(cliente, sizeof(Cliente), 1, arquivo)) {
+        if (cliente->status == True) {
+            if (lista == NULL) {
+                lista = cliente;
+                cliente->proximo = NULL;
+            } else if (strcmp(cliente->nome, lista->nome) < 0) {
+                cliente->proximo = lista;
+                lista = cliente;
+            } else {
+                Cliente* anterior = lista;
+                Cliente* atual = lista->proximo;
+
+                while ((atual != NULL) && strcmp(cliente->nome, cliente->nome) < 0) {
+                    anterior = atual;
+                    atual = atual->proximo;
+                }
+                anterior->proximo = cliente;
+                cliente->proximo = atual;
+            }
+            cliente = (Cliente *)malloc(sizeof(Cliente));
+        }
+    }
+    fclose(arquivo);
+
+    return lista;  
 }
 void deletarCliente(char cpfCliente[]) {
     Cliente * cliente;
