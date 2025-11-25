@@ -373,7 +373,7 @@ char recebeOpcao(void) {
     return opcao;
 }
 
-// Funções de exibicao
+// Funções de formatação
 char* formataCpf(char* destino) {
     char* formatado = malloc(15);
     

@@ -1,6 +1,7 @@
 #define True 1
 #define False 0
 
+// Funções de validação
 void recebeNome(char ponteiroNome[], char tipo[]);
 void recebeCpf(char ponteiroCpf[]);
 void recebeId(char ponteiroId[], char tipo[]);
@@ -12,8 +13,12 @@ void recebeValor(char ponteiroValor[]);
 void recebeDuracaoTempo(char ponteiroDuracao[]); 
 void recebeHora(char ponteiroHora[]);
 char recebeOpcao(void);
+
+// Funções de formatação
 char* formataCpf(char *cpf);
 char* formataCelular(char *celular);
+
+// Funções de verificação de arquivos
 void verificaArquivo(FILE * arquivo);
 void verificaArquivoTemporario(FILE * arquivoTemp);
 void trocaArquivos(char antigo[], char novo[]);
