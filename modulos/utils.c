@@ -373,7 +373,7 @@ char recebeOpcao(void) {
     return opcao;
 }
 
-// Funções de formatação
+// Funções de tratamento
 char* paraMaiusculo(char* palavra) {
     char* maiuscula = (char*) malloc(sizeof(palavra));
     for (int i = 0; palavra[i] != '\0'; i++) {
@@ -396,6 +396,16 @@ char* formataCpf(char* destino) {
 
     formatado[posicao] = '\0';
     return formatado;
+}
+// Funções de comparação
+int comparaNomes(char* primeiro, char* segundo) {
+    char* nome1 = paraMaiusculo(primeiro);
+    char* nome2 = paraMaiusculo(segundo);
+    int resultado = strcmp(nome1, nome2);
+    
+    free(nome1);
+    free(nome2);
+    return resultado;
 }
 char* formataCelular(char* destino) {
     char* formatado = malloc(16);

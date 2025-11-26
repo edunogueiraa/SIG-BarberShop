@@ -260,15 +260,6 @@ char* nomeCliente(char* cpf) {
 
     return NULL;
 }
-int comparaNomes(char* primeiro, char* segundo) {
-    char* nome1 = paraMaiusculo(primeiro);
-    char* nome2 = paraMaiusculo(segundo);
-    int resultado = strcmp(nome1, nome2);
-
-    free(nome1);
-    free(nome2);
-    return resultado;
-}
 void cadastrarCliente(Cliente * cliente) {
     criarDiretorio();
     FILE * arquivo = fopen("./dados/clientes.bin", "ab");
