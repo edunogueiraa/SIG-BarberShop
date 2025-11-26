@@ -12,11 +12,13 @@ void recebeTipo(char ponteiroTipo[]);
 void recebeValor(char ponteiroValor[]);
 void recebeDuracaoTempo(char ponteiroDuracao[]); 
 void recebeHora(char ponteiroHora[]);
-// Funções de comparação
-int comparaNomes(char* primeiro, char* segundo);
 char recebeOpcao(void);
 
-// Funções de formatação
+// Funções de comparação
+int comparaNomes(char* primeiro, char* segundo);
+int comparaDatas(char* primeira, char* segunda);
+
+// Funções de tratamento
 char* paraMaiusculo(char* palavra);
 char* formataCpf(char *cpf);
 char* formataCelular(char *celular);
