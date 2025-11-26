@@ -27,6 +27,6 @@ char* formataCelular(char *celular);
 void verificaArquivo(FILE * arquivo);
 void verificaArquivoTemporario(FILE * arquivoTemp);
 void trocaArquivos(char antigo[], char novo[]);
-void criarDiretorio(void);
+void criaDiretorio(void);
 int verificaItensArquivo(FILE *arquivo, int tamanho);
 int atribuirId(const char *nomeArquivo, int tamanhoRegistro);

@@ -237,7 +237,7 @@ void opcaoAgendamento() {
 
 
 void cadastrarAgendamento(Agendamento * agendamento) {
-    criarDiretorio();
+    criaDiretorio();
     FILE * arquivo = fopen("./dados/agendamentos.bin", "ab");
     verificaArquivo(arquivo);
     

@@ -262,7 +262,7 @@ void opcaoServicos(void) {
 }
 
 void cadastrarServico(Servico * servico) {
-    criarDiretorio();
+    criaDiretorio();
     FILE * arquivo = fopen("./dados/servicos.bin", "ab");
     verificaArquivo(arquivo);
     

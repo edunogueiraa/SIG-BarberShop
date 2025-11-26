@@ -535,7 +535,7 @@ int verificaItensArquivo(FILE *arquivo, int tamanho) {
     int quantidade = bytes / tamanho;
     return quantidade;
 }
-void criarDiretorio(void) {
+void criaDiretorio(void) {
     // Função adaptada de:
     // https://linux.die.net/man/2/mkdir e https://stackoverflow.com/questions/7430248/creating-a-new-directory-in-c
     // Criando diretório para armazenamento de dados

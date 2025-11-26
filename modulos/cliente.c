@@ -268,7 +268,7 @@ char* nomeCliente(char* cpf) {
     return NULL;
 }
 void cadastrarCliente(Cliente * cliente) {
-    criarDiretorio();
+    criaDiretorio();
     FILE * arquivo = fopen("./dados/clientes.bin", "ab");
     verificaArquivo(arquivo);
     

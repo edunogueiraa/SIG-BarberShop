@@ -240,7 +240,7 @@ void opcaoEstoque(void) {
 }
 
 void cadastrarProduto(Estoque * estoque) {
-    criarDiretorio();
+    criaDiretorio();
     FILE * arquivo = fopen("./dados/estoque.bin", "ab");
     verificaArquivo(arquivo);
 
