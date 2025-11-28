@@ -151,9 +151,16 @@ void atualizaCliente(void) {
     recebeCpf(cpfCliente);
 
     int opcao;
+    if(!exibirCliente(cpfCliente)){
+        printf("\n>>> Nenhuma ação será realizada.\n");
+        printf("\n>>> Tecle <ENTER> para continuar...\n");
+        getchar();
+        return;
+    }
     do {
         system("clear||cls");
         exibirCliente(cpfCliente);
+
 
         printf("\nQual dado você deseja alterar?\n");
         printf("\n1 - Nome");
