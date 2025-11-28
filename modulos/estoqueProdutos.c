@@ -139,6 +139,13 @@ void atualizaProduto(void) {
     scanf("%[^\n]", idProduto);
     getchar();
 
+    if(!exibirProduto(idProduto)){
+        printf("\n>>> Nenhuma ação será realizada.\n");
+        printf("\n>>> Tecle <ENTER> para continuar...\n");
+        getchar();
+        return;
+    }
+
     int opcao = 0;
     do {
         system("clear||cls");
