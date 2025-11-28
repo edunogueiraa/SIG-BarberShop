@@ -89,7 +89,10 @@ void exibeAgendamento(void) {
 
     char idAgendamento[50];
     recebeId(idAgendamento,"agendamento");
+
     exibirAgendamento(idAgendamento);
+    printf("\n>>> Tecle <ENTER> para continuar...\n");
+    getchar();
 
 }
 
@@ -318,25 +321,29 @@ void exibirAgendamento(char idAgendamento[]) {
 
     verificaArquivo(arquivo);
 
-        while (fread(agendamento,sizeof(Agendamento),1,arquivo)){
-            if(strcmp(idAgendamento,agendamento->id) == 0 && agendamento->status == True){
-                char* cliente = nomeCliente(agendamento->cpfCliente);
-                char* servico = nomeServico(agendamento->idServico);
-                printf("\n\t\t\t <--- Agendamento Encontrado ---> \n\n");
-                printf("\t\t\tID: %s\n",agendamento->id);
-                printf("\t\t\tNome do cliente: %s\n", cliente);
-                printf("\t\t\tServiço: %s\n",servico);
-                printf("\t\t\tData: %s\n",agendamento->data);
-                printf("\t\t\tHora: %s\n",agendamento->hora);
-                printf("\n>>> Tecle <ENTER> para continuar...\n");
-                getchar();
-                free(cliente);
-                fclose(arquivo);
-                return;
-            }
+    int encontrado = False;
+    while (fread(agendamento,sizeof(Agendamento),1,arquivo) && encontrado == False){
+        if(strcmp(idAgendamento,agendamento->id) == 0 && agendamento->status == True){
+            char* cliente = nomeCliente(agendamento->cpfCliente);
+            char* servico = nomeServico(agendamento->idServico);
+            printf("\n\t\t\t <--- Agendamento Encontrado ---> \n\n");
+            printf("\t\t\tID: %s\n",agendamento->id);
+            printf("\t\t\tNome do cliente: %s\n", cliente);
+            printf("\t\t\tServiço: %s\n",servico);
+            printf("\t\t\tData: %s\n",agendamento->data);
+            printf("\t\t\tHora: %s\n",agendamento->hora);
+            free(cliente);
+            fclose(arquivo);
+            return;
         }
+    }
 
+    fclose(arquivo);
     free(agendamento);
+
+    if (encontrado == False) {
+        printf("\n\t\t\t <--- Agendamento não encontrado ---> \n\n");
+    }
 }
 
 void listagemAgendamento(void) {
