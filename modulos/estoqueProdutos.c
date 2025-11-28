@@ -271,6 +271,10 @@ void exibirProduto(char idProduto[]) {
     }
     fclose(arquivo);
     free(estoque);
+
+    if(encontrado == False) {
+        printf("\n\t\t\t <--- Produto não encontrado ---> \n\n");
+    }
 }
 
 void exibirDadosProduto(Estoque* estoque) {
