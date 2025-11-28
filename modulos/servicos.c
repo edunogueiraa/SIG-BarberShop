@@ -134,6 +134,13 @@ void atualizaServico(void) {
     char idServico[50];
     recebeId(idServico,"serviço");
 
+    if(!exibirServico(idServico)){
+        printf("\n>>> Nenhuma ação será realizada.\n");
+        printf("\n>>> Tecle <ENTER> para continuar...\n");
+        getchar();
+        return;
+    }
+
     int opcao;
     do {
         system("clear||cls");
