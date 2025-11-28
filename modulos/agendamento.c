@@ -138,7 +138,12 @@ void deletaAgendamento(void) {
     char idAgendamento[50];
     recebeId(idAgendamento,"agendamento");
     
-    exibirAgendamento(idAgendamento);
+    if(!exibirAgendamento(idAgendamento)){
+        printf("\n>>> Nenhuma ação será realizada.\n");
+        printf("\n>>> Tecle <ENTER> para continuar...\n");
+        getchar();
+        return;
+    }
 
     int excluir;
     printf("\nTem certeza que deseja excluir esse agendamento? (0 - excluir / 1 - cancelar operação): ");
@@ -313,7 +318,7 @@ void deletarAgendamento(char idAgendamento[]) {
     fclose(arquivo);
 }
 
-void exibirAgendamento(char idAgendamento[]) {
+int exibirAgendamento(char idAgendamento[]) {
     Agendamento *agendamento;
     agendamento = (Agendamento*) malloc(sizeof(Agendamento));
 
@@ -333,8 +338,7 @@ void exibirAgendamento(char idAgendamento[]) {
             printf("\t\t\tData: %s\n",agendamento->data);
             printf("\t\t\tHora: %s\n",agendamento->hora);
             free(cliente);
-            fclose(arquivo);
-            return;
+            encontrado = True;
         }
     }
 
@@ -343,7 +347,9 @@ void exibirAgendamento(char idAgendamento[]) {
 
     if (encontrado == False) {
         printf("\n\t\t\t <--- Agendamento não encontrado ---> \n\n");
+        return 0;
     }
+    return 1;
 }
 
 void listagemAgendamento(void) {

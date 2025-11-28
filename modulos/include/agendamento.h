@@ -25,7 +25,7 @@ void listagemAgendamento(void);
 void listarAgendamentosData(char* dataBusca);
 void exibirDadosAgendamento(Agendamento * agendamento);
 void listarAgendamentosNome(char* filtro);
-void exibirAgendamento(char idAgendamento[]);
+int exibirAgendamento(char idAgendamento[]);
 void cadastrarAgendamento(Agendamento * agendamento);
 void atualizarAgendamento(char idAgendamento[], int opcao);
 void deletarAgendamento(char idAgendamento[]);
