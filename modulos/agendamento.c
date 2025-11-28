@@ -106,6 +106,13 @@ void atualizaAgendamento(void) {
 
     char idAgendamento[50];
     recebeId(idAgendamento,"agendamento");
+    
+    if(!exibirAgendamento(idAgendamento)){
+        printf("\n>>> Nenhuma ação será realizada.\n");
+        printf("\n>>> Tecle <ENTER> para continuar...\n");
+        getchar();
+        return;
+    }
 
     int opcao;
     do {
