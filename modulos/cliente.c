@@ -9,7 +9,7 @@
 // Assinatura de funções
 void cadastrarCliente(Cliente * cliente);
 void exibirDadosCliente(Cliente* cliente);
-void exibirCliente(char cpfCliente[]);
+int exibirCliente(char cpfCliente[]);
 void listarClientes(Cliente* lista);
 void listarClientesNome(Cliente* lista, char* filtro);
 void atualizarCliente(char cpfCliente[], int opcao);
@@ -180,9 +180,12 @@ void deletaCliente(void) {
     char cpfCliente[15];
     recebeCpf(cpfCliente);
     
-    exibirCliente(cpfCliente);
-    printf("\n>>> Tecle <ENTER> para continuar...\n");
-    getchar();
+    if(!exibirCliente(cpfCliente)){
+        printf("\n>>> Nenhuma ação será realizada.\n");
+        printf("\n>>> Tecle <ENTER> para continuar...\n");
+        getchar();
+        return;
+    }
 
     int excluir;
     printf("\nTem certeza que deseja excluir esse cliente? (0 - excluir / 1 - cancelar operação): ");
@@ -291,7 +294,7 @@ void exibirDadosCliente(Cliente* cliente) {
     free(cpf);
     free(celular);
 }
-void exibirCliente(char* cpfCliente) {
+int exibirCliente(char* cpfCliente) {
     Cliente * cliente = (Cliente*) malloc(sizeof(Cliente));
 
     FILE * arquivo = fopen("./dados/clientes.bin", "rb");
@@ -320,7 +323,9 @@ void exibirCliente(char* cpfCliente) {
 
     if (encontrado == False) {
         printf("\n\t\t\t <--- Cliente não encontrado ---> \n\n");
+        return 0;
     }
+    return 1;
 }
 void listarClientes(Cliente* lista) {
     Cliente* cliente = lista;
