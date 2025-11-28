@@ -163,7 +163,12 @@ void deletaServico(void) {
     char idServico[50];
     recebeId(idServico,"serviço");
     
-    exibirServico(idServico);
+    if(!exibirServico(idServico)){
+        printf("\n>>> Nenhuma ação será realizada.\n");
+        printf("\n>>> Tecle <ENTER> para continuar...\n");
+        getchar();
+        return;
+    }
 
     int excluir;
     printf("\nTem certeza que deseja excluir esse servico? (0 - excluir / 1 - cancelar operação): ");
@@ -332,7 +337,7 @@ void deletarServico(char idServico[]) {
     fclose(arquivo);
 }
 
-void exibirServico(char idServico[]) {
+int exibirServico(char idServico[]) {
     Servico *servico;
     servico = (Servico*) malloc(sizeof(Servico));
     FILE * arquivo = fopen("./dados/servicos.bin", "rb");
@@ -349,7 +354,7 @@ void exibirServico(char idServico[]) {
             printf("\t\t\tDuração do serviço: %s\n", servico->duracao);
             
             fclose(arquivo);
-            return;
+            
         }
     }
     fclose(arquivo);
@@ -357,7 +362,9 @@ void exibirServico(char idServico[]) {
 
     if (encontrado == False) {
         printf("\n\t\t\t <--- Serviço não encontrado ---> \n\n");
+        return 0;
     }
+    return 1;
 }
 
 void listagemServico(void) {

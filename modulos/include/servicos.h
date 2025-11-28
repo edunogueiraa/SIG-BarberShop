@@ -23,7 +23,7 @@ void listagemServico(void);
 
 void exibirDadosServicos(Servico * servico);
 void listarServicosNome(char* filtro);
-void exibirServico(char idServico[]);
+int exibirServico(char idServico[]);
 void cadastrarServico(Servico * servico);
 void atualizarServico(char idServico[], int opcao);
 void deletarServico(char idServico[]);
