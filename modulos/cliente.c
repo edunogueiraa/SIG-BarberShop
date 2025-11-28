@@ -317,6 +317,10 @@ void exibirCliente(char* cpfCliente) {
     }
     fclose(arquivo);
     free(cliente);
+
+    if (encontrado == False) {
+        printf("\n\t\t\t <--- Cliente não encontrado ---> \n\n");
+    }
 }
 void listarClientes(Cliente* lista) {
     Cliente* cliente = lista;
