@@ -447,6 +447,15 @@ char* formataCelular(char* destino) {
 }
 
 // Funções de comparação
+int compararPreco(const char* v1, const char* v2) {
+    float n1 = atof(v1);
+    float n2 = atof(v2);
+
+    if (n1 < n2) return -1;
+    if (n1 > n2) return 1;
+    return 0;
+}
+
 int comparaNomes(char* primeiro, char* segundo) {
     char* nome1 = paraMaiusculo(primeiro);
     char* nome2 = paraMaiusculo(segundo);

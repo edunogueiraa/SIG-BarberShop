@@ -15,6 +15,7 @@ void recebeHora(char ponteiroHora[]);
 char recebeOpcao(void);
 
 // Funções de comparação
+int compararPreco(const char* v1, const char* v2);
 int comparaNomes(char* primeiro, char* segundo);
 int comparaDatas(char* primeira, char* segunda);
 

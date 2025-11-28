@@ -9,11 +9,14 @@
 // Assinatura de funções
 void cadastrarProduto(Estoque * estoque);
 int exibirProduto(char idProduto[]);
-void listarProdutos(void);
-void listarProdutosPreco(float minimo, float maximo);
+void listarProdutos(Estoque* lista);
+void listarProdutosPreco(Estoque* lista, float minimo, float maximo);
 void atualizarProduto(char idProduto[], int opcao);
 void deletarProduto(char idProduto[]);
 void excluirBancoEstoque(void);
+Estoque* gerarListaEstoque(void);
+Estoque* gerarListaOrdemPreco(void);
+void liberarListaEstoque(Estoque** lista);
 
 void telaEstoque(void) {
     system("clear||cls");
@@ -85,6 +88,7 @@ void exibeProduto(void) {
 
 void listaEstoque(void) {
     char opcao = '0';
+    Estoque* lista = NULL;
     do {
         system("clear||cls");
         printf("\n");
@@ -93,8 +97,9 @@ void listaEstoque(void) {
         printf("|                                     ESCOLHA O TIPO DE LISTAGEM                                  |\n");
         printf("|_________________________________________________________________________________________________|\n");
         printf("|                                                                                                 |\n");
-        printf("|                                   1 Todos os produtos                                           |\n");
-        printf("|                                   2 Filtrar preço                                               |\n");
+        printf("|                                   1 Listar por preço (crescente)                                |\n");
+        printf("|                                   2 Todos os produtos                                           |\n");
+        printf("|                                   3 Filtrar preço                                               |\n");
         printf("|                                   0 Sair                                                        |\n");
         printf("|_________________________________________________________________________________________________|\n\n");
         
@@ -102,17 +107,24 @@ void listaEstoque(void) {
         opcao = recebeOpcao();
         switch (opcao) {
             case '1':
-                listarProdutos();
+                lista = gerarListaOrdemPreco();
+                listarProdutos(lista);
                 break;
 
             case '2':
+            lista = gerarListaEstoque();
+            listarProdutos(lista);
+            break;
+                
+            case '3':
+                lista = gerarListaEstoque();
                 printf("Digite o preço mínimo pelo qual buscar: ");
                 scanf("%f", &filtro[0]);
                 getchar();
                 printf("Digite o preço máximo pelo qual buscar: ");
                 scanf("%f", &filtro[1]);
                 getchar();
-                listarProdutosPreco(filtro[0], filtro[1]);
+                listarProdutosPreco(lista, filtro[0], filtro[1]);
                 break;
 
             case '0':
@@ -124,6 +136,9 @@ void listaEstoque(void) {
                 getchar();
         }
     } while (opcao != '0');
+    if (lista != NULL) {
+        liberarListaEstoque(&lista);
+    }
 }
 
 void atualizaProduto(void) {
@@ -300,27 +315,24 @@ void exibirDadosProduto(Estoque* estoque) {
         valorNumerico);
 }
 
-void listarProdutos(void) {
-    Estoque * estoque;
-    estoque = (Estoque *) malloc(sizeof(Estoque));
-    
-    FILE * arquivo = fopen("./dados/estoque.bin", "rb");
+void listarProdutos(Estoque* lista) {
+    Estoque * estoque = lista;
     
     printf("\n%-20s | %-10s | %-15s | %s\n", "Nome do produto", "ID", "Tipo", "Valor (R$)");
     printf("----------------------------------------------------------------------------\n");
-    while (fread(estoque, sizeof(Estoque), 1, arquivo)) {
+    while (estoque != NULL) {
         if (estoque->status == True) {
             exibirDadosProduto(estoque);
+            estoque = estoque->proximo;
         }
     }
-    fclose(arquivo);
     free(estoque);
 
     printf("\n>>> Tecle <ENTER> para continuar...\n");
     getchar();
 }
 
-void listarProdutosPreco(float minimo, float maximo) {
+void listarProdutosPreco(Estoque* lista, float minimo, float maximo) {
     Estoque * estoque;
     estoque = (Estoque *) malloc(sizeof(Estoque));
     
@@ -430,4 +442,79 @@ void excluirBancoEstoque(void) {
     printf("Limpeza do banco concluída com sucesso!\n");
     printf("Estoques mantidos: %d\n", estoquesMantidos);
     printf("Estoques removidos: %d\n", estoquesRemovidos);
+}
+
+Estoque* gerarListaEstoque(void){
+    Estoque* lista = NULL;
+    Estoque* estoque = (Estoque*) malloc(sizeof(Estoque));
+
+    FILE *arquivo = fopen("./dados/estoque.bin", "rb");
+    verificaArquivo(arquivo);
+
+    while (fread(estoque, sizeof(Estoque), 1, arquivo)) {
+        if (estoque->status == True) {
+            estoque->proximo = lista;
+            lista = estoque;
+            estoque = (Estoque*) malloc(sizeof(Estoque));
+        }
+    }
+
+    fclose(arquivo);
+    return lista;
+}
+
+Estoque* gerarListaOrdemPreco(void) {
+
+    Estoque* lista = NULL;
+    Estoque* estoque = (Estoque*) malloc(sizeof(Estoque));
+
+    FILE *arquivo = fopen("./dados/estoque.bin", "rb");
+    verificaArquivo(arquivo);
+
+    while (fread(estoque, sizeof(Estoque), 1, arquivo)) {
+
+        if (estoque->status == True) {
+            if (lista == NULL) {
+
+                lista = estoque;
+                estoque->proximo = NULL;
+
+            } else if (compararPreco(estoque->valor, lista->valor) < 0) {
+
+                estoque->proximo = lista;
+                lista = estoque;
+
+            } else {
+
+                Estoque* anterior = lista;
+                Estoque* atual = lista->proximo;
+
+                while ((atual != NULL) && compararPreco(atual->valor, estoque->valor) < 0) {
+
+                    anterior = atual;
+                    atual = atual->proximo;
+                }
+
+                anterior->proximo = estoque;
+                estoque->proximo = atual;
+            }
+
+            estoque = (Estoque*) malloc(sizeof(Estoque));
+        }
+    }
+
+    fclose(arquivo);
+
+    return lista;
+}
+void liberarListaEstoque(Estoque** lista) {
+    Estoque* estoque;
+
+    while (*lista != NULL) {
+        estoque = *lista;
+        *lista = (*lista)->proximo;
+        free(estoque);
+    }
+
+    *lista = NULL;
 }
