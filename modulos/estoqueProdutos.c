@@ -8,7 +8,7 @@
 
 // Assinatura de funções
 void cadastrarProduto(Estoque * estoque);
-void exibirProduto(char idProduto[]);
+int exibirProduto(char idProduto[]);
 void listarProdutos(void);
 void listarProdutosPreco(float minimo, float maximo);
 void atualizarProduto(char idProduto[], int opcao);
@@ -170,7 +170,12 @@ void deletaProduto(void) {
     scanf("%s", idProduto);
     getchar();
 
-    exibirProduto(idProduto);
+    if(!exibirProduto(idProduto)){
+        printf("\n>>> Nenhuma ação será realizada.\n");
+        printf("\n>>> Tecle <ENTER> para continuar...\n");
+        getchar();
+        return;
+    }
 
     int excluir;
     printf("\nTem certeza que deseja excluir esse produto? (0 - excluir / 1 - cancelar operação): ");
@@ -250,7 +255,7 @@ void cadastrarProduto(Estoque * estoque) {
     fclose(arquivo);
 }
 
-void exibirProduto(char idProduto[]) {
+int exibirProduto(char idProduto[]) {
     Estoque * estoque;
     estoque = (Estoque *) malloc(sizeof(Estoque));
 
@@ -274,7 +279,9 @@ void exibirProduto(char idProduto[]) {
 
     if(encontrado == False) {
         printf("\n\t\t\t <--- Produto não encontrado ---> \n\n");
+        return 0;
     }
+    return 1;
 }
 
 void exibirDadosProduto(Estoque* estoque) {
