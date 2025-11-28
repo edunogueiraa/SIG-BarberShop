@@ -116,7 +116,10 @@ void exibeServico(void) {
 
     char idServico[50];
     recebeId(idServico,"serviço");
+
     exibirServico(idServico);
+    printf("\n>>> Tecle <ENTER> para continuar...\n");
+    getchar();
     
 }
 
@@ -336,21 +339,25 @@ void exibirServico(char idServico[]) {
 
     verificaArquivo(arquivo);
 
-        while (fread(servico,sizeof(Servico),1,arquivo)){
-            if(strcmp(idServico,servico->id) == 0 && servico->status == True){
-                printf("\n\t\t\t <--- Servico Encontrado ---> \n\n");
-                printf("\t\t\tNome do serviço: %s\n", servico->nome);
-                printf("\t\t\tID do serviço: %s\n", servico->id);
-                printf("\t\t\tValor: R$ %.2f\n", atof(servico->valor));
-                printf("\t\t\tDuração do serviço: %s\n", servico->duracao);
-                printf("\n>>> Tecle <ENTER> para continuar...\n");
-                getchar();
-                fclose(arquivo);
-                return;
-            }
+    int encontrado = False;
+    while (fread(servico,sizeof(Servico),1,arquivo) && encontrado == False){
+        if(strcmp(idServico,servico->id) == 0 && servico->status == True){
+            printf("\n\t\t\t <--- Servico Encontrado ---> \n\n");
+            printf("\t\t\tNome do serviço: %s\n", servico->nome);
+            printf("\t\t\tID do serviço: %s\n", servico->id);
+            printf("\t\t\tValor: R$ %.2f\n", atof(servico->valor));
+            printf("\t\t\tDuração do serviço: %s\n", servico->duracao);
+            
+            fclose(arquivo);
+            return;
         }
-
+    }
+    fclose(arquivo);
     free(servico);
+
+    if (encontrado == False) {
+        printf("\n\t\t\t <--- Serviço não encontrado ---> \n\n");
+    }
 }
 
 void listagemServico(void) {
