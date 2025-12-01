@@ -6,6 +6,11 @@
 #include "include/servicos.h"
 #include "include/utils.h"
 
+// Assinatura das funções
+Servico* gerarListaServicos();
+Servico* gerarListaServicosAlfabetica(void);
+Servico* gerarListaServicosOrdemPreco(void);
+void limpaLista(Servico** lista);
 
 void telaServico(void) {
     system("clear||cls");
@@ -62,40 +67,34 @@ void exibirDadosServicos(Servico * servico){
             servico->duracao,
             valorNumerico);
 }
-void listaServico(void){
-    Servico *servico;
-    servico = (Servico*) malloc(sizeof(Servico));
-    
-    FILE * arquivo = fopen("./dados/servicos.bin", "rb");
-    verificaArquivo(arquivo);
+void listarServicos(Servico* lista){
+    Servico *servico = lista;
     
     printf("\n%-20s | %-10s | %-15s | %s\n", "Nome do serviço", "ID", "Duração", "Valor (R$)");
     printf("----------------------------------------------------------------------------\n");
-    while (fread(servico,sizeof(Servico),1,arquivo)){
+    while (servico != NULL){
         if (servico->status == True) {
             exibirDadosServicos(servico);
         }
+        servico = servico->proximo;
     }
-    fclose(arquivo);
     free(servico);
 
     printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
     getchar();
 }
-void listarServicosNome(char* filtro){
-    Servico *servico = malloc(sizeof(Servico));
-    FILE *arquivo = fopen("./dados/servicos.bin", "rb");
-    verificaArquivo(arquivo);
+void listarServicosNome(Servico* lista, char* filtro){
+    Servico *servico = lista;
 
     printf("\n%-20s | %-10s | %-15s | %s\n", "Nome do serviço", "ID", "Duração", "Valor (R$)");
     printf("----------------------------------------------------------------------------------------------------------------------\n");
-    while (fread(servico, sizeof(Servico), 1, arquivo)) {
+    while (servico != NULL) {
         char* filtrado = strstr(servico->nome, filtro);
         if (servico->status == True && filtrado != NULL) {
             exibirDadosServicos(servico);
         }
+        servico = servico->proximo;
     }
-    fclose(arquivo);
     free(servico); 
 
     printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
@@ -128,7 +127,7 @@ void atualizaServico(void) {
     char idServico[50];
     recebeId(idServico,"serviço");
 
-    if(!exibirServico(idServico)){
+    if(!verificaServico(idServico)){
         printf("\n>>> Nenhuma ação será realizada.\n");
         printf("\n>>> Tecle <ENTER> para continuar...\n");
         getchar();
@@ -362,6 +361,7 @@ int exibirServico(char idServico[]) {
 }
 void listagemServico(void) {
     char opcao = '0';
+    Servico* lista;
     do {
         system("clear||cls");
         printf("\n");
@@ -370,23 +370,37 @@ void listagemServico(void) {
         printf("|                                     ESCOLHA O TIPO DE LISTAGEM                                  |\n");
         printf("|_________________________________________________________________________________________________|\n");
         printf("|                                                                                                 |\n");
-        printf("|                                   1 Todos os Serviços                                           |\n");
-        printf("|                                   2 Filtrar nome                                                |\n");
+        printf("|                                   1 Ordem alfabética                                            |\n");
+        printf("|                                   2 Ordem de recentes                                           |\n");
+        printf("|                                   3 Ordem de preço                                              |\n");
+        printf("|                                   4 Filtrar nome                                                |\n");
         printf("|                                   0 Sair                                                        |\n");
         printf("|_________________________________________________________________________________________________|\n\n");
-        
+
         char filtro[50];
         opcao = recebeOpcao();
         switch (opcao) {
             case '1':
-                listaServico();
+            lista = gerarListaServicosAlfabetica();
+                listarServicos(lista);
                 break;
 
             case '2':
+            lista = gerarListaServicos();
+                listarServicos(lista);
+                break;
+
+            case '3':
+                lista = gerarListaServicosOrdemPreco();
+                listarServicos(lista);
+                break;
+
+            case '4':
+            lista = gerarListaServicosAlfabetica();
                 printf("Digite o serviço pelo qual buscar: ");
                 scanf("%[^\n]", filtro);
                 getchar();
-                listarServicosNome(filtro);
+                listarServicosNome(lista, filtro);
                 break;
 
             case '0':
@@ -398,6 +412,7 @@ void listagemServico(void) {
                 getchar();
         }
     } while (opcao != '0');
+    limpaLista(&lista);
 }
 char* nomeServico(char* id) {
     Servico* servico;
@@ -418,6 +433,108 @@ char* nomeServico(char* id) {
     
     return NULL;
 }
+Servico *gerarListaServicos(void) {
+    Servico *lista = NULL;
+    Servico *servico = (Servico *)malloc(sizeof(Servico));
 
+    FILE *arquivo = fopen("./dados/servicos.bin", "rb");
+    verificaArquivo(arquivo);
 
+    while (fread(servico, sizeof(Servico), 1, arquivo)) {
+        if (servico->status == True) {
+            servico->proximo = lista;
+            lista = servico;
+            servico = (Servico *)malloc(sizeof(Servico));
+        }
+    }
+    fclose(arquivo);
 
+    return lista;
+}
+Servico* gerarListaServicosAlfabetica(void) {
+    Servico* lista = NULL;
+    Servico* servico = (Servico*) malloc(sizeof(Servico));
+    
+    FILE *arquivo = fopen("./dados/servicos.bin", "rb");
+    verificaArquivo(arquivo);
+
+    while (fread(servico, sizeof(Servico), 1, arquivo)) {
+        if (servico->status == True) {
+            if (lista == NULL) {
+                lista = servico;
+                servico->proximo = NULL;
+            } else if (comparaNomes(servico->nome, lista->nome) < 0) {
+                servico->proximo = lista;
+                lista = servico;
+            } else {
+                Servico* anterior = lista;
+                Servico* atual = lista->proximo;
+
+                while ((atual != NULL) && comparaNomes(atual->nome, servico->nome) < 0) {
+                    anterior = atual;
+                    atual = atual->proximo;
+                }
+                anterior->proximo = servico;
+                servico->proximo = atual;
+            }
+            servico = (Servico *)malloc(sizeof(Servico));
+        }
+    }
+    fclose(arquivo);
+
+    return lista;  
+}
+Servico* gerarListaServicosOrdemPreco(void) {
+    Servico* lista = NULL;
+    Servico* servico = (Servico*) malloc(sizeof(Servico));
+
+    FILE *arquivo = fopen("./dados/servico.bin", "rb");
+    verificaArquivo(arquivo);
+
+    while (fread(servico, sizeof(Servico), 1, arquivo)) {
+
+        if (servico->status == True) {
+            if (lista == NULL) {
+
+                lista = servico;
+                servico->proximo = NULL;
+
+            } else if (compararPreco(servico->valor, lista->valor) < 0) {
+
+                servico->proximo = lista;
+                lista = servico;
+
+            } else {
+
+                Servico* anterior = lista;
+                Servico* atual = lista->proximo;
+
+                while ((atual != NULL) && compararPreco(atual->valor, servico->valor) < 0) {
+
+                    anterior = atual;
+                    atual = atual->proximo;
+                }
+
+                anterior->proximo = servico;
+                servico->proximo = atual;
+            }
+
+            servico = (Servico*) malloc(sizeof(Servico));
+        }
+    }
+
+    fclose(arquivo);
+
+    return lista;
+}
+void limpaListaServicos(Servico** lista) {
+    Servico* servico;
+
+    while (*lista != NULL) {
+        servico = *lista;
+        *lista = (*lista)->proximo;
+        free(servico);
+    }
+
+    *lista = NULL;
+}
