@@ -510,7 +510,7 @@ Servico* gerarListaServicosOrdemPreco(void) {
     Servico* lista = NULL;
     Servico* servico = (Servico*) malloc(sizeof(Servico));
 
-    FILE *arquivo = fopen("./dados/servico.bin", "rb");
+    FILE *arquivo = fopen("./dados/servicos.bin", "rb");
     verificaArquivo(arquivo);
 
     while (fread(servico, sizeof(Servico), 1, arquivo)) {
