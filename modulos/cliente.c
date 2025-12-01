@@ -9,7 +9,7 @@
 // Assinatura de funções
 void cadastrarCliente(Cliente * cliente);
 void exibirDadosCliente(Cliente* cliente);
-int exibirCliente(char cpfCliente[]);
+int exibirCliente(char* cpfCliente);
 void listarClientes(Cliente* lista);
 void listarClientesNome(Cliente* lista, char* filtro);
 void atualizarCliente(char cpfCliente[], int opcao);
@@ -404,6 +404,55 @@ void atualizarCliente(char cpfCliente[], int opcao) {
     fclose(arquivo);
     free(cliente);
 }
+void deletarCliente(char cpfCliente[]) {
+    Cliente * cliente;
+    cliente = (Cliente*) malloc(sizeof(Cliente));
+
+    FILE * arquivo = fopen("./dados/clientes.bin", "r+b");
+
+    int encontrado = False;
+    while (fread(cliente, sizeof(Cliente), 1, arquivo) && encontrado == False) {
+        if (strcmp(cliente->cpf, cpfCliente) == 0) {
+            cliente->status = False;
+            encontrado = True;
+            fseek(arquivo, (-1) * sizeof(Cliente), SEEK_CUR);
+            fwrite(cliente, sizeof(Cliente), 1, arquivo);
+            fclose(arquivo);
+        }
+    }
+    free(cliente);
+    fclose(arquivo);
+}
+void excluirBancoCliente(void) {
+    Cliente * cliente;
+    cliente = (Cliente *) malloc(sizeof(Cliente));
+    
+    FILE * arquivo = fopen("./dados/clientes.bin", "rb");
+    
+    FILE * arquivoTemp = fopen("./dados/clientes_temp.bin", "wb");
+    verificaArquivoTemporario(arquivoTemp);
+
+    int clientesMantidos = 0;
+    int clientesRemovidos = 0;
+    while (fread(cliente, sizeof(Cliente), 1, arquivo) == 1) {
+        if (cliente->status == True) {
+            fwrite(cliente, sizeof(Cliente), 1, arquivoTemp);
+            clientesMantidos++;
+        } else {
+            clientesRemovidos++;
+        }
+    }
+    
+    fclose(arquivo);
+    fclose(arquivoTemp);
+    free(cliente);
+    
+    trocaArquivos("./dados/clientes.bin", "./dados/clientes_temp.bin");
+    
+    printf("Limpeza do banco concluída com sucesso!\n");
+    printf("Clientes mantidos: %d\n", clientesMantidos);
+    printf("Clientes removidos: %d\n", clientesRemovidos);
+}
 Cliente* gerarLista(void) {
     Cliente* lista = NULL;
     Cliente* cliente = (Cliente*) malloc(sizeof(Cliente));
@@ -487,55 +536,6 @@ Cliente* gerarListaAniversario(void) {
     fclose(arquivo);
 
     return lista;  
-}
-void deletarCliente(char cpfCliente[]) {
-    Cliente * cliente;
-    cliente = (Cliente*) malloc(sizeof(Cliente));
-
-    FILE * arquivo = fopen("./dados/clientes.bin", "r+b");
-
-    int encontrado = False;
-    while (fread(cliente, sizeof(Cliente), 1, arquivo) && encontrado == False) {
-        if (strcmp(cliente->cpf, cpfCliente) == 0) {
-            cliente->status = False;
-            encontrado = True;
-            fseek(arquivo, (-1) * sizeof(Cliente), SEEK_CUR);
-            fwrite(cliente, sizeof(Cliente), 1, arquivo);
-            fclose(arquivo);
-        }
-    }
-    free(cliente);
-    fclose(arquivo);
-}
-void excluirBancoCliente(void) {
-    Cliente * cliente;
-    cliente = (Cliente *) malloc(sizeof(Cliente));
-    
-    FILE * arquivo = fopen("./dados/clientes.bin", "rb");
-    
-    FILE * arquivoTemp = fopen("./dados/clientes_temp.bin", "wb");
-    verificaArquivoTemporario(arquivoTemp);
-
-    int clientesMantidos = 0;
-    int clientesRemovidos = 0;
-    while (fread(cliente, sizeof(Cliente), 1, arquivo) == 1) {
-        if (cliente->status == True) {
-            fwrite(cliente, sizeof(Cliente), 1, arquivoTemp);
-            clientesMantidos++;
-        } else {
-            clientesRemovidos++;
-        }
-    }
-    
-    fclose(arquivo);
-    fclose(arquivoTemp);
-    free(cliente);
-    
-    trocaArquivos("./dados/clientes.bin", "./dados/clientes_temp.bin");
-    
-    printf("Limpeza do banco concluída com sucesso!\n");
-    printf("Clientes mantidos: %d\n", clientesMantidos);
-    printf("Clientes removidos: %d\n", clientesRemovidos);
 }
 void limpaLista(Cliente** lista) {
     Cliente* cliente;
