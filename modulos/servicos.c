@@ -7,6 +7,7 @@
 #include "include/utils.h"
 
 // Assinatura das funções
+int verificaServico(char idServico[]);
 Servico* gerarListaServicos();
 Servico* gerarListaServicosAlfabetica(void);
 Servico* gerarListaServicosOrdemPreco(void);
@@ -347,7 +348,7 @@ int exibirServico(char idServico[]) {
             printf("\t\t\tDuração do serviço: %s\n", servico->duracao);
             
             fclose(arquivo);
-            
+            encontrado = True;
         }
     }
     fclose(arquivo);
@@ -355,6 +356,27 @@ int exibirServico(char idServico[]) {
 
     if (encontrado == False) {
         printf("\n\t\t\t <--- Serviço não encontrado ---> \n\n");
+        return 0;
+    }
+    return 1;
+}
+int verificaServico(char idServico[]) {
+    Servico *servico;
+    servico = (Servico*) malloc(sizeof(Servico));
+    FILE * arquivo = fopen("./dados/servicos.bin", "rb");
+
+    verificaArquivo(arquivo);
+
+    int encontrado = False;
+    while (fread(servico,sizeof(Servico),1,arquivo) && encontrado == False){
+        if(strcmp(idServico,servico->id) == 0 && servico->status == True){
+            encontrado = True;
+        }
+    }
+    fclose(arquivo);
+    free(servico);
+
+    if (encontrado == False) {
         return 0;
     }
     return 1;
