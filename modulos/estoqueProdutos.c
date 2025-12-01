@@ -17,6 +17,7 @@ void excluirBancoEstoque(void);
 Estoque* gerarListaEstoque(void);
 Estoque* gerarListaOrdemPreco(void);
 void liberarListaEstoque(Estoque** lista);
+int verificaEstoque(char* idProduto);
 
 void telaEstoque(void) {
     system("clear||cls");
@@ -154,7 +155,7 @@ void atualizaProduto(void) {
     scanf("%[^\n]", idProduto);
     getchar();
 
-    if(!exibirProduto(idProduto)){
+    if(!verificaEstoque(idProduto)){
         printf("\n>>> Nenhuma ação será realizada.\n");
         printf("\n>>> Tecle <ENTER> para continuar...\n");
         getchar();
@@ -517,4 +518,27 @@ void liberarListaEstoque(Estoque** lista) {
     }
 
     *lista = NULL;
+}
+
+int verificaEstoque(char* idProduto) {
+    Estoque * estoque;
+    estoque = (Estoque *) malloc(sizeof(Estoque));
+
+    FILE * arquivo = fopen("./dados/estoque.bin", "rt");
+    verificaArquivo(arquivo);
+    
+    int encontrado = False;
+    while (fread(estoque, sizeof(Estoque), 1, arquivo) && encontrado == False) {
+        if (strcmp(idProduto, estoque->id) == 0 && estoque->status == True) {
+            encontrado = True;
+        }
+    }
+    fclose(arquivo);
+    free(estoque);
+
+    if(encontrado == False) {
+        printf("\n\t\t\t <--- Produto não encontrado ---> \n\n");
+        return 0;
+    }
+    return 1;
 }
