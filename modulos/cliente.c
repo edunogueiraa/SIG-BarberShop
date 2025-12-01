@@ -19,6 +19,7 @@ Cliente* gerarListaClientes(void);
 Cliente* gerarListaClientesAlfabetica(void);
 Cliente* gerarListaClientesAniversario(void);
 void limpaListaClientes(Cliente** lista);
+int verificaCliente(char* cpfCliente);
 
 void telaCliente(void) {
     system("clear||cls");
@@ -151,7 +152,7 @@ void atualizaCliente(void) {
     recebeCpf(cpfCliente);
 
     int opcao;
-    if(!exibirCliente(cpfCliente)){
+    if(!verificaCliente(cpfCliente)){
         printf("\n>>> Nenhuma ação será realizada.\n");
         printf("\n>>> Tecle <ENTER> para continuar...\n");
         getchar();
@@ -547,4 +548,26 @@ void limpaListaClientes(Cliente** lista) {
     }
 
     *lista = NULL;
+}
+
+int verificaCliente(char* cpfCliente) {
+    Cliente *cliente;
+    cliente = (Cliente*) malloc(sizeof(Cliente));
+    FILE * arquivo = fopen("./dados/clientes.bin", "rb");
+
+    verificaArquivo(arquivo);
+
+    int encontrado = False;
+    while (fread(cliente,sizeof(Cliente),1,arquivo) && encontrado == False){
+        if(strcmp(cpfCliente,cliente->cpf) == 0 && cliente->status == True){
+            encontrado = True;
+        }
+    }
+    fclose(arquivo);
+    free(cliente);
+
+    if (encontrado == False) {
+        return 0;
+    }
+    return 1;
 }
