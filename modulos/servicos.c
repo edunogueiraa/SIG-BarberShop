@@ -355,7 +355,7 @@ int exibirServico(char idServico[]) {
             printf("\t\t\tValor: R$ %.2f\n", atof(servico->valor));
             printf("\t\t\tDuração do serviço: %s\n", servico->duracao);
             
-            fclose(arquivo);
+            // fclose(arquivo);
             encontrado = True;
         }
     }
