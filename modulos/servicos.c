@@ -33,7 +33,6 @@ void telaServico(void) {
     printf("|                                   0 Sair                                                        |\n");
     printf("|_________________________________________________________________________________________________|\n\n");
 }
-
 void cadastroServico(void) {
     system("clear||cls");
     printf("\n");
@@ -46,7 +45,7 @@ void cadastroServico(void) {
     servico = (Servico*) malloc(sizeof(Servico));
 
     int idInteiro = atribuirId("./dados/servicos.bin", sizeof(Servico));
-    sprintf(servico->id, "%d", idInteiro); // Converte int para string
+    sprintf(servico->id, "%d", idInteiro);
 
     recebeNome(servico->nome,"serviço");
     recebeValor(servico->valor);
@@ -55,7 +54,6 @@ void cadastroServico(void) {
     cadastrarServico(servico);
     free(servico);
 }
-
 void exibirDadosServicos(Servico * servico){
     float valorNumerico = atof(servico->valor);
         printf("%-19s | %-10s | %-13s | R$ %.2f\n",
@@ -64,7 +62,6 @@ void exibirDadosServicos(Servico * servico){
             servico->duracao,
             valorNumerico);
 }
-
 void listaServico(void){
     Servico *servico;
     servico = (Servico*) malloc(sizeof(Servico));
@@ -85,7 +82,6 @@ void listaServico(void){
     printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
     getchar();
 }
-
 void listarServicosNome(char* filtro){
     Servico *servico = malloc(sizeof(Servico));
     FILE *arquivo = fopen("./dados/servicos.bin", "rb");
@@ -105,7 +101,6 @@ void listarServicosNome(char* filtro){
     printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
     getchar();
 }
-
 void exibeServico(void) {
     system("clear||cls");
     printf("\n");
@@ -122,7 +117,6 @@ void exibeServico(void) {
     getchar();
     
 }
-
 void atualizaServico(void) {
     system("clear||cls");
     printf("\n");
@@ -158,7 +152,6 @@ void atualizaServico(void) {
         }
     } while (opcao != 0);
 }
-
 void deletaServico(void) {
     system("clear||cls");
     printf("\n");
@@ -194,7 +187,6 @@ void deletaServico(void) {
     }
     
 }
-
 void limparBancoServico(void) {
     system("clear||cls");
     printf("\n");
@@ -236,7 +228,6 @@ void limparBancoServico(void) {
     getchar();
 
 }
-
 void opcaoServicos(void) {
     char opcao = '9';
 
@@ -275,7 +266,6 @@ void opcaoServicos(void) {
     } while (opcao != '0');
 
 }
-
 void cadastrarServico(Servico * servico) {
     criaDiretorio();
     FILE * arquivo = fopen("./dados/servicos.bin", "ab");
@@ -286,7 +276,6 @@ void cadastrarServico(Servico * servico) {
 
     fclose(arquivo);
 }
-
 void atualizarServico(char idServico[], int opcao) {
     char dado[50];
     if (opcao == 1) {
@@ -323,7 +312,6 @@ void atualizarServico(char idServico[], int opcao) {
     fclose(arquivo);
     free(servico);
 }
-
 void deletarServico(char idServico[]) {
     Servico *servico;
     servico = (Servico*) malloc(sizeof(Servico));
@@ -343,7 +331,6 @@ void deletarServico(char idServico[]) {
     free(servico);
     fclose(arquivo);
 }
-
 int exibirServico(char idServico[]) {
     Servico *servico;
     servico = (Servico*) malloc(sizeof(Servico));
@@ -373,7 +360,6 @@ int exibirServico(char idServico[]) {
     }
     return 1;
 }
-
 void listagemServico(void) {
     char opcao = '0';
     do {
@@ -413,7 +399,6 @@ void listagemServico(void) {
         }
     } while (opcao != '0');
 }
-
 char* nomeServico(char* id) {
     Servico* servico;
     servico = (Servico*) malloc(sizeof(Servico));
