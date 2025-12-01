@@ -15,10 +15,10 @@ void listarClientesNome(Cliente* lista, char* filtro);
 void atualizarCliente(char cpfCliente[], int opcao);
 void deletarCliente(char cpfCliente[]);
 void excluirBancoCliente(void);
-Cliente* gerarLista(void);
-Cliente* gerarListaAlfabetica(void);
-Cliente* gerarListaAniversario(void);
-void limpaLista(Cliente** lista);
+Cliente* gerarListaClientes(void);
+Cliente* gerarListaClientesAlfabetica(void);
+Cliente* gerarListaClientesAniversario(void);
+void limpaListaClientes(Cliente** lista);
 
 void telaCliente(void) {
     system("clear||cls");
@@ -105,22 +105,22 @@ void listaClientes(void) {
         opcao = recebeOpcao();
         switch (opcao) {
             case '1':
-                lista = gerarListaAlfabetica();
+                lista = gerarListaClientesAlfabetica();
                 listarClientes(lista);
                 break;
 
             case '2':
-                lista = gerarLista();
+                lista = gerarListaClientes();
                 listarClientes(lista);
                 break;
 
             case '3':
-                lista = gerarListaAniversario();
+                lista = gerarListaClientesAniversario();
                 listarClientes(lista);
                 break;
 
             case '4':
-                lista = gerarLista();
+                lista = gerarListaClientes();
                 printf("Digite o nome pelo qual buscar: ");
                 scanf("%[^\n]", filtro);
                 getchar();
@@ -137,7 +137,7 @@ void listaClientes(void) {
         }
     } while (opcao != '0');
 
-    limpaLista(&lista);
+    limpaListaClientes(&lista);
 }
 void atualizaCliente(void) {
     system("clear||cls");
@@ -453,7 +453,7 @@ void excluirBancoCliente(void) {
     printf("Clientes mantidos: %d\n", clientesMantidos);
     printf("Clientes removidos: %d\n", clientesRemovidos);
 }
-Cliente* gerarLista(void) {
+Cliente* gerarListaClientes(void) {
     Cliente* lista = NULL;
     Cliente* cliente = (Cliente*) malloc(sizeof(Cliente));
     
@@ -471,7 +471,7 @@ Cliente* gerarLista(void) {
 
     return lista;
 }
-Cliente* gerarListaAlfabetica(void) {
+Cliente* gerarListaClientesAlfabetica(void) {
     Cliente* lista = NULL;
     Cliente* cliente = (Cliente*) malloc(sizeof(Cliente));
     
@@ -504,7 +504,7 @@ Cliente* gerarListaAlfabetica(void) {
 
     return lista;  
 }
-Cliente* gerarListaAniversario(void) {
+Cliente* gerarListaClientesAniversario(void) {
     Cliente* lista = NULL;
     Cliente* cliente = (Cliente*) malloc(sizeof(Cliente));
     
@@ -537,7 +537,7 @@ Cliente* gerarListaAniversario(void) {
 
     return lista;  
 }
-void limpaLista(Cliente** lista) {
+void limpaListaClientes(Cliente** lista) {
     Cliente* cliente;
 
     while (*lista != NULL) {
