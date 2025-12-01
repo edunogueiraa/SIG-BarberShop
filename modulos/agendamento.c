@@ -107,7 +107,7 @@ void atualizaAgendamento(void) {
     char idAgendamento[50];
     recebeId(idAgendamento,"agendamento");
     
-    if(!exibirAgendamento(idAgendamento)){
+    if(!verificaAgendamento(idAgendamento)){
         printf("\n>>> Nenhuma ação será realizada.\n");
         printf("\n>>> Tecle <ENTER> para continuar...\n");
         getchar();
@@ -431,4 +431,28 @@ void listarAgendamentosData(char* dataBusca){
 
     printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
     getchar();
+}
+
+int verificaAgendamento(char idAgendamento[]) {
+    Agendamento *agendamento;
+    agendamento = (Agendamento*) malloc(sizeof(Agendamento));
+
+    FILE * arquivo = fopen("./dados/agendamentos.bin", "rb");
+
+    verificaArquivo(arquivo);
+
+    int encontrado = False;
+    while (fread(agendamento,sizeof(Agendamento),1,arquivo) && encontrado == False){
+        if(strcmp(idAgendamento,agendamento->id) == 0 && agendamento->status == True){
+            encontrado = True;
+        }
+    }
+    fclose(arquivo);
+    free(agendamento);
+
+    if (encontrado == False) {
+        printf("\n\t\t\t <--- Agendamento não encontrado ---> \n\n");
+        return 0;
+    }
+    return 1;
 }
