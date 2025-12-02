@@ -9,14 +9,17 @@
 // Assinatura de funções
 void cadastrarCliente(Cliente * cliente);
 void exibirDadosCliente(Cliente* cliente);
-void exibirCliente(char cpfCliente[]);
+int exibirCliente(char* cpfCliente);
 void listarClientes(Cliente* lista);
 void listarClientesNome(Cliente* lista, char* filtro);
 void atualizarCliente(char cpfCliente[], int opcao);
 void deletarCliente(char cpfCliente[]);
 void excluirBancoCliente(void);
-Cliente* gerarLista(void);
-void limpaLista(Cliente** lista);
+Cliente* gerarListaClientes(void);
+Cliente* gerarListaClientesAlfabetica(void);
+Cliente* gerarListaClientesAniversario(void);
+void limpaListaClientes(Cliente** lista);
+int verificaCliente(char* cpfCliente);
 
 void telaCliente(void) {
     system("clear||cls");
@@ -45,7 +48,6 @@ void telaCliente(void) {
     printf("|_________________________________________________________________________________________________|\n\n");
 
 }
-
 void cadastroCliente(void) {
     system("clear||cls");
     printf("\n");
@@ -66,7 +68,6 @@ void cadastroCliente(void) {
     cadastrarCliente(cliente);
     free(cliente);
 }
-
 void exibeCliente(void) {
     system("clear||cls");
     printf("\n");
@@ -83,10 +84,9 @@ void exibeCliente(void) {
     printf("\n>>> Tecle <ENTER> para continuar...\n");
     getchar();
 }
-
 void listaClientes(void) {
     char opcao = '0';
-    Cliente* lista = gerarLista();
+    Cliente* lista;
     do {
         system("clear||cls");
         printf("\n");
@@ -95,8 +95,10 @@ void listaClientes(void) {
         printf("|                                     ESCOLHA O TIPO DE LISTAGEM                                  |\n");
         printf("|_________________________________________________________________________________________________|\n");
         printf("|                                                                                                 |\n");
-        printf("|                                   1 Todos os clientes                                           |\n");
-        printf("|                                   2 Filtrar nome                                                |\n");
+        printf("|                                   1 Ordem alfabética                                            |\n");
+        printf("|                                   2 Ordem de recentes                                           |\n");
+        printf("|                                   3 Data de nascimento                                          |\n");
+        printf("|                                   4 Filtrar nome                                                |\n");
         printf("|                                   0 Sair                                                        |\n");
         printf("|_________________________________________________________________________________________________|\n\n");
         
@@ -104,10 +106,22 @@ void listaClientes(void) {
         opcao = recebeOpcao();
         switch (opcao) {
             case '1':
+                lista = gerarListaClientesAlfabetica();
                 listarClientes(lista);
                 break;
 
             case '2':
+                lista = gerarListaClientes();
+                listarClientes(lista);
+                break;
+
+            case '3':
+                lista = gerarListaClientesAniversario();
+                listarClientes(lista);
+                break;
+
+            case '4':
+                lista = gerarListaClientes();
                 printf("Digite o nome pelo qual buscar: ");
                 scanf("%[^\n]", filtro);
                 getchar();
@@ -124,9 +138,8 @@ void listaClientes(void) {
         }
     } while (opcao != '0');
 
-    limpaLista(&lista);
+    limpaListaClientes(&lista);
 }
-
 void atualizaCliente(void) {
     system("clear||cls");
     printf("\n");
@@ -139,9 +152,16 @@ void atualizaCliente(void) {
     recebeCpf(cpfCliente);
 
     int opcao;
+    if(!verificaCliente(cpfCliente)){
+        printf("\n>>> Nenhuma ação será realizada.\n");
+        printf("\n>>> Tecle <ENTER> para continuar...\n");
+        getchar();
+        return;
+    }
     do {
         system("clear||cls");
         exibirCliente(cpfCliente);
+
 
         printf("\nQual dado você deseja alterar?\n");
         printf("\n1 - Nome");
@@ -157,7 +177,6 @@ void atualizaCliente(void) {
     } while (opcao != 0);
     
 }
-
 void deletaCliente(void) {
     system("clear||cls");
     printf("\n");
@@ -169,9 +188,12 @@ void deletaCliente(void) {
     char cpfCliente[15];
     recebeCpf(cpfCliente);
     
-    exibirCliente(cpfCliente);
-    printf("\n>>> Tecle <ENTER> para continuar...\n");
-    getchar();
+    if(!exibirCliente(cpfCliente)){
+        printf("\n>>> Nenhuma ação será realizada.\n");
+        printf("\n>>> Tecle <ENTER> para continuar...\n");
+        getchar();
+        return;
+    }
 
     int excluir;
     printf("\nTem certeza que deseja excluir esse cliente? (0 - excluir / 1 - cancelar operação): ");
@@ -189,7 +211,6 @@ void deletaCliente(void) {
         getchar();
     }
 }
-
 void limparBancoCliente(void) {
     system("clear||cls");
     printf("\n");
@@ -203,7 +224,6 @@ void limparBancoCliente(void) {
     printf("\n>>> Tecle <ENTER> para continuar.\n");
     getchar();
 }
-
 void opcaoCliente(void) {
     char opcao = '9';
 
@@ -258,9 +278,8 @@ char* nomeCliente(char* cpf) {
 
     return NULL;
 }
-
 void cadastrarCliente(Cliente * cliente) {
-    criarDiretorio();
+    criaDiretorio();
     FILE * arquivo = fopen("./dados/clientes.bin", "ab");
     verificaArquivo(arquivo);
     
@@ -269,7 +288,6 @@ void cadastrarCliente(Cliente * cliente) {
     
     fclose(arquivo);
 }
-
 void exibirDadosCliente(Cliente* cliente) {
     char* cpf = formataCpf(cliente->cpf);
     char* celular = formataCelular(cliente->celular);
@@ -284,8 +302,7 @@ void exibirDadosCliente(Cliente* cliente) {
     free(cpf);
     free(celular);
 }
-
-void exibirCliente(char* cpfCliente) {
+int exibirCliente(char* cpfCliente) {
     Cliente * cliente = (Cliente*) malloc(sizeof(Cliente));
 
     FILE * arquivo = fopen("./dados/clientes.bin", "rb");
@@ -311,9 +328,13 @@ void exibirCliente(char* cpfCliente) {
     }
     fclose(arquivo);
     free(cliente);
-    printf("nada");
-}
 
+    if (encontrado == False) {
+        printf("\n\t\t\t <--- Cliente não encontrado ---> \n\n");
+        return 0;
+    }
+    return 1;
+}
 void listarClientes(Cliente* lista) {
     Cliente* cliente = lista;
     
@@ -329,7 +350,6 @@ void listarClientes(Cliente* lista) {
     printf("\n>>> Tecle <ENTER> para continuar...\n");
     getchar();
 }
-
 void listarClientesNome(Cliente* lista, char* filtro) {
     Cliente* cliente = lista;
     printf("\n\t\t\t\t\t <--- Lista de clientes filtrada por nome---> \n\n");
@@ -347,7 +367,6 @@ void listarClientesNome(Cliente* lista, char* filtro) {
     printf("\n>>> Tecle <ENTER> para continuar...\n");
     getchar();
 }
-
 void atualizarCliente(char cpfCliente[], int opcao) {
     char dado[50];
     if (opcao == 1) {
@@ -386,26 +405,6 @@ void atualizarCliente(char cpfCliente[], int opcao) {
     fclose(arquivo);
     free(cliente);
 }
-
-Cliente* gerarLista(void) {
-    Cliente* lista = NULL;
-    Cliente* cliente = (Cliente*) malloc(sizeof(Cliente));
-    
-    FILE *arquivo = fopen("./dados/clientes.bin", "rb");
-    verificaArquivo(arquivo);
-
-    while (fread(cliente, sizeof(Cliente), 1, arquivo)) {
-        if (cliente->status == True) {
-            cliente->proximo = lista;
-            lista = cliente;
-            cliente = (Cliente*) malloc(sizeof(Cliente));
-        }
-    }
-    fclose(arquivo);
-
-    return lista;
-}
-
 void deletarCliente(char cpfCliente[]) {
     Cliente * cliente;
     cliente = (Cliente*) malloc(sizeof(Cliente));
@@ -425,7 +424,6 @@ void deletarCliente(char cpfCliente[]) {
     free(cliente);
     fclose(arquivo);
 }
-
 void excluirBancoCliente(void) {
     Cliente * cliente;
     cliente = (Cliente *) malloc(sizeof(Cliente));
@@ -456,8 +454,91 @@ void excluirBancoCliente(void) {
     printf("Clientes mantidos: %d\n", clientesMantidos);
     printf("Clientes removidos: %d\n", clientesRemovidos);
 }
+Cliente* gerarListaClientes(void) {
+    Cliente* lista = NULL;
+    Cliente* cliente = (Cliente*) malloc(sizeof(Cliente));
+    
+    FILE *arquivo = fopen("./dados/clientes.bin", "rb");
+    verificaArquivo(arquivo);
 
-void limpaLista(Cliente** lista) {
+    while (fread(cliente, sizeof(Cliente), 1, arquivo)) {
+        if (cliente->status == True) {
+            cliente->proximo = lista;
+            lista = cliente;
+            cliente = (Cliente*) malloc(sizeof(Cliente));
+        }
+    }
+    fclose(arquivo);
+
+    return lista;
+}
+Cliente* gerarListaClientesAlfabetica(void) {
+    Cliente* lista = NULL;
+    Cliente* cliente = (Cliente*) malloc(sizeof(Cliente));
+    
+    FILE *arquivo = fopen("./dados/clientes.bin", "rb");
+    verificaArquivo(arquivo);
+
+    while (fread(cliente, sizeof(Cliente), 1, arquivo)) {
+        if (cliente->status == True) {
+            if (lista == NULL) {
+                lista = cliente;
+                cliente->proximo = NULL;
+            } else if (comparaNomes(cliente->nome, lista->nome) < 0) {
+                cliente->proximo = lista;
+                lista = cliente;
+            } else {
+                Cliente* anterior = lista;
+                Cliente* atual = lista->proximo;
+
+                while ((atual != NULL) && comparaNomes(atual->nome, cliente->nome) < 0) {
+                    anterior = atual;
+                    atual = atual->proximo;
+                }
+                anterior->proximo = cliente;
+                cliente->proximo = atual;
+            }
+            cliente = (Cliente *)malloc(sizeof(Cliente));
+        }
+    }
+    fclose(arquivo);
+
+    return lista;  
+}
+Cliente* gerarListaClientesAniversario(void) {
+    Cliente* lista = NULL;
+    Cliente* cliente = (Cliente*) malloc(sizeof(Cliente));
+    
+    FILE *arquivo = fopen("./dados/clientes.bin", "rb");
+    verificaArquivo(arquivo);
+
+    while (fread(cliente, sizeof(Cliente), 1, arquivo)) {
+        if (cliente->status == True) {
+            if (lista == NULL) {
+                lista = cliente;
+                cliente->proximo = NULL;
+            } else if (comparaDatas(cliente->data, lista->data) < 0) {
+                cliente->proximo = lista;
+                lista = cliente;
+            } else {
+                Cliente* anterior = lista;
+                Cliente* atual = lista->proximo;
+
+                while ((atual != NULL) && comparaDatas(atual->data, cliente->data) < 0) {
+                    anterior = atual;
+                    atual = atual->proximo;
+                }
+                anterior->proximo = cliente;
+                cliente->proximo = atual;
+            }
+            cliente = (Cliente *)malloc(sizeof(Cliente));
+        }
+    }
+    fclose(arquivo);
+
+    return lista;  
+}
+void limpaListaClientes(Cliente** lista) {
     Cliente* cliente;
 
     while (*lista != NULL) {
@@ -467,4 +548,26 @@ void limpaLista(Cliente** lista) {
     }
 
     *lista = NULL;
+}
+
+int verificaCliente(char* cpfCliente) {
+    Cliente *cliente;
+    cliente = (Cliente*) malloc(sizeof(Cliente));
+    FILE * arquivo = fopen("./dados/clientes.bin", "rb");
+
+    verificaArquivo(arquivo);
+
+    int encontrado = False;
+    while (fread(cliente,sizeof(Cliente),1,arquivo) && encontrado == False){
+        if(strcmp(cpfCliente,cliente->cpf) == 0 && cliente->status == True){
+            encontrado = True;
+        }
+    }
+    fclose(arquivo);
+    free(cliente);
+
+    if (encontrado == False) {
+        return 0;
+    }
+    return 1;
 }

@@ -1,6 +1,8 @@
 #define True 1
 #define False 0
 
+// typedef struct agendamento Agendamento;
+
 struct agendamento {
     char id[50];
     char cpfCliente[15];
@@ -8,6 +10,7 @@ struct agendamento {
     char data[11];
     char hora[9];
     int status;
+    // Agendamento* proximo;
 };
 
 typedef struct agendamento Agendamento;
@@ -21,11 +24,16 @@ void deletaAgendamento(void);
 void limparBancoAgendamento(void);
 void opcaoAgendamento(void);
 void listagemAgendamento(void);
+int verificaAgendamento(char idAgendamento[]);
+// Agendamento* gerarListaAgendamentos(void);
+// Agendamento* gerarListaAgendamentosAlfabetica(void);
+// void limpaListaAgendamentos(Agendamento** lista);
+// int comparaAgendamentosPorNome(Agendamento* a, Agendamento* b);
 
 void listarAgendamentosData(char* dataBusca);
 void exibirDadosAgendamento(Agendamento * agendamento);
 void listarAgendamentosNome(char* filtro);
-void exibirAgendamento(char idAgendamento[]);
+int exibirAgendamento(char idAgendamento[]);
 void cadastrarAgendamento(Agendamento * agendamento);
 void atualizarAgendamento(char idAgendamento[], int opcao);
 void deletarAgendamento(char idAgendamento[]);

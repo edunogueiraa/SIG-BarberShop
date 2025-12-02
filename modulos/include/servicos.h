@@ -1,15 +1,16 @@
 #define True 1
 #define False 0
 
+typedef struct servico Servico;
+
 struct servico {
     char id[10];
     char nome[50];
     char valor[20];
     char duracao[9];
     int status;
+    Servico* proximo;
 };
-
-typedef struct servico Servico;
 
 void telaServico(void);
 void cadastroServico(void);
@@ -22,8 +23,8 @@ void listaServico(void);
 void listagemServico(void);
 
 void exibirDadosServicos(Servico * servico);
-void listarServicosNome(char* filtro);
-void exibirServico(char idServico[]);
+void listarServicosNome(Servico* lista, char* filtro);
+int exibirServico(char idServico[]);
 void cadastrarServico(Servico * servico);
 void atualizarServico(char idServico[], int opcao);
 void deletarServico(char idServico[]);

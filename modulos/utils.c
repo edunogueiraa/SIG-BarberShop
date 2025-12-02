@@ -373,7 +373,44 @@ char recebeOpcao(void) {
     return opcao;
 }
 
-// Funções de exibicao
+// Funções de tratamento
+char* paraMaiusculo(char* palavra) {
+    char* maiuscula = (char*) malloc(sizeof(palavra));
+    for (int i = 0; palavra[i] != '\0'; i++) {
+        maiuscula[i] = toupper(palavra[i]);
+    }
+    return maiuscula;
+}
+int converteDia(char* data) {
+    char dia[2];
+    
+    for (int i = 0; i < 2; i++) {
+        dia[i] = data[i];
+    }
+    
+    int intDia = atoi(dia);
+    return intDia;
+}
+int converteMes(char* data) {
+    char mes[2];
+
+    for (int i = 0; i < 2; i++) {
+        mes[i] = data[i+3];
+    }
+    
+    int intMes = atoi(mes);
+    return intMes;
+}
+int converteAno(char* data) {
+    char ano[4];
+
+    for (int i = 0; i < 5; i++) {
+        ano[i] = data[i+6];
+    }
+    
+    int intAno = atoi(ano);
+    return intAno;
+}
 char* formataCpf(char* destino) {
     char* formatado = malloc(15);
     
@@ -409,6 +446,60 @@ char* formataCelular(char* destino) {
     return formatado;
 }
 
+// Funções de comparação
+int compararPreco(const char* v1, const char* v2) {
+    float n1 = atof(v1);
+    float n2 = atof(v2);
+
+    if (n1 < n2) return -1;
+    if (n1 > n2) return 1;
+    return 0;
+}
+
+int comparaNomes(char* primeiro, char* segundo) {
+    char* nome1 = paraMaiusculo(primeiro);
+    char* nome2 = paraMaiusculo(segundo);
+    int resultado = strcmp(nome1, nome2);
+
+    free(nome1);
+    free(nome2);
+    return resultado;
+}
+int comparaDatas(char* primeira, char* segunda) {
+    int resultado;
+    
+    int ano1 = converteAno(primeira);
+    int ano2 = converteAno(segunda);
+
+    if (ano1 < ano2) {
+        resultado = -1;
+    } else if (ano1 > ano2) {
+        resultado = 1;
+    } else {
+        int mes1 = converteMes(primeira);
+        int mes2 = converteMes(segunda);
+
+        if (mes1 < mes2) {
+            resultado = -1;
+        } else if (mes1 > mes2) {
+            resultado = 1;
+        } else {
+            int dia1 = converteDia(primeira);
+            int dia2 = converteDia(segunda);
+
+            if (dia1 < dia2) {
+                resultado = -1;
+            } else if (dia1 > dia2) {
+                resultado = 1;
+            } else {
+                resultado = 0;
+            }
+        }
+    }
+
+    return resultado;
+}
+ 
 // Funções de verificação de arquivos
 void verificaArquivo(FILE * arquivo) {
 
@@ -453,7 +544,7 @@ int verificaItensArquivo(FILE *arquivo, int tamanho) {
     int quantidade = bytes / tamanho;
     return quantidade;
 }
-void criarDiretorio(void) {
+void criaDiretorio(void) {
     // Função adaptada de:
     // https://linux.die.net/man/2/mkdir e https://stackoverflow.com/questions/7430248/creating-a-new-directory-in-c
     // Criando diretório para armazenamento de dados
