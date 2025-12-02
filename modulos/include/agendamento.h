@@ -17,22 +17,23 @@ typedef struct agendamento Agendamento;
 
 void telaAgendamento(void);
 void cadastroAgendamento(void);
-void listaAgendamento(Agendamento* lista);
 void exibeAgendamento(void);
+void listagemAgendamento(void);
 void atualizaAgendamento(void);
 void deletaAgendamento(void);
 void limparBancoAgendamento(void);
 void opcaoAgendamento(void);
-void listagemAgendamento(void);
-int verificaAgendamento(char idAgendamento[]);
+
+void cadastrarAgendamento(Agendamento * agendamento);
+void exibirDadosAgendamento(Agendamento * agendamento);
+int exibirAgendamento(char idAgendamento[]);
+void listaAgendamento(Agendamento* lista);
+void listarAgendamentosData(Agendamento* lista,char* dataBusca);
+void atualizarAgendamento(char idAgendamento[], int opcao);
+void deletarAgendamento(char idAgendamento[]);
 Agendamento* gerarListaAgendamentos(void);
 Agendamento* gerarListaAgendamentosAlfabetica(void);
 void limpaListaAgendamentos(Agendamento** lista);
-int comparaAgendamentosPorNome(Agendamento* a, Agendamento* b);
 
-void listarAgendamentosData(Agendamento* lista,char* dataBusca);
-void exibirDadosAgendamento(Agendamento * agendamento);
-int exibirAgendamento(char idAgendamento[]);
-void cadastrarAgendamento(Agendamento * agendamento);
-void atualizarAgendamento(char idAgendamento[], int opcao);
-void deletarAgendamento(char idAgendamento[]);
+int comparaAgendamentosPorNome(Agendamento* a, Agendamento* b);
+int verificaAgendamento(char idAgendamento[]);
