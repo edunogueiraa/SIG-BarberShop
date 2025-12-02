@@ -26,13 +26,12 @@ void opcaoAgendamento(void);
 void listagemAgendamento(void);
 int verificaAgendamento(char idAgendamento[]);
 Agendamento* gerarListaAgendamentos(void);
-// Agendamento* gerarListaAgendamentosAlfabetica(void);
+Agendamento* gerarListaAgendamentosAlfabetica(void);
 void limpaListaAgendamentos(Agendamento** lista);
-// int comparaAgendamentosPorNome(Agendamento* a, Agendamento* b);
+int comparaAgendamentosPorNome(Agendamento* a, Agendamento* b);
 
 void listarAgendamentosData(Agendamento* lista,char* dataBusca);
 void exibirDadosAgendamento(Agendamento * agendamento);
-void listarAgendamentosNome(char* filtro);
 int exibirAgendamento(char idAgendamento[]);
 void cadastrarAgendamento(Agendamento * agendamento);
 void atualizarAgendamento(char idAgendamento[], int opcao);
