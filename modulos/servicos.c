@@ -7,12 +7,6 @@
 #include "include/utils.h"
 
 // Assinatura das funções
-int verificaServico(char idServico[]);
-void listarServicos(Servico* lista);
-Servico* gerarListaServicos();
-Servico* gerarListaServicosAlfabetica(void);
-Servico* gerarListaServicosOrdemPreco(void);
-void limpaListaServicos(Servico** lista);
 
 void telaServico(void) {
     system("clear||cls");

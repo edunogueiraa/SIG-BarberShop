@@ -20,3 +20,17 @@ void atualizaCliente(void);
 void deletaCliente(void);
 void opcaoCliente(void);
 char* nomeCliente(char* cpf);
+
+void cadastrarCliente(Cliente *cliente);
+void exibirDadosCliente(Cliente *cliente);
+int exibirCliente(char *cpfCliente);
+void listarClientes(Cliente *lista);
+void listarClientesNome(Cliente *lista, char *filtro);
+void atualizarCliente(char cpfCliente[], int opcao);
+void deletarCliente(char cpfCliente[]);
+void excluirBancoCliente(void);
+Cliente *gerarListaClientes(void);
+Cliente *gerarListaClientesAlfabetica(void);
+Cliente *gerarListaClientesAniversario(void);
+void limpaListaClientes(Cliente **lista);
+int verificaCliente(char *cpfCliente);

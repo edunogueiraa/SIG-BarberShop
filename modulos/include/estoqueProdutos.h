@@ -18,3 +18,15 @@ void exibeProduto(void);
 void atualizarEstoque(void);
 void deletarEstoque(void);
 void opcaoEstoque(void);
+
+void cadastrarProduto(Estoque *estoque);
+int exibirProduto(char idProduto[]);
+void listarProdutos(Estoque *lista);
+void listarProdutosPreco(Estoque *lista, float minimo, float maximo);
+void atualizarProduto(char idProduto[], int opcao);
+void deletarProduto(char idProduto[]);
+void excluirBancoEstoque(void);
+Estoque *gerarListaEstoque(void);
+Estoque *gerarListaOrdemPreco(void);
+void liberarListaEstoque(Estoque **lista);
+int verificaEstoque(char *idProduto);

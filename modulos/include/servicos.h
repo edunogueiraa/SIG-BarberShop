@@ -15,17 +15,23 @@ struct servico {
 void telaServico(void);
 void cadastroServico(void);
 void exibeServico(void);
+void listagemServico(void);
 void atualizaServico(void);
 void deletaServico(void);
 void limparBancoServico(void); 
 void opcaoServicos(void);
-void listaServico(void);
-void listagemServico(void);
 
-void exibirDadosServicos(Servico * servico);
-void listarServicosNome(Servico* lista, char* filtro);
-int exibirServico(char idServico[]);
+char* nomeServico(char* id);
 void cadastrarServico(Servico * servico);
+int verificaServico(char idServico[]);
+void exibirDadosServicos(Servico * servico);
+int exibirServico(char idServico[]);
+void listarServicos(Servico *lista);
+void listarServicosNome(Servico* lista, char* filtro);
 void atualizarServico(char idServico[], int opcao);
 void deletarServico(char idServico[]);
-char* nomeServico(char* id);
+
+Servico *gerarListaServicos();
+Servico *gerarListaServicosAlfabetica(void);
+Servico *gerarListaServicosOrdemPreco(void);
+void limpaListaServicos(Servico **lista);

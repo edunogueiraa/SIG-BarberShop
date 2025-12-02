@@ -6,19 +6,6 @@
 #include "include/estoqueProdutos.h"
 #include "include/utils.h"
 
-// Assinatura de funções
-void cadastrarProduto(Estoque * estoque);
-int exibirProduto(char idProduto[]);
-void listarProdutos(Estoque* lista);
-void listarProdutosPreco(Estoque* lista, float minimo, float maximo);
-void atualizarProduto(char idProduto[], int opcao);
-void deletarProduto(char idProduto[]);
-void excluirBancoEstoque(void);
-Estoque* gerarListaEstoque(void);
-Estoque* gerarListaOrdemPreco(void);
-void liberarListaEstoque(Estoque** lista);
-int verificaEstoque(char* idProduto);
-
 void telaEstoque(void) {
     system("clear||cls");
     printf("_________________________________________________________________________________________________\n");
