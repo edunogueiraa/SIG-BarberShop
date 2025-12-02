@@ -58,7 +58,7 @@ void cadastroAgendamento(void) {
     cadastrarAgendamento(agendamento);
 }
 
-void listaAgendamento(void) {
+void listaAgendamento(Agendamento* lista) {
     Agendamento *agendamento;
     agendamento = (Agendamento*) malloc(sizeof(Agendamento));
     
@@ -361,7 +361,7 @@ int exibirAgendamento(char idAgendamento[]) {
 
 void listagemAgendamento(void) {
     char opcao = '0';
-    // Agendamento* lista = NULL;
+    Agendamento* lista = NULL;
     do {
         system("clear||cls");
         printf("\n");
@@ -380,16 +380,16 @@ void listagemAgendamento(void) {
         opcao = recebeOpcao();
         switch (opcao) {
             case '1':
-                // lista = gerarListaAgendamentos();
-                listaAgendamento();
+                lista = gerarListaAgendamentos();
+                listaAgendamento(lista);
                 break;
 
             case '2':
-                // lista = gerarListaAgendamentos();
+                lista = gerarListaAgendamentos();
                 printf("Digite a data pelo qual deseja buscar: ");
                 scanf(" %15[^\n]", dataBusca);
                 getchar();
-                listarAgendamentosData(dataBusca);
+                listarAgendamentosData(lista, dataBusca);
                 break;
             
             // case '3':
@@ -406,9 +406,9 @@ void listagemAgendamento(void) {
                 getchar();
         }
     } while (opcao != '0');
-    // if (lista != NULL) {
-    //     limpaListaAgendamentos(&lista);
-    // }
+    if (lista != NULL) {
+        limpaListaAgendamentos(&lista);
+    }
 }
 
 void exibirDadosAgendamento(Agendamento* agendamento){
@@ -424,7 +424,7 @@ void exibirDadosAgendamento(Agendamento* agendamento){
     free(servico);
 }
 
-void listarAgendamentosData(char* dataBusca){
+void listarAgendamentosData(Agendamento* lista, char* dataBusca){
     Agendamento * agendamento = malloc(sizeof(Agendamento));
     FILE *arquivo = fopen("./dados/agendamentos.bin", "rb");
     verificaArquivo(arquivo);
@@ -445,23 +445,23 @@ void listarAgendamentosData(char* dataBusca){
     getchar();
 }
 
-// Agendamento* gerarListaAgendamentos(void) {
-//     Agendamento* lista = NULL;
-//     Agendamento* agendamento = (Agendamento*) malloc(sizeof(Agendamento)); 
+Agendamento* gerarListaAgendamentos(void) {
+    Agendamento* lista = NULL;
+    Agendamento* agendamento = (Agendamento*) malloc(sizeof(Agendamento)); 
 
-//     FILE * arquivo = fopen("./dados/agendamentos.bin", "rb");
-//     verificaArquivo(arquivo);
+    FILE * arquivo = fopen("./dados/agendamentos.bin", "rb");
+    verificaArquivo(arquivo);
 
-//     while (fread(agendamento, sizeof(Agendamento), 1, arquivo)) {
-//         if (agendamento->status == True) {
-//             agendamento->proximo = lista;
-//             lista = agendamento;
-//             agendamento = (Agendamento*) malloc(sizeof(Agendamento));
-//         }   
-//     }
-//     fclose(arquivo);
-//     return lista;
-// }
+    while (fread(agendamento, sizeof(Agendamento), 1, arquivo)) {
+        if (agendamento->status == True) {
+            agendamento->proximo = lista;
+            lista = agendamento;
+            agendamento = (Agendamento*) malloc(sizeof(Agendamento));
+        }   
+    }
+    fclose(arquivo);
+    return lista;
+}
 
 // Agendamento* gerarListaAgendamentosAlfabetica(void) {
 //     FILE *arquivo = fopen("./dados/agendamentos.bin", "rb");
@@ -534,17 +534,17 @@ int verificaAgendamento(char idAgendamento[]) {
     return 1;
 }
 
-// void limpaListaAgendamentos(Agendamento** lista) {
-//     Agendamento* agendamento;
+void limpaListaAgendamentos(Agendamento** lista) {
+    Agendamento* agendamento;
 
-//     while (*lista != NULL) {
-//         agendamento = *lista;
-//         *lista = (*lista)->proximo;
-//         free(agendamento);
-//     }
+    while (*lista != NULL) {
+        agendamento = *lista;
+        *lista = (*lista)->proximo;
+        free(agendamento);
+    }
 
-//     *lista = NULL;
-// }
+    *lista = NULL;
+}
 
 // int comparaAgendamentosPorNome(Agendamento* a, Agendamento* b) {
 //     char* nomeA = nomeCliente(a->cpfCliente);
