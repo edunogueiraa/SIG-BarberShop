@@ -59,20 +59,16 @@ void cadastroAgendamento(void) {
 }
 
 void listaAgendamento(Agendamento* lista) {
-    Agendamento *agendamento;
-    agendamento = (Agendamento*) malloc(sizeof(Agendamento));
-    
-    FILE * arquivo = fopen("./dados/agendamentos.bin", "rb");
-    verificaArquivo(arquivo);
+    Agendamento *agendamento = lista;
     
     printf("\n%-10s | %-25s | %-15s  | %-12s | %-8s\n", "ID", "Nome do cliente", "Serviço", "Data", "Hora");
     printf("--------------------------------------------------------------------------------------------------\n");
-    while (fread(agendamento,sizeof(Agendamento),1,arquivo)){
+    while (agendamento != NULL){
         if (agendamento->status == True) {
             exibirDadosAgendamento(agendamento);
         }
+        agendamento = agendamento->proximo;
     }
-    fclose(arquivo);
     free(agendamento);
 
     printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
@@ -425,20 +421,17 @@ void exibirDadosAgendamento(Agendamento* agendamento){
 }
 
 void listarAgendamentosData(Agendamento* lista, char* dataBusca){
-    Agendamento * agendamento = malloc(sizeof(Agendamento));
-    FILE *arquivo = fopen("./dados/agendamentos.bin", "rb");
-    verificaArquivo(arquivo);
+    Agendamento * agendamento = lista;
 
     printf("\n%-10s | %-25s | %-15s  | %-12s | %-8s\n", "ID", "Nome do cliente", "Serviço", "Data", "Hora");
     printf("--------------------------------------------------------------------------------------------------\n");
-    while (fread(agendamento, sizeof(Agendamento), 1, arquivo)) {
-
+    while (agendamento != NULL) {
         char* filtrado = strstr(agendamento->data, dataBusca);
         if (agendamento->status == True && filtrado != NULL) {
             exibirDadosAgendamento(agendamento);
         }
+        agendamento = agendamento->proximo;
     }
-    fclose(arquivo);
     free(agendamento); 
 
     printf("\n>>> Tecle <ENTER> para encerrar o programa.\n");
