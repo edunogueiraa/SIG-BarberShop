@@ -361,6 +361,7 @@ int exibirAgendamento(char idAgendamento[]) {
 
 void listagemAgendamento(void) {
     char opcao = '0';
+    // Agendamento* lista = NULL;
     do {
         system("clear||cls");
         printf("\n");
@@ -371,6 +372,7 @@ void listagemAgendamento(void) {
         printf("|                                                                                                 |\n");
         printf("|                                   1 Todos os agendamentos                                       |\n");
         printf("|                                   2 Filtrar data                                                |\n");
+        // printf("|                                   3 Ordem alfabetica                                            |\n");
         printf("|                                   0 Sair                                                        |\n");
         printf("|_________________________________________________________________________________________________|\n\n");
         
@@ -378,15 +380,22 @@ void listagemAgendamento(void) {
         opcao = recebeOpcao();
         switch (opcao) {
             case '1':
+                // lista = gerarListaAgendamentos();
                 listaAgendamento();
                 break;
 
             case '2':
+                // lista = gerarListaAgendamentos();
                 printf("Digite a data pelo qual deseja buscar: ");
                 scanf(" %15[^\n]", dataBusca);
                 getchar();
                 listarAgendamentosData(dataBusca);
                 break;
+            
+            // case '3':
+            //     lista = gerarListaAgendamentosAlfabetica();
+            //     listaAgendamento(lista);
+            //     break;
 
             case '0':
                 break;
@@ -397,6 +406,9 @@ void listagemAgendamento(void) {
                 getchar();
         }
     } while (opcao != '0');
+    // if (lista != NULL) {
+    //     limpaListaAgendamentos(&lista);
+    // }
 }
 
 void exibirDadosAgendamento(Agendamento* agendamento){
@@ -433,6 +445,71 @@ void listarAgendamentosData(char* dataBusca){
     getchar();
 }
 
+// Agendamento* gerarListaAgendamentos(void) {
+//     Agendamento* lista = NULL;
+//     Agendamento* agendamento = (Agendamento*) malloc(sizeof(Agendamento)); 
+
+//     FILE * arquivo = fopen("./dados/agendamentos.bin", "rb");
+//     verificaArquivo(arquivo);
+
+//     while (fread(agendamento, sizeof(Agendamento), 1, arquivo)) {
+//         if (agendamento->status == True) {
+//             agendamento->proximo = lista;
+//             lista = agendamento;
+//             agendamento = (Agendamento*) malloc(sizeof(Agendamento));
+//         }   
+//     }
+//     fclose(arquivo);
+//     return lista;
+// }
+
+// Agendamento* gerarListaAgendamentosAlfabetica(void) {
+//     FILE *arquivo = fopen("./dados/agendamentos.bin", "rb");
+//     verificaArquivo(arquivo);
+
+//     Agendamento *lista = NULL;
+//     Agendamento *agendamento = malloc(sizeof(Agendamento));
+
+//     while (fread(agendamento, sizeof(Agendamento), 1, arquivo)) {
+
+//         if (agendamento->status == True) {
+
+//             // 1) Se a lista estiver vazia
+//             if (lista == NULL) {
+//                 agendamento->proximo = NULL;
+//                 lista = agendamento;
+//             }
+//             // 2) Inserção no INÍCIO
+//             else if (comparaAgendamentosPorNome(agendamento, lista) < 0) {
+//                 agendamento->proximo = lista;
+//                 lista = agendamento;
+//             }
+//             // 3) Inserção no MEIO ou no FINAL
+//             else {
+//                 Agendamento *anterior = lista;
+//                 Agendamento *atual = lista->proximo;
+
+//                 while (atual != NULL && comparaAgendamentosPorNome(agendamento, atual) > 0) {
+
+//                     anterior = atual;
+//                     atual = atual->proximo;
+//                 }
+
+//                 anterior->proximo = agendamento;
+//                 agendamento->proximo = atual;
+//             }
+
+//             // prepara novo para próxima leitura
+//             agendamento = malloc(sizeof(Agendamento));
+//         }
+//     }
+//     fclose(arquivo);
+
+//     return lista;
+// }
+
+
+
 int verificaAgendamento(char idAgendamento[]) {
     Agendamento *agendamento;
     agendamento = (Agendamento*) malloc(sizeof(Agendamento));
@@ -456,3 +533,27 @@ int verificaAgendamento(char idAgendamento[]) {
     }
     return 1;
 }
+
+// void limpaListaAgendamentos(Agendamento** lista) {
+//     Agendamento* agendamento;
+
+//     while (*lista != NULL) {
+//         agendamento = *lista;
+//         *lista = (*lista)->proximo;
+//         free(agendamento);
+//     }
+
+//     *lista = NULL;
+// }
+
+// int comparaAgendamentosPorNome(Agendamento* a, Agendamento* b) {
+//     char* nomeA = nomeCliente(a->cpfCliente);
+//     char* nomeB = nomeCliente(b->cpfCliente);
+
+//     int resultado = strcmp(nomeA, nomeB);
+
+//     free(nomeA);
+//     free(nomeB);
+
+//     return resultado;
+// }
