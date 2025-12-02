@@ -351,7 +351,7 @@ void recebeHora(char ponteiroHora[]) {
     int validado = False;
 
     do {
-        printf("Digite o Horário: ");
+        printf("Digite o horário: ");
         scanf("%s", hora);
         getchar();
 
