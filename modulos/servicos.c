@@ -84,8 +84,8 @@ void listagemServico(void) {
         printf("|                                                                                                 |\n");
         printf("|                                   1 Ordem alfabética                                            |\n");
         printf("|                                   2 Ordem de recentes                                           |\n");
-        printf("|                                   3 Ordem de preço                                              |\n");
-        printf("|                                   4 Filtrar nome                                                |\n");
+        printf("|                                   3 Ordem de preço (crescente)                                  |\n");
+        printf("|                                   4 Filtrar por nome                                            |\n");
         printf("|                                   0 Sair                                                        |\n");
         printf("|_________________________________________________________________________________________________|\n\n");
 
@@ -109,7 +109,7 @@ void listagemServico(void) {
 
             case '4':
             lista = gerarListaServicosAlfabetica();
-                printf("Digite o serviço pelo qual buscar: ");
+                printf("Digite o nome do serviço pelo qual buscar: ");
                 scanf("%[^\n]", filtro);
                 getchar();
                 listarServicosNome(lista, filtro);

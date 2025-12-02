@@ -83,9 +83,9 @@ void listagemAgendamento(void) {
         printf("|                                     ESCOLHA O TIPO DE LISTAGEM                                  |\n");
         printf("|_________________________________________________________________________________________________|\n");
         printf("|                                                                                                 |\n");
-        printf("|                                   1 Todos os agendamentos                                       |\n");
-        printf("|                                   2 Filtrar data                                                |\n");
-        printf("|                                   3 Ordem alfabetica                                            |\n");
+        printf("|                                   1 Ordem alfabética                                            |\n");
+        printf("|                                   2 Ordem de recentes                                           |\n");
+        printf("|                                   3 Filtrar por data                                            |\n");
         printf("|                                   0 Sair                                                        |\n");
         printf("|_________________________________________________________________________________________________|\n\n");
         
@@ -93,21 +93,21 @@ void listagemAgendamento(void) {
         opcao = recebeOpcao();
         switch (opcao) {
             case '1':
-                lista = gerarListaAgendamentos();
+                lista = gerarListaAgendamentosAlfabetica();
                 listaAgendamento(lista);
                 break;
 
             case '2':
                 lista = gerarListaAgendamentos();
-                printf("Digite a data pelo qual deseja buscar: ");
+                listaAgendamento(lista);
+                break;
+
+            case '3':
+                lista = gerarListaAgendamentos();
+                printf("Digite a data pelo qual deseja buscar (DD/MM ou AAAA): ");
                 scanf(" %15[^\n]", dataBusca);
                 getchar();
                 listarAgendamentosData(lista, dataBusca);
-                break;
-            
-            case '3':
-                lista = gerarListaAgendamentosAlfabetica();
-                listaAgendamento(lista);
                 break;
 
             case '0':
