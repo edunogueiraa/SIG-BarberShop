@@ -291,8 +291,8 @@ char* nomeServico(char* id) {
             return servicoNome;
         }
     }
-    
-    return NULL;
+    strcpy(servicoNome, "Serviço não encontrado");
+    return servicoNome;
 }
 void cadastrarServico(Servico * servico) {
     criaDiretorio();

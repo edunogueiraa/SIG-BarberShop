@@ -260,8 +260,8 @@ char* nomeCliente(char* cpf) {
             return nome;
         }
     }
-
-    return NULL;
+    strcpy(nome, "Cliente não encontrado");
+    return nome;
 }
 void cadastrarCliente(Cliente * cliente) {
     criaDiretorio();
