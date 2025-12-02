@@ -33,7 +33,6 @@ void telaEstoque(void) {
     printf("|_________________________________________________________________________________________________|\n\n");
     
 }
-
 void cadastroEstoque(void) {
     system("clear||cls");
     printf("\n");
@@ -55,7 +54,6 @@ void cadastroEstoque(void) {
     cadastrarProduto(estoque);
     free(estoque);
 }
-
 void exibeProduto(void) {
     system("clear||cls");
     printf("\n");
@@ -73,7 +71,6 @@ void exibeProduto(void) {
     printf("\n>>> Tecle <ENTER> para continuar...\n");
     getchar();
 }
-
 void listaEstoque(void) {
     char opcao = '0';
     Estoque* lista = NULL;
@@ -128,7 +125,6 @@ void listaEstoque(void) {
         liberarListaEstoque(&lista);
     }
 }
-
 void atualizaProduto(void) {
     system("clear||cls");
     printf("\n");
@@ -166,7 +162,6 @@ void atualizaProduto(void) {
         }
     } while (opcao != 0);
 }
-
 void deletaProduto(void) {
     system("clear||cls");
     printf("\n");
@@ -203,7 +198,6 @@ void deletaProduto(void) {
         getchar();
     }
 }
-
 void limparBancoEstoque(void) {
     system("clear||cls");
     printf("\n");
@@ -217,7 +211,6 @@ void limparBancoEstoque(void) {
     printf("\n>>> Tecle <ENTER> para continuar.\n");
     getchar();
 }
-
 void opcaoEstoque(void) {
     char opcao = '9';
 
@@ -264,7 +257,6 @@ void cadastrarProduto(Estoque * estoque) {
 
     fclose(arquivo);
 }
-
 int exibirProduto(char idProduto[]) {
     Estoque * estoque;
     estoque = (Estoque *) malloc(sizeof(Estoque));
@@ -293,7 +285,6 @@ int exibirProduto(char idProduto[]) {
     }
     return 1;
 }
-
 void exibirDadosProduto(Estoque* estoque) {
     float valorNumerico = atof(estoque->valor);
     printf("%-20s | %-10s | %-15s | R$ %.2f\n",
@@ -302,7 +293,6 @@ void exibirDadosProduto(Estoque* estoque) {
         estoque->tipo,
         valorNumerico);
 }
-
 void listarProdutos(Estoque* lista) {
     Estoque * estoque = lista;
     
@@ -319,7 +309,6 @@ void listarProdutos(Estoque* lista) {
     printf("\n>>> Tecle <ENTER> para continuar...\n");
     getchar();
 }
-
 void listarProdutosPreco(Estoque* lista, float minimo, float maximo) {
     Estoque * estoque;
     estoque = (Estoque *) malloc(sizeof(Estoque));
@@ -344,7 +333,6 @@ void listarProdutosPreco(Estoque* lista, float minimo, float maximo) {
     printf("\n>>> Tecle <ENTER> para continuar...\n");
     getchar();
 }
-
 void atualizarProduto(char idProduto[], int opcao) {
     char dado[50];
     if (opcao == 1) {
@@ -379,7 +367,6 @@ void atualizarProduto(char idProduto[], int opcao) {
     fclose(arquivo);
     free(estoque);
 }
-
 void deletarProduto(char idProduto[]) {
     Estoque * estoque;
     estoque = (Estoque *) malloc(sizeof(Estoque));
@@ -400,7 +387,6 @@ void deletarProduto(char idProduto[]) {
     fclose(arquivo);
     free(estoque);
 }
-
 void excluirBancoEstoque(void) {
     Estoque * estoque;
     estoque = (Estoque *) malloc(sizeof(Estoque));
@@ -431,7 +417,6 @@ void excluirBancoEstoque(void) {
     printf("Estoques mantidos: %d\n", estoquesMantidos);
     printf("Estoques removidos: %d\n", estoquesRemovidos);
 }
-
 Estoque* gerarListaEstoque(void){
     Estoque* lista = NULL;
     Estoque* estoque = (Estoque*) malloc(sizeof(Estoque));
@@ -450,7 +435,6 @@ Estoque* gerarListaEstoque(void){
     fclose(arquivo);
     return lista;
 }
-
 Estoque* gerarListaOrdemPreco(void) {
 
     Estoque* lista = NULL;
@@ -495,6 +479,7 @@ Estoque* gerarListaOrdemPreco(void) {
 
     return lista;
 }
+
 void liberarListaEstoque(Estoque** lista) {
     Estoque* estoque;
 
@@ -506,7 +491,6 @@ void liberarListaEstoque(Estoque** lista) {
 
     *lista = NULL;
 }
-
 int verificaEstoque(char* idProduto) {
     Estoque * estoque;
     estoque = (Estoque *) malloc(sizeof(Estoque));
